@@ -9,8 +9,10 @@
   "name": "kitgrid-ecommerce-shop",
   "version": "1.0.0",
   "description": "> Online store for football coaches and team managers: training equipment, team kits, goalkeeper gear and recovery supplies, with bulk pricing and an AI Kit Advisor. Open to individual players too.",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
