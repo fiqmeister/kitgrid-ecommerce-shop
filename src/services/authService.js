@@ -11,7 +11,7 @@ async function register({ name, email, password }) {
 
     const existing = await userDal.findByEmail(cleanEmail);
     if (existing) {
-        throw new createError('Email is already registered', 409);
+        throw createError('Email is already registered', 409);
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
