@@ -7,6 +7,7 @@ const tokens = require('../utils/tokens');
 const createError = require('../utils/createError');
 
 // destructuring: unpacks the req.body object 
+// registering a user
 async function register({ name, email, password }) {
     // trim any whitespace and make all chars lowercase
     const cleanEmail = email.trim().toLowerCase();
@@ -24,7 +25,7 @@ async function register({ name, email, password }) {
     });
     return userDal.findById(id);
 }
-
+// user login
 async function login ({ email, password }) {
     const user = await userDal.findByEmail(email.trim().toLowerCase());
     if (!user) {
@@ -56,5 +57,39 @@ async function login ({ email, password }) {
         refreshToken,
     };
 }
+// loads the user again when request for new access token
+async function refresh (refreshToken) {
+    try {
+        // verify if the signature is valid and token hasn't expired
+        tokens.verifyRefreshToken(refreshToken);
+    } catch (err) {
+        throw createError('Invalid refresh token', 401);
+    }
+    // hash the given refreshToken, then checks in DB if it's a valid token
+    const stored = await refreshTokenDal.findValidToken(tokens.hashToken(refreshToken));
+    if (!stored) {
+        throw createError('Invalid refresh token', 401);
+    }
 
-module.exports = { register, login };
+    const user = await userDal.findById(stored.user_id);
+    if (!user) {
+        throw createError('Invalid refresh token', 401);
+    }
+    return {
+        accessToken: tokens.signAccessToken(user)
+    };
+}
+
+async function logout (refreshToken) {
+    await refreshTokenDal.revoke(tokens.hashToken(refreshToken));
+}
+
+async function getCurrentUser(id) {
+    const user = await userDal.findById(id);
+    if (!user) {
+        throw createError('User not found', 404);
+    }
+    return user;
+}
+
+module.exports = { register, login, refresh, logout, getCurrentUser };

@@ -19,5 +19,9 @@ const loginSchema = yup.object({
     email: yup.string().trim().required('Email is required').email('Enter a valid email address'),
     password: yup.string().required('Password is required'),
 });
+// when requesting for access token
+const refreshSchema = yup.object ({
+    refreshToken: yup.string().required('Refresh token is required'),
+});
 
-module.exports = { registerSchema, loginSchema };
+module.exports = { registerSchema, loginSchema, refreshSchema };

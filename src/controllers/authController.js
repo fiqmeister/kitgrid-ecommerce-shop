@@ -1,5 +1,6 @@
 // Takes in request and sends the response out. No business rules/logic, No SQL here.
 
+const { ref } = require('yup');
 const authService = require('../services/authService');
 
 async function register(req, res) {
@@ -12,4 +13,19 @@ async function login (req, res) {
     res.json(result); // once gotten result, display it
 }
 
-module.exports = { register, login };
+async function refresh (req, res) {
+    const result = await authService.refresh(req.body.refreshToken);
+    res.json(result);
+}
+
+async function logout (req, res) {
+    await authService.logout(req.body.refreshToken);
+    res.status(204).send();
+}
+
+async function currentUser (req, res) {
+    const user = await authService.getCurrentUser(req.user.id); // user.id gotten from authenticate which is from access token payload
+    res.json({ user });
+}
+
+module.exports = { register, login, refresh, logout, currentUser };

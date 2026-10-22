@@ -1,3 +1,5 @@
+// functions related anything to do with tokens
+
 const jwt = require ('jsonwebtoken');
 const crypto = require ('crypto');
 // function to create jwt access token
@@ -28,4 +30,12 @@ function getExpiry(token) {
     return new Date(jwt.decode(token).exp * 1000);
 }
 
-module.exports = { signAccessToken, signRefreshToken, hashToken, getExpiry };
+function verifyAccessToken(token) {
+    return jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+}
+
+function verifyRefreshToken(token) {
+    return jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+}
+
+module.exports = { signAccessToken, signRefreshToken, hashToken, getExpiry, verifyAccessToken, verifyRefreshToken };
