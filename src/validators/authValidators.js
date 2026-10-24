@@ -1,4 +1,4 @@
-// Validating using Yup on the server side
+// Validating using Yup on the server side for auth
 // a checklist/rules to be used
 
 const yup = require("yup");

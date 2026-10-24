@@ -1,0 +1,121 @@
+<svg width="1000" height="1360" viewBox="0 0 1000 1360" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="1000" height="1360" rx="0" fill="#F8FAFC"/>
+<text x="50" y="56" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="700" fill="#0F172A" text-anchor="start">States</text>
+<text x="50" y="84" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#475569" text-anchor="start">Loading, empty and error states used across the app. Every screen needs one of these.</text>
+<rect x="50" y="140" width="440" height="250" rx="12" fill="white"/>
+<rect x="50.5" y="140.5" width="439" height="249" rx="12" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="50" y="110" width="149.75" height="24" rx="12" fill="#E0F2FE"/>
+<text x="62" y="127" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Loading: product list</text>
+<text x="70" y="174" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#334155" text-anchor="start">Loading kits…</text>
+<path d="M446 164a9 9 0 1 1 -9 -9" stroke="#0284C7" stroke-width="3" stroke-linecap="round" fill="none"/>
+<rect x="70" y="196" width="125" height="172" rx="10" fill="#F1F5F9"/>
+<rect x="80" y="206" width="105" height="80" rx="8" fill="#E2E8F0"/>
+<rect x="80" y="298" width="80" height="10" rx="5" fill="#E2E8F0"/>
+<rect x="80" y="318" width="55" height="10" rx="5" fill="#E2E8F0"/>
+<rect x="80" y="338" width="105" height="20" rx="6" fill="#E2E8F0"/>
+<rect x="205" y="196" width="125" height="172" rx="10" fill="#F1F5F9"/>
+<rect x="215" y="206" width="105" height="80" rx="8" fill="#E2E8F0"/>
+<rect x="215" y="298" width="80" height="10" rx="5" fill="#E2E8F0"/>
+<rect x="215" y="318" width="55" height="10" rx="5" fill="#E2E8F0"/>
+<rect x="215" y="338" width="105" height="20" rx="6" fill="#E2E8F0"/>
+<rect x="340" y="196" width="125" height="172" rx="10" fill="#F1F5F9"/>
+<rect x="350" y="206" width="105" height="80" rx="8" fill="#E2E8F0"/>
+<rect x="350" y="298" width="80" height="10" rx="5" fill="#E2E8F0"/>
+<rect x="350" y="318" width="55" height="10" rx="5" fill="#E2E8F0"/>
+<rect x="350" y="338" width="105" height="20" rx="6" fill="#E2E8F0"/>
+<rect x="510" y="140" width="440" height="250" rx="12" fill="white"/>
+<rect x="510.5" y="140.5" width="439" height="249" rx="12" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="510" y="110" width="175.421875" height="24" rx="12" fill="#E0F2FE"/>
+<text x="522" y="127" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Empty: no search results</text>
+<circle cx="730.0" cy="190" r="26" fill="#F1F5F9"/>
+<g stroke="#64748B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="727.0" cy="187" r="9"/><path d="M734.0 194l8 8"/></g>
+<text x="730.0" y="248" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" fill="#0F172A" text-anchor="middle">No kits match your filters</text>
+<text x="730.0" y="270" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#475569" text-anchor="middle">Try removing a filter or lowering the minimum in stock.</text>
+<rect x="595.0" y="290" width="62.859375" height="28" rx="14" fill="#E0F2FE"/>
+<text x="609.0" y="309" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#0369A1" text-anchor="start">Red</text>
+<path d="M637.859375 300l7 7m0-7l-7 7" stroke="#0369A1" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="665.859375" y="290" width="72.59375" height="28" rx="14" fill="#E0F2FE"/>
+<text x="679.859375" y="309" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#0369A1" text-anchor="start">Black</text>
+<path d="M718.453125 300l7 7m0-7l-7 7" stroke="#0369A1" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="746.453125" y="290" width="109.53125" height="28" rx="14" fill="#E0F2FE"/>
+<text x="760.453125" y="309" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#0369A1" text-anchor="start">15+ in stock</text>
+<path d="M835.984375 300l7 7m0-7l-7 7" stroke="#0369A1" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="655.0" y="332" width="150" height="40" rx="8" fill="#0284C7"/>
+<text x="730.0" y="357.0" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="white" text-anchor="middle">Clear all filters</text>
+<rect x="50" y="440" width="440" height="250" rx="12" fill="white"/>
+<rect x="50.5" y="440.5" width="439" height="249" rx="12" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="50" y="410" width="95.484375" height="24" rx="12" fill="#E0F2FE"/>
+<text x="62" y="427" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Empty: cart</text>
+<circle cx="270.0" cy="496" r="26" fill="#F1F5F9"/>
+<g stroke="#64748B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M258.0 486h4l3 14h11l3-10h-16"/><circle cx="268.0" cy="506" r="1.6"/><circle cx="278.0" cy="506" r="1.6"/></g>
+<text x="270.0" y="554" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" fill="#0F172A" text-anchor="middle">Your cart is empty</text>
+<text x="270.0" y="576" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#475569" text-anchor="middle">Add kit and bulk discounts will show up here.</text>
+<rect x="175.0" y="600" width="190" height="40" rx="8" fill="#0284C7"/>
+<text x="270.0" y="625.0" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="white" text-anchor="middle">Shop Matchday Kits</text>
+<text x="270.0" y="666" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#0284C7" text-anchor="middle">Or ask the Kit Advisor to build a kit for you</text>
+<rect x="510" y="440" width="440" height="250" rx="12" fill="white"/>
+<rect x="510.5" y="440.5" width="439" height="249" rx="12" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="510" y="410" width="190.265625" height="24" rx="12" fill="#E0F2FE"/>
+<text x="522" y="427" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Error: quantity above stock</text>
+<text x="530" y="474" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">Striker Pro Jersey (Red)</text>
+<rect x="530" y="488" width="400" height="28" rx="6" fill="#F1F5F9"/>
+<text x="542" y="507" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="700" fill="#475569" text-anchor="start">Size</text>
+<text x="660" y="507" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="700" fill="#475569" text-anchor="start">In stock</text>
+<text x="800" y="507" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="700" fill="#475569" text-anchor="start">Quantity</text>
+<text x="542" y="550" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="start">Adult M</text>
+<text x="660" y="550" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#475569" text-anchor="start">18 (Senior)</text>
+<rect x="800.75" y="530.75" width="62.5" height="33.5" rx="6" fill="white" stroke="#DC2626" stroke-width="1.5"/>
+<text x="832" y="553" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle">25</text>
+<circle cx="548" cy="587" r="6" fill="#DC2626"/><path d="M548 584v3.5m0 2v.2" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+<text x="560" y="591" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#DC2626" text-anchor="start">Only 18 in stock. Enter 18 or fewer.</text>
+<line x1="530" y1="612" x2="930" y2="612" stroke="#F1F5F9"/>
+<text x="530" y="640" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="start">Totals stay at the last valid quantity until this is fixed.</text>
+<rect x="50" y="740" width="440" height="250" rx="12" fill="white"/>
+<rect x="50.5" y="740.5" width="439" height="249" rx="12" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="50" y="710" width="203.734375" height="24" rx="12" fill="#E0F2FE"/>
+<text x="62" y="727" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Pending: payment confirming</text>
+<circle cx="270.0" cy="796" r="26" fill="#E0F2FE"/>
+<path d="M284.0 796a14 14 0 1 1 -14 -14" stroke="#0284C7" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+<text x="270.0" y="852" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" fill="#0F172A" text-anchor="middle">Confirming your payment…</text>
+<text x="270.0" y="874" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#475569" text-anchor="middle">This usually takes a few seconds. Please keep this page open.</text>
+<rect x="200.203125" y="896" width="139.59375" height="26" rx="13" fill="#FEF3C7"/>
+<circle cx="214.203125" cy="909" r="3.5" fill="#D97706"/>
+<text x="224.203125" y="914" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#D97706" text-anchor="start">Pending payment</text>
+<text x="270.0" y="954" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#334155" text-anchor="middle">Order #1042  ·  S$682.05</text>
+<rect x="510" y="740" width="440" height="250" rx="12" fill="white"/>
+<rect x="510.5" y="740.5" width="439" height="249" rx="12" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="510" y="710" width="208.90625" height="24" rx="12" fill="#E0F2FE"/>
+<text x="522" y="727" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Error: payment not completed</text>
+<circle cx="730.0" cy="796" r="26" fill="#FEF3C7"/>
+<g stroke="#D97706" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M730.0 786v12m0 6v.2"/></g>
+<text x="730.0" y="852" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" fill="#0F172A" text-anchor="middle">Payment not completed</text>
+<text x="730.0" y="874" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#475569" text-anchor="middle">You haven't been charged. Your cart and order are saved.</text>
+<rect x="580.0" y="904" width="140" height="40" rx="8" fill="#0284C7"/>
+<text x="650.0" y="929.0" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="white" text-anchor="middle">Try again</text>
+<rect x="740.5" y="904.5" width="139" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="810.0" y="929.0" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#1E293B" text-anchor="middle">Back to cart</text>
+<text x="730.0" y="966" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="middle">Unpaid orders stay as Pending payment in your order history.</text>
+<rect x="50" y="1040" width="440" height="250" rx="12" fill="white"/>
+<rect x="50.5" y="1040.5" width="439" height="249" rx="12" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="50" y="1010" width="161.359375" height="24" rx="12" fill="#E0F2FE"/>
+<text x="62" y="1027" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Error: list failed to load</text>
+<circle cx="270.0" cy="1096" r="26" fill="#FEE2E2"/>
+<g stroke="#DC2626" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M270.0 1086v12m0 6v.2"/></g>
+<text x="270.0" y="1152" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" fill="#0F172A" text-anchor="middle">We couldn't load the products</text>
+<text x="270.0" y="1174" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#475569" text-anchor="middle">Check your connection and try again.</text>
+<rect x="210.0" y="1200" width="120" height="40" rx="8" fill="#0284C7"/>
+<text x="270.0" y="1225.0" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="white" text-anchor="middle">Try again</text>
+<text x="270.0" y="1266" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="middle">Shown for network and server errors on any list page.</text>
+<rect x="510" y="1040" width="440" height="250" rx="12" fill="white"/>
+<rect x="510.5" y="1040.5" width="439" height="249" rx="12" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="510" y="1010" width="199.578125" height="24" rx="12" fill="#E0F2FE"/>
+<text x="522" y="1027" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Error: Kit Advisor unavailable</text>
+<rect x="530" y="1064" width="400" height="40" rx="10" fill="#0F172A"/>
+<text x="546" y="1089" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="start">Kit Advisor</text>
+<rect x="530" y="1124" width="330" height="82" rx="14" fill="#FEE2E2"/>
+<text x="546" y="1150" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#991B1B" text-anchor="start">The Kit Advisor isn't available right now.</text>
+<text x="546" y="1170" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#991B1B" text-anchor="start">You can still browse and add items yourself.</text>
+<text x="546" y="1192" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0284C7" text-anchor="start">Try again</text>
+<rect x="530.5" y="1236.5" width="340" height="40" rx="20" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="550" y="1261" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#94A3B8" text-anchor="start">Input is disabled while the advisor is down</text>
+</svg>

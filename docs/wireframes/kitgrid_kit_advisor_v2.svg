@@ -1,0 +1,116 @@
+<svg width="1000" height="1070" viewBox="0 0 1000 1070" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="1000" height="1070" rx="0" fill="#F8FAFC"/>
+<text x="50" y="56" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="700" fill="#0F172A" text-anchor="start">Kit Advisor panel</text>
+<text x="50" y="84" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#475569" text-anchor="start">Opens from the floating button on every page except checkout. Two modes, same panel.</text>
+<rect x="50" y="130" width="440" height="880" rx="16" fill="white"/>
+<rect x="50.5" y="130.5" width="439" height="879" rx="16" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+<path d="M50 198V146a16 16 0 0 1 16-16h408a16 16 0 0 1 16 16v52z" fill="#0F172A"/>
+<circle cx="86" cy="164" r="16" fill="#0284C7"/>
+<path d="M79 160h14a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-6l-4 3v-3h-4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z" stroke="white" stroke-width="1.6" stroke-linejoin="round" fill="none"/>
+<text x="112" y="160" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" fill="white" text-anchor="start">Kit Advisor</text>
+<text x="112" y="178" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#CBD5E1" text-anchor="start">Checks live stock before it suggests</text>
+<path d="M456 156l12 12m0-12l-12 12" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+<rect x="70" y="214" width="400" height="42" rx="10" fill="#F1F5F9"/>
+<rect x="74.0" y="218" width="196.0" height="34" rx="8" fill="white" stroke="#E2E8F0" stroke-width="1"/>
+<text x="172.0" y="240" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0369A1" text-anchor="middle">For my team</text>
+<text x="368.0" y="240" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#475569" text-anchor="middle">For me</text>
+<rect x="70" y="278" width="306.3125" height="62" rx="14" fill="#F1F5F9"/>
+<text x="84" y="304" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1E293B" text-anchor="start">Hi Alex! Tell me about your team and budget,</text>
+<text x="84" y="324" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1E293B" text-anchor="start">and I'll build a kit from what's in stock.</text>
+<rect x="146.3125" y="352" width="323.6875" height="62" rx="14" fill="#0284C7"/>
+<text x="160.3125" y="378" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="white" text-anchor="start">U12 team of 16 players, S$800 budget. We need</text>
+<text x="160.3125" y="398" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="white" text-anchor="start">match jerseys and training bibs.</text>
+<rect x="70" y="426" width="312.828125" height="62" rx="14" fill="#F1F5F9"/>
+<text x="84" y="452" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1E293B" text-anchor="start">Here's a kit for 16 players that fits your S$800.</text>
+<text x="84" y="472" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1E293B" text-anchor="start">Everything is in stock.</text>
+<rect x="70.5" y="502.5" width="399" height="317" rx="12" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="90" y="532" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="#0F172A" text-anchor="start">Suggested kit for 16 players</text>
+<rect x="368" y="516" width="82" height="24" rx="12" fill="#DCFCE7"/>
+<text x="409" y="533" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="700" fill="#16A34A" text-anchor="middle">In stock</text>
+<rect x="90" y="554" width="44" height="44" rx="6" fill="#CBD5E1"/>
+<text x="146" y="570" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="start">Striker Pro Jersey (Red)</text>
+<text x="146" y="590" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Youth XS × 4  ·  Youth S × 8  ·  Adult M × 4</text>
+<text x="450" y="570" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$543.86</text>
+<rect x="90" y="616" width="44" height="44" rx="6" fill="#CBD5E1"/>
+<text x="146" y="632" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="start">Training Bib (Fluro yellow)</text>
+<text x="146" y="652" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">One size × 16</text>
+<text x="450" y="632" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$88.40</text>
+<line x1="90" y1="674" x2="450" y2="674" stroke="#E2E8F0"/>
+<text x="90" y="698" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#16A34A" text-anchor="start">Bulk discounts (15% each)</text>
+<text x="450" y="698" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#16A34A" text-anchor="end">−S$111.58</text>
+<text x="90" y="722" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">Total</text>
+<text x="450" y="723" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#0F172A" text-anchor="end">S$632.26</text>
+<text x="90" y="742" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">S$167.74 under your S$800 budget  ·  free shipping</text>
+<rect x="90" y="756" width="160" height="40" rx="8" fill="#0284C7"/>
+<text x="170" y="781" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="white" text-anchor="middle">Add all to cart</text>
+<rect x="262.5" y="756.5" width="150" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="337.5" y="781" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#1E293B" text-anchor="middle">Adjust quantities</text>
+<rect x="70" y="832" width="319.375" height="62" rx="14" fill="#F1F5F9"/>
+<text x="84" y="858" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1E293B" text-anchor="start">Want me to add goalkeeper kit or staff polos? I</text>
+<text x="84" y="878" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1E293B" text-anchor="start">can keep it under budget.</text>
+<line x1="50" y1="918" x2="490" y2="918" stroke="#E2E8F0"/>
+<rect x="70.5" y="932.5" width="340" height="40" rx="20" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="90" y="957" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#64748B" text-anchor="start">Ask a follow-up…</text>
+<circle cx="450" cy="952" r="20" fill="#0284C7"/>
+<path d="M443 952h14m-6-6l6 6l-6 6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<text x="270.0" y="992" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#64748B" text-anchor="middle">AI suggestions use live stock. Check sizes before paying.</text>
+<rect x="510" y="130" width="440" height="880" rx="16" fill="white"/>
+<rect x="510.5" y="130.5" width="439" height="879" rx="16" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+<path d="M510 198V146a16 16 0 0 1 16-16h408a16 16 0 0 1 16 16v52z" fill="#0F172A"/>
+<circle cx="546" cy="164" r="16" fill="#0284C7"/>
+<path d="M539 160h14a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-6l-4 3v-3h-4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z" stroke="white" stroke-width="1.6" stroke-linejoin="round" fill="none"/>
+<text x="572" y="160" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" fill="white" text-anchor="start">Kit Advisor</text>
+<text x="572" y="178" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#CBD5E1" text-anchor="start">Checks live stock before it suggests</text>
+<path d="M916 156l12 12m0-12l-12 12" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+<rect x="530" y="214" width="400" height="42" rx="10" fill="#F1F5F9"/>
+<text x="632.0" y="240" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#475569" text-anchor="middle">For my team</text>
+<rect x="730.0" y="218" width="196.0" height="34" rx="8" fill="white" stroke="#E2E8F0" stroke-width="1"/>
+<text x="828.0" y="240" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0369A1" text-anchor="middle">For me</text>
+<rect x="530" y="278" width="305.21875" height="62" rx="14" fill="#F1F5F9"/>
+<text x="544" y="304" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1E293B" text-anchor="start">Shopping for yourself? Tell me what you play</text>
+<text x="544" y="324" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1E293B" text-anchor="start">and your budget, and I'll pick items in stock.</text>
+<rect x="605.0" y="352" width="325.0" height="62" rx="14" fill="#0284C7"/>
+<text x="619.0" y="378" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="white" text-anchor="start">Midfielder, adult medium. Budget S$80. I need a</text>
+<text x="619.0" y="398" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="white" text-anchor="start">match jersey and a training tee.</text>
+<rect x="530" y="426" width="310.6875" height="62" rx="14" fill="#F1F5F9"/>
+<text x="544" y="452" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1E293B" text-anchor="start">Two picks in your size, both in stock. Together</text>
+<text x="544" y="472" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1E293B" text-anchor="start">S$63.99, under your S$80.</text>
+<rect x="530.5" y="502.5" width="399" height="131" rx="12" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="550" y="518" width="64" height="64" rx="8" fill="#CBD5E1"/>
+<text x="630" y="538" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="700" fill="#0F172A" text-anchor="start">Striker Pro Jersey</text>
+<text x="630" y="558" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="start">Matchday Kits  ·  Red</text>
+<circle cx="634" cy="573" r="4" fill="#16A34A"/>
+<text x="644" y="577" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#16A34A" text-anchor="start">In stock</text>
+<text x="910" y="538" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="#0F172A" text-anchor="end">S$39.99</text>
+<rect x="550.5" y="594.5" width="120" height="29" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="564" y="613" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#334155" text-anchor="start">Size: Adult M</text>
+<path d="M654 606l4 4l4-4" stroke="#64748B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<rect x="810" y="594" width="100" height="30" rx="8" fill="#0F172A"/>
+<text x="860" y="614" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="white" text-anchor="middle">Add to cart</text>
+<rect x="530.5" y="644.5" width="399" height="131" rx="12" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<rect x="550" y="660" width="64" height="64" rx="8" fill="#CBD5E1"/>
+<text x="630" y="680" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="700" fill="#0F172A" text-anchor="start">Pace Training Tee</text>
+<text x="630" y="700" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="start">Training Wear  ·  Black</text>
+<circle cx="634" cy="715" r="4" fill="#16A34A"/>
+<text x="644" y="719" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#16A34A" text-anchor="start">In stock</text>
+<text x="910" y="680" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="#0F172A" text-anchor="end">S$24.00</text>
+<rect x="550.5" y="736.5" width="120" height="29" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="564" y="755" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#334155" text-anchor="start">Size: Adult M</text>
+<path d="M654 748l4 4l4-4" stroke="#64748B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<rect x="810" y="736" width="100" height="30" rx="8" fill="#0F172A"/>
+<text x="860" y="756" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="white" text-anchor="middle">Add to cart</text>
+<rect x="550" y="790" width="360" height="40" rx="8" fill="#0284C7"/>
+<text x="730.0" y="815" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="white" text-anchor="middle">Add both to cart  ·  S$63.99</text>
+<rect x="530" y="842" width="321.046875" height="42" rx="14" fill="#F1F5F9"/>
+<text x="544" y="868" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1E293B" text-anchor="start">Need boots or goalkeeper gloves too? Just ask.</text>
+<line x1="510" y1="918" x2="950" y2="918" stroke="#E2E8F0"/>
+<rect x="530.5" y="932.5" width="340" height="40" rx="20" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="550" y="957" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#64748B" text-anchor="start">Ask about kit, sizes or budget…</text>
+<circle cx="910" cy="952" r="20" fill="#0284C7"/>
+<path d="M903 952h14m-6-6l6 6l-6 6" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<text x="730.0" y="992" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#64748B" text-anchor="middle">AI suggestions use live stock. Check sizes before paying.</text>
+<rect x="50" y="94" width="110" height="26" rx="13" fill="#E0F2FE"/>
+<text x="105" y="112" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="middle">Team mode</text>
+<rect x="510" y="94" width="130" height="26" rx="13" fill="#E0F2FE"/>
+<text x="575" y="112" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="middle">Personal mode</text>
+</svg>

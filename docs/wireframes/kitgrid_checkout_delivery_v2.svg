@@ -1,0 +1,85 @@
+<svg width="1000" height="1084" viewBox="0 0 1000 1084" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="1000" height="1084" rx="0" fill="#F8FAFC"/>
+<rect x="0" y="0" width="1000" height="76" rx="0" fill="white"/>
+<path transform="translate(0,-41)" d="M52.016 89V62.684H57.56V76.976L63.32 70.244H69.728L62.6 78.164L69.944 89H63.716L57.56 79.604V89H52.016ZM72.0576 89V70.244H77.5656V89H72.0576ZM74.7576 67.976C73.8456 67.976 73.0656 67.712 72.4176 67.184C71.7936 66.656 71.4816 65.912 71.4816 64.952C71.4816 63.968 71.7936 63.212 72.4176 62.684C73.0656 62.156 73.8456 61.892 74.7576 61.892C75.6936 61.892 76.4856 62.156 77.1336 62.684C77.7816 63.188 78.1056 63.944 78.1056 64.952C78.1056 65.912 77.7816 66.656 77.1336 67.184C76.4856 67.712 75.6936 67.976 74.7576 67.976ZM89.4647 89.396C87.6887 89.396 86.2847 88.904 85.2527 87.92C84.2447 86.936 83.7407 85.472 83.7407 83.528V74.744H80.0687L89.2487 64.232V70.244H93.8207V74.744H89.2487V82.736C89.2487 83.36 89.3927 83.84 89.6807 84.176C89.9687 84.512 90.4127 84.68 91.0127 84.68C91.3967 84.68 91.7567 84.632 92.0927 84.536C92.4527 84.44 92.8247 84.308 93.2087 84.14V88.532C92.7047 88.796 92.1407 89 91.5167 89.144C90.8927 89.312 90.2087 89.396 89.4647 89.396ZM104.45 95.228C102.842 95.228 101.402 95.036 100.13 94.652C98.8817 94.292 97.6457 93.8 96.4217 93.176V88.496C97.0937 88.928 97.8497 89.348 98.6897 89.756C99.5537 90.164 100.478 90.488 101.462 90.728C102.446 90.968 103.43 91.088 104.414 91.088C106.214 91.088 107.654 90.668 108.734 89.828C109.838 89.012 110.39 87.644 110.39 85.724V84.5C109.646 85.388 108.782 86.132 107.798 86.732C106.814 87.332 105.59 87.632 104.126 87.632C102.566 87.632 101.126 87.26 99.8057 86.516C98.5097 85.772 97.4777 84.74 96.7097 83.42C95.9417 82.076 95.5577 80.516 95.5577 78.74C95.5577 76.916 95.9417 75.344 96.7097 74.024C97.5017 72.68 98.5457 71.648 99.8417 70.928C101.162 70.184 102.602 69.812 104.162 69.812C105.554 69.812 106.718 70.076 107.654 70.604C108.614 71.132 109.466 71.804 110.21 72.62L115.862 70.244V85.184C115.862 87.416 115.37 89.276 114.386 90.764C113.426 92.252 112.082 93.368 110.354 94.112C108.65 94.856 106.682 95.228 104.45 95.228ZM105.71 83.24C106.598 83.24 107.39 83.048 108.086 82.664C108.806 82.256 109.37 81.716 109.778 81.044C110.186 80.348 110.39 79.568 110.39 78.704C110.39 77.816 110.186 77.036 109.778 76.364C109.37 75.692 108.806 75.164 108.086 74.78C107.39 74.396 106.598 74.204 105.71 74.204C104.798 74.204 103.994 74.396 103.298 74.78C102.602 75.164 102.05 75.704 101.642 76.4C101.258 77.072 101.066 77.852 101.066 78.74C101.066 79.604 101.27 80.372 101.678 81.044C102.086 81.716 102.638 82.256 103.334 82.664C104.03 83.048 104.822 83.24 105.71 83.24ZM119.938 89V70.244L125.518 73.484C126.118 72.38 126.874 71.516 127.786 70.892C128.722 70.244 129.85 69.92 131.17 69.92C131.314 69.92 131.446 69.92 131.566 69.92C131.686 69.92 131.794 69.932 131.89 69.956V75.68C131.794 75.632 131.662 75.608 131.494 75.608C131.35 75.584 131.182 75.572 130.99 75.572C129.958 75.572 129.022 75.788 128.182 76.22C127.342 76.652 126.682 77.324 126.202 78.236C125.722 79.124 125.482 80.288 125.482 81.728V89H119.938ZM134.144 89V70.244H139.652V89H134.144ZM136.844 67.976C135.932 67.976 135.152 67.712 134.504 67.184C133.88 66.656 133.568 65.912 133.568 64.952C133.568 63.968 133.88 63.212 134.504 62.684C135.152 62.156 135.932 61.892 136.844 61.892C137.78 61.892 138.572 62.156 139.22 62.684C139.868 63.188 140.192 63.944 140.192 64.952C140.192 65.912 139.868 66.656 139.22 67.184C138.572 67.712 137.78 67.976 136.844 67.976ZM151.479 89.396C149.919 89.396 148.479 89 147.159 88.208C145.863 87.416 144.819 86.288 144.027 84.824C143.235 83.36 142.839 81.632 142.839 79.64C142.839 77.6 143.235 75.848 144.027 74.384C144.819 72.92 145.863 71.792 147.159 71C148.455 70.208 149.871 69.812 151.407 69.812C152.871 69.812 154.095 70.1 155.079 70.676C156.063 71.252 156.903 71.972 157.599 72.836V62.684H163.143V89.288L157.455 86.336C156.759 87.2 155.943 87.932 155.007 88.532C154.071 89.108 152.895 89.396 151.479 89.396ZM152.955 84.752C153.843 84.752 154.635 84.536 155.331 84.104C156.051 83.672 156.627 83.06 157.059 82.268C157.491 81.476 157.707 80.576 157.707 79.568C157.707 78.56 157.479 77.684 157.023 76.94C156.591 76.172 156.015 75.572 155.295 75.14C154.599 74.684 153.819 74.456 152.955 74.456C152.139 74.456 151.371 74.672 150.651 75.104C149.931 75.536 149.355 76.136 148.923 76.904C148.515 77.672 148.311 78.572 148.311 79.604C148.311 80.492 148.503 81.332 148.887 82.124C149.271 82.892 149.811 83.528 150.507 84.032C151.203 84.512 152.019 84.752 152.955 84.752Z" fill="#0F172A"/>
+<line x1="0" y1="76.5" x2="1000" y2="76.5" stroke="#E2E8F0"/>
+<g fill="none" stroke="#64748B" stroke-width="1.8" stroke-linejoin="round"><rect x="682" y="33" width="13" height="10" rx="2"/><path d="M685 33v-3a3.5 3.5 0 0 1 7 0v3"/></g>
+<text x="703" y="43" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#475569" text-anchor="start">Secure checkout</text>
+<text x="950" y="43" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#0284C7" text-anchor="end">← Back to cart</text>
+<circle cx="64" cy="118" r="14" fill="#0284C7"/>
+<text x="64" y="123" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="middle">1</text>
+<text x="88" y="123" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="#0F172A" text-anchor="start">Delivery</text>
+<rect x="190" y="117" width="120" height="2" rx="0" fill="#CBD5E1"/>
+<circle cx="324" cy="118" r="14" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+<text x="324" y="123" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#64748B" text-anchor="middle">2</text>
+<text x="348" y="123" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" fill="#64748B" text-anchor="start">Review &amp; pay</text>
+<rect x="50" y="158" width="590" height="808" rx="12" fill="white"/>
+<text x="70" y="196" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#0F172A" text-anchor="start">Contact</text>
+<text x="70" y="226" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Full name</text>
+<rect x="70.5" y="236.5" width="266.0" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="84" y="261" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">Alex Tan</text>
+<text x="353.0" y="226" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Mobile number</text>
+<rect x="353.5" y="236.5" width="266.0" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="367.0" y="261" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#334155" text-anchor="start">+65</text>
+<line x1="405.0" y1="245" x2="405.0" y2="267" stroke="#CBD5E1"/>
+<text x="417.0" y="261" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">9123 4567</text>
+<text x="70" y="302" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Email</text>
+<rect x="70.5" y="312.5" width="549" height="39" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="84" y="337" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="start">alex.tan@example.com</text>
+<text x="70" y="368" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">From your account. We send the order confirmation here.</text>
+<line x1="70" y1="388" x2="620" y2="388" stroke="#E2E8F0"/>
+<text x="70" y="416" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#0F172A" text-anchor="start">Delivery address (Singapore)</text>
+<text x="70" y="446" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Postal code</text>
+<rect x="70.5" y="456.5" width="266.0" height="39" rx="8" fill="white" stroke="#DC2626" stroke-width="1.5"/>
+<text x="84" y="481" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">12345</text>
+<circle cx="76" cy="512" r="6" fill="#DC2626"/><path d="M76 509v3.5m0 2v.2" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+<text x="88" y="516" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#DC2626" text-anchor="start">Enter a 6-digit postal code.</text>
+<text x="353.0" y="446" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Unit number</text>
+<text x="437.25" y="446" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="start">(optional)</text>
+<rect x="353.5" y="456.5" width="266.0" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="367.0" y="481" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">#05-12</text>
+<text x="70" y="542" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Block and street name</text>
+<rect x="70.5" y="552.5" width="549" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="84" y="577" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">Blk 123 Example Street 45</text>
+<text x="70" y="618" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Building name</text>
+<text x="166.0625" y="618" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="start">(optional)</text>
+<rect x="70.5" y="628.5" width="549" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="70" y="694" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Delivery notes</text>
+<text x="167.625" y="694" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="start">(optional)</text>
+<rect x="70.5" y="704.5" width="549" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="84" y="729" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="start">e.g. Leave with the security guard</text>
+<line x1="70" y1="756" x2="620" y2="756" stroke="#E2E8F0"/>
+<text x="70" y="784" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#0F172A" text-anchor="start">Shipping method</text>
+<rect x="70.75" y="802.75" width="548.5" height="62.5" rx="8" fill="#F0F9FF" stroke="#0284C7" stroke-width="1.5"/>
+<circle cx="96" cy="834" r="9" fill="white" stroke="#0284C7" stroke-width="2"/><circle cx="96" cy="834" r="4.5" fill="#0284C7"/>
+<text x="120" y="830" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">Standard delivery</text>
+<text x="120" y="849" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="start">Flat S$8.00, free on orders of 15+ items</text>
+<text x="604" y="838" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#16A34A" text-anchor="end">S$0.00</text>
+<rect x="70" y="892" width="280" height="50" rx="10" fill="#0284C7"/>
+<text x="210" y="923" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="white" text-anchor="middle">Continue to review &amp; pay</text>
+<text x="374" y="923" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="start">Your details are saved for next time.</text>
+<rect x="664" y="158" width="286" height="372" rx="12" fill="white"/>
+<text x="684" y="194" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#0F172A" text-anchor="start">Order summary</text>
+<text x="930" y="194" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#0284C7" text-anchor="end">Edit cart</text>
+<rect x="684" y="214" width="44" height="44" rx="6" fill="#CBD5E1"/>
+<text x="740" y="230" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="start">Striker Pro Jersey</text>
+<text x="740" y="249" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Red  ·  18 units</text>
+<text x="930" y="249" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$611.85</text>
+<rect x="684" y="276" width="44" height="44" rx="6" fill="#CBD5E1"/>
+<text x="740" y="292" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="start">Training Bib</text>
+<text x="740" y="311" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Fluro yellow  ·  12 units</text>
+<text x="930" y="311" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$70.20</text>
+<line x1="684" y1="342" x2="930" y2="342" stroke="#E2E8F0"/>
+<text x="684" y="368" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#475569" text-anchor="start">Subtotal</text>
+<text x="930" y="368" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="end">S$797.82</text>
+<text x="684" y="396" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#16A34A" text-anchor="start">Bulk discounts</text>
+<text x="930" y="396" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#16A34A" text-anchor="end">−S$115.77</text>
+<text x="684" y="424" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#475569" text-anchor="start">Shipping</text>
+<text x="930" y="424" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="end">S$0.00</text>
+<line x1="684" y1="440" x2="930" y2="440" stroke="#E2E8F0"/>
+<text x="684" y="474" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" fill="#0F172A" text-anchor="start">Total</text>
+<text x="930" y="476" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="24" font-weight="700" fill="#0F172A" text-anchor="end">S$682.05</text>
+<rect x="748" y="998" width="202" height="46" rx="23" fill="#0284C7"/>
+<path d="M772 1015h16a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-8l-5 4v-4h-3a3 3 0 0 1-3-3v-8a3 3 0 0 1 3-3z" stroke="white" stroke-width="1.8" stroke-linejoin="round" fill="none"/>
+<text x="804" y="1026" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="start">Ask the Kit Advisor</text>
+</svg>

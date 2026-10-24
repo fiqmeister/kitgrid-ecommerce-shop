@@ -1,0 +1,135 @@
+<svg width="1000" height="876" viewBox="0 0 1000 876" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="1000" height="876" rx="0" fill="#F8FAFC"/>
+<rect x="0" y="0" width="1000" height="56" rx="0" fill="#0F172A"/>
+<path transform="translate(-2,-47)" d="M52.016 89V62.684H57.56V76.976L63.32 70.244H69.728L62.6 78.164L69.944 89H63.716L57.56 79.604V89H52.016ZM72.0576 89V70.244H77.5656V89H72.0576ZM74.7576 67.976C73.8456 67.976 73.0656 67.712 72.4176 67.184C71.7936 66.656 71.4816 65.912 71.4816 64.952C71.4816 63.968 71.7936 63.212 72.4176 62.684C73.0656 62.156 73.8456 61.892 74.7576 61.892C75.6936 61.892 76.4856 62.156 77.1336 62.684C77.7816 63.188 78.1056 63.944 78.1056 64.952C78.1056 65.912 77.7816 66.656 77.1336 67.184C76.4856 67.712 75.6936 67.976 74.7576 67.976ZM89.4647 89.396C87.6887 89.396 86.2847 88.904 85.2527 87.92C84.2447 86.936 83.7407 85.472 83.7407 83.528V74.744H80.0687L89.2487 64.232V70.244H93.8207V74.744H89.2487V82.736C89.2487 83.36 89.3927 83.84 89.6807 84.176C89.9687 84.512 90.4127 84.68 91.0127 84.68C91.3967 84.68 91.7567 84.632 92.0927 84.536C92.4527 84.44 92.8247 84.308 93.2087 84.14V88.532C92.7047 88.796 92.1407 89 91.5167 89.144C90.8927 89.312 90.2087 89.396 89.4647 89.396ZM104.45 95.228C102.842 95.228 101.402 95.036 100.13 94.652C98.8817 94.292 97.6457 93.8 96.4217 93.176V88.496C97.0937 88.928 97.8497 89.348 98.6897 89.756C99.5537 90.164 100.478 90.488 101.462 90.728C102.446 90.968 103.43 91.088 104.414 91.088C106.214 91.088 107.654 90.668 108.734 89.828C109.838 89.012 110.39 87.644 110.39 85.724V84.5C109.646 85.388 108.782 86.132 107.798 86.732C106.814 87.332 105.59 87.632 104.126 87.632C102.566 87.632 101.126 87.26 99.8057 86.516C98.5097 85.772 97.4777 84.74 96.7097 83.42C95.9417 82.076 95.5577 80.516 95.5577 78.74C95.5577 76.916 95.9417 75.344 96.7097 74.024C97.5017 72.68 98.5457 71.648 99.8417 70.928C101.162 70.184 102.602 69.812 104.162 69.812C105.554 69.812 106.718 70.076 107.654 70.604C108.614 71.132 109.466 71.804 110.21 72.62L115.862 70.244V85.184C115.862 87.416 115.37 89.276 114.386 90.764C113.426 92.252 112.082 93.368 110.354 94.112C108.65 94.856 106.682 95.228 104.45 95.228ZM105.71 83.24C106.598 83.24 107.39 83.048 108.086 82.664C108.806 82.256 109.37 81.716 109.778 81.044C110.186 80.348 110.39 79.568 110.39 78.704C110.39 77.816 110.186 77.036 109.778 76.364C109.37 75.692 108.806 75.164 108.086 74.78C107.39 74.396 106.598 74.204 105.71 74.204C104.798 74.204 103.994 74.396 103.298 74.78C102.602 75.164 102.05 75.704 101.642 76.4C101.258 77.072 101.066 77.852 101.066 78.74C101.066 79.604 101.27 80.372 101.678 81.044C102.086 81.716 102.638 82.256 103.334 82.664C104.03 83.048 104.822 83.24 105.71 83.24ZM119.938 89V70.244L125.518 73.484C126.118 72.38 126.874 71.516 127.786 70.892C128.722 70.244 129.85 69.92 131.17 69.92C131.314 69.92 131.446 69.92 131.566 69.92C131.686 69.92 131.794 69.932 131.89 69.956V75.68C131.794 75.632 131.662 75.608 131.494 75.608C131.35 75.584 131.182 75.572 130.99 75.572C129.958 75.572 129.022 75.788 128.182 76.22C127.342 76.652 126.682 77.324 126.202 78.236C125.722 79.124 125.482 80.288 125.482 81.728V89H119.938ZM134.144 89V70.244H139.652V89H134.144ZM136.844 67.976C135.932 67.976 135.152 67.712 134.504 67.184C133.88 66.656 133.568 65.912 133.568 64.952C133.568 63.968 133.88 63.212 134.504 62.684C135.152 62.156 135.932 61.892 136.844 61.892C137.78 61.892 138.572 62.156 139.22 62.684C139.868 63.188 140.192 63.944 140.192 64.952C140.192 65.912 139.868 66.656 139.22 67.184C138.572 67.712 137.78 67.976 136.844 67.976ZM151.479 89.396C149.919 89.396 148.479 89 147.159 88.208C145.863 87.416 144.819 86.288 144.027 84.824C143.235 83.36 142.839 81.632 142.839 79.64C142.839 77.6 143.235 75.848 144.027 74.384C144.819 72.92 145.863 71.792 147.159 71C148.455 70.208 149.871 69.812 151.407 69.812C152.871 69.812 154.095 70.1 155.079 70.676C156.063 71.252 156.903 71.972 157.599 72.836V62.684H163.143V89.288L157.455 86.336C156.759 87.2 155.943 87.932 155.007 88.532C154.071 89.108 152.895 89.396 151.479 89.396ZM152.955 84.752C153.843 84.752 154.635 84.536 155.331 84.104C156.051 83.672 156.627 83.06 157.059 82.268C157.491 81.476 157.707 80.576 157.707 79.568C157.707 78.56 157.479 77.684 157.023 76.94C156.591 76.172 156.015 75.572 155.295 75.14C154.599 74.684 153.819 74.456 152.955 74.456C152.139 74.456 151.371 74.672 150.651 75.104C149.931 75.536 149.355 76.136 148.923 76.904C148.515 77.672 148.311 78.572 148.311 79.604C148.311 80.492 148.503 81.332 148.887 82.124C149.271 82.892 149.811 83.528 150.507 84.032C151.203 84.512 152.019 84.752 152.955 84.752Z" fill="white"/>
+<text x="200" y="34" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#CBD5E1" text-anchor="start">Dashboard</text>
+<text x="305.640625" y="34" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="start">Orders</text>
+<rect x="305.640625" y="50" width="46.5625" height="3" rx="0" fill="#38BDF8"/>
+<text x="384.203125" y="34" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#CBD5E1" text-anchor="start">Products</text>
+<text x="477.484375" y="34" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#CBD5E1" text-anchor="start">Users</text>
+<text x="950" y="34" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#CBD5E1" text-anchor="end">Sign out</text>
+<text x="50" y="110" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="700" fill="#0F172A" text-anchor="start">Orders</text>
+<text x="950" y="108" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#475569" text-anchor="end">43 orders</text>
+<rect x="50" y="132" width="900" height="84" rx="12" fill="white"/>
+<text x="70" y="158" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#1E293B" text-anchor="start">Search</text>
+<rect x="70.5" y="166.5" width="249" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="84" y="191" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="start">Order # or customer name</text>
+<text x="340" y="158" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#1E293B" text-anchor="start">Status</text>
+<rect x="340.5" y="166.5" width="159" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="354" y="191" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">All statuses</text>
+<path d="M476 182l5 5l5-5" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="520" y="158" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#1E293B" text-anchor="start">From</text>
+<rect x="520.5" y="166.5" width="119" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="534" y="191" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">01 Oct 2026</text>
+<text x="650" y="158" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#1E293B" text-anchor="start">To</text>
+<rect x="650.5" y="166.5" width="119" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="664" y="191" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">19 Oct 2026</text>
+<rect x="790" y="166" width="80" height="40" rx="8" fill="#0284C7"/>
+<text x="830" y="191" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="middle">Apply</text>
+<text x="910" y="191" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#0284C7" text-anchor="middle">Reset</text>
+<rect x="50" y="240" width="900" height="532" rx="12" fill="white"/>
+<rect x="50" y="240" width="900" height="40" rx="12" fill="#F1F5F9"/>
+<rect x="50" y="260" width="900" height="20" rx="0" fill="#F1F5F9"/>
+<text x="70" y="266" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="start">Order</text>
+<text x="160" y="266" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="start">Placed</text>
+<text x="290" y="266" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="start">Customer</text>
+<text x="470" y="266" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="start">Units</text>
+<text x="610" y="266" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="end">Total</text>
+<text x="650" y="266" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="start">Status</text>
+<text x="930" y="266" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="end">Actions</text>
+<text x="70" y="316" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">#KG-1043</text>
+<text x="160" y="316" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">19 Oct, 2:14 PM</text>
+<text x="290" y="307" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#0F172A" text-anchor="start">Wei Ling Chua</text>
+<text x="290" y="325" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Tampines Hornets FC</text>
+<text x="470" y="316" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">24</text>
+<text x="610" y="316" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$786.50</text>
+<rect x="650" y="297" width="58.203125" height="26" rx="13" fill="#DCFCE7"/>
+<circle cx="664" cy="310" r="3.5" fill="#16A34A"/>
+<text x="674" y="315" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#16A34A" text-anchor="start">Paid</text>
+<text x="930" y="316" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#0284C7" text-anchor="end">View</text>
+<line x1="50" y1="340.5" x2="950" y2="340.5" stroke="#E2E8F0"/>
+<text x="70" y="376" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">#KG-1042</text>
+<text x="160" y="376" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">19 Oct, 11:02 AM</text>
+<text x="290" y="376" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#0F172A" text-anchor="start">Alex Tan</text>
+<text x="470" y="376" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">3</text>
+<text x="610" y="376" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$118.97</text>
+<rect x="650" y="357" width="139.59375" height="26" rx="13" fill="#FEF3C7"/>
+<circle cx="664" cy="370" r="3.5" fill="#D97706"/>
+<text x="674" y="375" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#D97706" text-anchor="start">Pending payment</text>
+<text x="930" y="376" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#0284C7" text-anchor="end">View</text>
+<line x1="50" y1="400.5" x2="950" y2="400.5" stroke="#E2E8F0"/>
+<text x="70" y="436" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">#KG-1041</text>
+<text x="160" y="436" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">18 Oct, 6:40 PM</text>
+<text x="290" y="427" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#0F172A" text-anchor="start">Ravi Nair</text>
+<text x="290" y="445" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Bedok Youth FC</text>
+<text x="470" y="436" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">32</text>
+<text x="610" y="436" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$960.00</text>
+<rect x="650" y="417" width="99.34375" height="26" rx="13" fill="#E0F2FE"/>
+<circle cx="664" cy="430" r="3.5" fill="#0369A1"/>
+<text x="674" y="435" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Processing</text>
+<text x="930" y="436" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#0284C7" text-anchor="end">View</text>
+<line x1="50" y1="460.5" x2="950" y2="460.5" stroke="#E2E8F0"/>
+<text x="70" y="496" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">#KG-1040</text>
+<text x="160" y="496" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">17 Oct, 9:15 AM</text>
+<text x="290" y="496" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#0F172A" text-anchor="start">Hana Yusof</text>
+<text x="470" y="496" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">1</text>
+<text x="610" y="496" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$47.99</text>
+<rect x="650" y="477" width="82.78125" height="26" rx="13" fill="#E0F2FE"/>
+<circle cx="664" cy="490" r="3.5" fill="#0369A1"/>
+<text x="674" y="495" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Shipped</text>
+<text x="930" y="496" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#0284C7" text-anchor="end">View</text>
+<line x1="50" y1="520.5" x2="950" y2="520.5" stroke="#E2E8F0"/>
+<text x="70" y="556" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">#KG-1039</text>
+<text x="160" y="556" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">15 Oct, 4:21 PM</text>
+<text x="290" y="547" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#0F172A" text-anchor="start">Marcus Lim</text>
+<text x="290" y="565" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Clementi Rovers</text>
+<text x="470" y="556" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">18</text>
+<text x="610" y="556" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$612.40</text>
+<rect x="650" y="537" width="90.1875" height="26" rx="13" fill="#DCFCE7"/>
+<circle cx="664" cy="550" r="3.5" fill="#16A34A"/>
+<text x="674" y="555" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#16A34A" text-anchor="start">Delivered</text>
+<text x="930" y="556" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#0284C7" text-anchor="end">View</text>
+<line x1="50" y1="580.5" x2="950" y2="580.5" stroke="#E2E8F0"/>
+<text x="70" y="616" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">#KG-1038</text>
+<text x="160" y="616" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">14 Oct, 8:05 PM</text>
+<text x="290" y="616" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#0F172A" text-anchor="start">Siti Rahman</text>
+<text x="470" y="616" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">2</text>
+<text x="610" y="616" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$73.98</text>
+<rect x="650" y="597" width="93.796875" height="26" rx="13" fill="#F1F5F9"/>
+<circle cx="664" cy="610" r="3.5" fill="#475569"/>
+<text x="674" y="615" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="start">Cancelled</text>
+<text x="930" y="616" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#0284C7" text-anchor="end">View</text>
+<line x1="50" y1="640.5" x2="950" y2="640.5" stroke="#E2E8F0"/>
+<text x="70" y="676" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">#KG-1037</text>
+<text x="160" y="676" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">12 Oct, 7:12 PM</text>
+<text x="290" y="667" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#0F172A" text-anchor="start">Daniel Ong</text>
+<text x="290" y="685" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Jurong Lions U12</text>
+<text x="470" y="676" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">15</text>
+<text x="610" y="676" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$521.25</text>
+<rect x="650" y="657" width="90.1875" height="26" rx="13" fill="#DCFCE7"/>
+<circle cx="664" cy="670" r="3.5" fill="#16A34A"/>
+<text x="674" y="675" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#16A34A" text-anchor="start">Delivered</text>
+<text x="930" y="676" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#0284C7" text-anchor="end">View</text>
+<line x1="50" y1="700.5" x2="950" y2="700.5" stroke="#E2E8F0"/>
+<text x="70" y="736" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">#KG-1036</text>
+<text x="160" y="736" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">11 Oct, 1:48 PM</text>
+<text x="290" y="727" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="600" fill="#0F172A" text-anchor="start">Priya Menon</text>
+<text x="290" y="745" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Woodlands Rangers</text>
+<text x="470" y="736" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">26</text>
+<text x="610" y="736" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="end">S$894.10</text>
+<rect x="650" y="717" width="90.1875" height="26" rx="13" fill="#DCFCE7"/>
+<circle cx="664" cy="730" r="3.5" fill="#16A34A"/>
+<text x="674" y="735" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#16A34A" text-anchor="start">Delivered</text>
+<text x="930" y="736" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#0284C7" text-anchor="end">View</text>
+<text x="50" y="824" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="400" fill="#475569" text-anchor="start">Showing 1 to 8 of 43</text>
+<rect x="882.53125" y="800.5" width="66.96875" height="35" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="892.04625" y="823" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#1E293B" text-anchor="start">Next</text><path d="M929.1 818.8H940.0M936.2 815.0L940.0 818.8L936.2 822.7" stroke="#1E293B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<rect x="834.53125" y="800.5" width="39" height="35" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="854.03125" y="823" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#1E293B" text-anchor="middle">3</text>
+<rect x="786.53125" y="800.5" width="39" height="35" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="806.03125" y="823" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#1E293B" text-anchor="middle">2</text>
+<rect x="738.03125" y="800" width="40" height="36" rx="8" fill="#0284C7"/>
+<text x="758.03125" y="823" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="white" text-anchor="middle">1</text>
+<rect x="664.375" y="800.5" width="65.15625" height="35" rx="8" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+<path d="M684.8 818.8H673.8M677.7 815.0L673.8 818.8L677.7 822.7" stroke="#94A3B8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><text x="692.5553124999999" y="823" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#94A3B8" text-anchor="start">Prev</text>
+</svg>

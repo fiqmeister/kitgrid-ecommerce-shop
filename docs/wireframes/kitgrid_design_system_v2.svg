@@ -1,0 +1,304 @@
+<svg width="1000" height="2765" viewBox="0 0 1000 2765" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="1000" height="2765" rx="0" fill="#F8FAFC"/>
+<text x="50" y="64" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="32" font-weight="700" fill="#0F172A" text-anchor="start">KitGrid design system</text>
+<text x="50" y="94" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14.5" font-weight="400" fill="#475569" text-anchor="start">Colour, type, controls and spacing used by every frame. DM Sans throughout.</text>
+<text x="50" y="150" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#0F172A" text-anchor="start">Colour</text>
+<text x="50" y="174" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#475569" text-anchor="start">Navy, slate and white carry the layout; blue is the single action colour.</text>
+<line x1="50" y1="188" x2="950" y2="188" stroke="#E2E8F0"/>
+<rect x="50.5" y="214.5" width="212.0" height="55" rx="8" fill="#0F172A" stroke="#E2E8F0" stroke-width="1"/>
+<text x="50.0" y="290" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Navy 900</text>
+<text x="263.0" y="290" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#0F172A</text>
+<text x="50.0" y="308" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Headings, dark buttons, footer</text>
+<rect x="279.5" y="214.5" width="212.0" height="55" rx="8" fill="#64748B" stroke="#E2E8F0" stroke-width="1"/>
+<text x="279.0" y="290" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Slate 500</text>
+<text x="492.0" y="290" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#64748B</text>
+<text x="279.0" y="308" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Secondary text</text>
+<rect x="508.5" y="214.5" width="212.0" height="55" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+<text x="508.0" y="290" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">White</text>
+<text x="721.0" y="290" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#FFFFFF</text>
+<text x="508.0" y="308" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Cards, inputs</text>
+<rect x="737.5" y="214.5" width="212.0" height="55" rx="8" fill="#0284C7" stroke="#E2E8F0" stroke-width="1"/>
+<text x="737.0" y="290" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Accent</text>
+<text x="950.0" y="290" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#0284C7</text>
+<text x="737.0" y="308" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Primary actions, links</text>
+<rect x="50.5" y="326.5" width="212.0" height="55" rx="8" fill="#0369A1" stroke="#E2E8F0" stroke-width="1"/>
+<text x="50.0" y="402" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Accent dark</text>
+<text x="263.0" y="402" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#0369A1</text>
+<text x="50.0" y="420" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Text on accent tint</text>
+<rect x="279.5" y="326.5" width="212.0" height="55" rx="8" fill="#38BDF8" stroke="#E2E8F0" stroke-width="1"/>
+<text x="279.0" y="402" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Accent light</text>
+<text x="492.0" y="402" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#38BDF8</text>
+<text x="279.0" y="420" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Highlights on navy</text>
+<rect x="508.5" y="326.5" width="212.0" height="55" rx="8" fill="#E0F2FE" stroke="#E2E8F0" stroke-width="1"/>
+<text x="508.0" y="402" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Accent tint</text>
+<text x="721.0" y="402" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#E0F2FE</text>
+<text x="508.0" y="420" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Chips, selected</text>
+<rect x="737.5" y="326.5" width="212.0" height="55" rx="8" fill="#F0F9FF" stroke="#E2E8F0" stroke-width="1"/>
+<text x="737.0" y="402" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Accent wash</text>
+<text x="950.0" y="402" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#F0F9FF</text>
+<text x="737.0" y="420" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Selected cards</text>
+<rect x="50.5" y="438.5" width="212.0" height="55" rx="8" fill="#1E293B" stroke="#E2E8F0" stroke-width="1"/>
+<text x="50.0" y="514" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Slate 800</text>
+<text x="263.0" y="514" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#1E293B</text>
+<text x="50.0" y="532" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Labels</text>
+<rect x="279.5" y="438.5" width="212.0" height="55" rx="8" fill="#334155" stroke="#E2E8F0" stroke-width="1"/>
+<text x="279.0" y="514" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Slate 700</text>
+<text x="492.0" y="514" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#334155</text>
+<text x="279.0" y="532" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Body text</text>
+<rect x="508.5" y="438.5" width="212.0" height="55" rx="8" fill="#475569" stroke="#E2E8F0" stroke-width="1"/>
+<text x="508.0" y="514" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Slate 600</text>
+<text x="721.0" y="514" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#475569</text>
+<text x="508.0" y="532" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Supporting text</text>
+<rect x="737.5" y="438.5" width="212.0" height="55" rx="8" fill="#94A3B8" stroke="#E2E8F0" stroke-width="1"/>
+<text x="737.0" y="514" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Slate 400</text>
+<text x="950.0" y="514" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#94A3B8</text>
+<text x="737.0" y="532" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Placeholders, disabled</text>
+<rect x="50.5" y="550.5" width="212.0" height="55" rx="8" fill="#CBD5E1" stroke="#E2E8F0" stroke-width="1"/>
+<text x="50.0" y="626" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Slate 300</text>
+<text x="263.0" y="626" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#CBD5E1</text>
+<text x="50.0" y="644" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Input borders</text>
+<rect x="279.5" y="550.5" width="212.0" height="55" rx="8" fill="#E2E8F0" stroke="#E2E8F0" stroke-width="1"/>
+<text x="279.0" y="626" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Slate 200</text>
+<text x="492.0" y="626" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#E2E8F0</text>
+<text x="279.0" y="644" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Card borders, dividers</text>
+<rect x="508.5" y="550.5" width="212.0" height="55" rx="8" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+<text x="508.0" y="626" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Slate 100</text>
+<text x="721.0" y="626" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#F1F5F9</text>
+<text x="508.0" y="644" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Fills, table headers</text>
+<rect x="737.5" y="550.5" width="212.0" height="55" rx="8" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+<text x="737.0" y="626" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Page</text>
+<text x="950.0" y="626" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#F8FAFC</text>
+<text x="737.0" y="644" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Page background</text>
+<rect x="50.5" y="662.5" width="212.0" height="55" rx="8" fill="#16A34A" stroke="#E2E8F0" stroke-width="1"/>
+<text x="50.0" y="738" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Success</text>
+<text x="263.0" y="738" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#16A34A</text>
+<text x="50.0" y="756" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">In stock, discounts, paid</text>
+<rect x="279.5" y="662.5" width="212.0" height="55" rx="8" fill="#DCFCE7" stroke="#E2E8F0" stroke-width="1"/>
+<text x="279.0" y="738" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Success tint</text>
+<text x="492.0" y="738" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#DCFCE7</text>
+<text x="279.0" y="756" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Success chips</text>
+<rect x="508.5" y="662.5" width="212.0" height="55" rx="8" fill="#D97706" stroke="#E2E8F0" stroke-width="1"/>
+<text x="508.0" y="738" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Warning</text>
+<text x="721.0" y="738" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#D97706</text>
+<text x="508.0" y="756" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Pending states</text>
+<rect x="737.5" y="662.5" width="212.0" height="55" rx="8" fill="#FEF3C7" stroke="#E2E8F0" stroke-width="1"/>
+<text x="737.0" y="738" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Warning tint</text>
+<text x="950.0" y="738" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#FEF3C7</text>
+<text x="737.0" y="756" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Warning chips</text>
+<rect x="50.5" y="774.5" width="212.0" height="55" rx="8" fill="#DC2626" stroke="#E2E8F0" stroke-width="1"/>
+<text x="50.0" y="850" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Error</text>
+<text x="263.0" y="850" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#DC2626</text>
+<text x="50.0" y="868" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Errors, destructive</text>
+<rect x="279.5" y="774.5" width="212.0" height="55" rx="8" fill="#FEE2E2" stroke="#E2E8F0" stroke-width="1"/>
+<text x="279.0" y="850" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Error tint</text>
+<text x="492.0" y="850" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#FEE2E2</text>
+<text x="279.0" y="868" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Error banners</text>
+<rect x="508.5" y="774.5" width="212.0" height="55" rx="8" fill="#991B1B" stroke="#E2E8F0" stroke-width="1"/>
+<text x="508.0" y="850" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Error text</text>
+<text x="721.0" y="850" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#64748B" text-anchor="end">#991B1B</text>
+<text x="508.0" y="868" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Text on error tint</text>
+<text x="50" y="936" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#0F172A" text-anchor="start">Typography</text>
+<text x="50" y="960" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#475569" text-anchor="start">DM Sans. Weights 400 regular, 600 semibold, 700 bold.</text>
+<line x1="50" y1="974" x2="950" y2="974" stroke="#E2E8F0"/>
+<text x="50" y="1004" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#64748B" text-anchor="start">Display</text>
+<text x="190" y="1004" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="38" font-weight="700" fill="#0F172A" text-anchor="start">ELEVATE YOUR CLUB'S IDENTITY</text>
+<text x="950" y="1004" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="end">38 / 700. Hero only.</text>
+<text x="50" y="1062" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#64748B" text-anchor="start">Heading 1</text>
+<text x="190" y="1062" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="700" fill="#0F172A" text-anchor="start">Team Matchday Jerseys</text>
+<text x="950" y="1062" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="end">28 / 700. Page titles.</text>
+<text x="50" y="1110" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#64748B" text-anchor="start">Heading 2</text>
+<text x="190" y="1110" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#0F172A" text-anchor="start">Equip Your Entire Club</text>
+<text x="950" y="1110" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="end">22 to 24 / 700. Sections.</text>
+<text x="50" y="1152" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#64748B" text-anchor="start">Heading 3</text>
+<text x="190" y="1152" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#0F172A" text-anchor="start">Order summary</text>
+<text x="950" y="1152" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="end">17 / 700. Card titles.</text>
+<text x="50" y="1189" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#64748B" text-anchor="start">Body</text>
+<text x="190" y="1189" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">Bulk discounts apply automatically to each item.</text>
+<text x="950" y="1189" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="end">14 / 400. Default text.</text>
+<text x="50" y="1223" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#64748B" text-anchor="start">Body small</text>
+<text x="190" y="1223" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#0F172A" text-anchor="start">Tier is based on total units across all sizes.</text>
+<text x="950" y="1223" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="end">12.5 / 400. Hints, meta.</text>
+<text x="50" y="1257" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#64748B" text-anchor="start">Label</text>
+<text x="190" y="1257" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0F172A" text-anchor="start">Postal code</text>
+<text x="950" y="1257" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="end">13 / 700. Form labels.</text>
+<text x="50" y="1291" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#64748B" text-anchor="start">Button</text>
+<text x="190" y="1291" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#0F172A" text-anchor="start">Add all selected to cart</text>
+<text x="950" y="1291" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="end">14 to 15 / 700.</text>
+<text x="50" y="1325" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#64748B" text-anchor="start">Price</text>
+<text x="190" y="1325" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="700" fill="#0F172A" text-anchor="start">S$39.99</text>
+<text x="950" y="1325" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="end">28 / 700. Product price.</text>
+<text x="50" y="1429" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#0F172A" text-anchor="start">Buttons</text>
+<text x="50" y="1453" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#475569" text-anchor="start">Height 40 to 52, radius 8 to 10. One primary action per area.</text>
+<line x1="50" y1="1467" x2="950" y2="1467" stroke="#E2E8F0"/>
+<rect x="50" y="1493" width="170" height="48" rx="10" fill="#0284C7"/>
+<text x="135.0" y="1523" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="middle">Primary</text>
+<rect x="236" y="1493" width="140" height="48" rx="10" fill="#0F172A"/>
+<text x="306.0" y="1523" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="white" text-anchor="middle">Dark</text>
+<rect x="392.5" y="1493.5" width="149" height="47" rx="10" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="467.0" y="1523" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#1E293B" text-anchor="middle">Secondary</text>
+<rect x="558" y="1493" width="190" height="48" rx="10" fill="#E2E8F0"/>
+<text x="653.0" y="1523" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="700" fill="#94A3B8" text-anchor="middle">Primary disabled</text>
+<text x="770" y="1523" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#0284C7" text-anchor="start">Link</text><path d="M806.0 1518.5H817.8M813.7 1514.4L817.8 1518.5L813.7 1522.6" stroke="#0284C7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<text x="850" y="1523" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="600" fill="#DC2626" text-anchor="start">Delete</text>
+<text x="50" y="1565" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Primary: add to cart, checkout, pay.  Dark: reorder, create account.  Secondary: cancel, view details.</text>
+<text x="50" y="1649" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#0F172A" text-anchor="start">Inputs</text>
+<text x="50" y="1673" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#475569" text-anchor="start">Height 40, radius 8, 1 px Slate 300 border. Errors show after the field is left.</text>
+<line x1="50" y1="1687" x2="950" y2="1687" stroke="#E2E8F0"/>
+<text x="50.0" y="1713" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Default</text>
+<rect x="50.5" y="1723.5" width="204" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="64.0" y="1748" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">Alex Tan</text>
+<text x="281.67" y="1713" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Focus</text>
+<rect x="282.67" y="1724.0" width="203" height="38" rx="8" fill="white" stroke="#0284C7" stroke-width="2"/>
+<text x="295.67" y="1748" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">alex.tan@</text>
+<text x="513.34" y="1713" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Error</text>
+<rect x="514.34" y="1724.0" width="203" height="38" rx="8" fill="white" stroke="#DC2626" stroke-width="2"/>
+<text x="527.34" y="1748" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">12345</text>
+<circle cx="519.34" cy="1779" r="6" fill="#DC2626"/><path d="M519.34 1776v3.5m0 2v.2" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+<text x="531.34" y="1783" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#DC2626" text-anchor="start">Enter a 6-digit postal code.</text>
+<text x="745.01" y="1713" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Locked</text>
+<rect x="745.51" y="1723.5" width="204" height="39" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="759.01" y="1748" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#64748B" text-anchor="start">alex.tan@example.com</text>
+<text x="50" y="1809" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Quantity stepper</text>
+<rect x="50.5" y="1819.5" width="35" height="33" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<path d="M62 1836.5h12" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+<rect x="90.5" y="1819.5" width="49" height="33" rx="6" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="115" y="1842" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle">6</text>
+<rect x="144.5" y="1819.5" width="35" height="33" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<path d="M156 1836.5h12M162 1830.5v12" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+<text x="240" y="1809" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Select</text>
+<rect x="240.5" y="1819.5" width="180" height="39" rx="8" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="254" y="1844" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="400" fill="#0F172A" text-anchor="start">Youth (U10–U16)</text>
+<path d="M398 1836l5 5l5-5" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="460" y="1809" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Checkbox</text>
+<rect x="460" y="1825" width="18" height="18" rx="4" fill="#0284C7"/>
+<path d="M464.5 1834.5l3.2 3.2l6-6.4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="495" cy="1834.0" r="7" fill="#DC2626" stroke="#CBD5E1"/>
+<text x="510" y="1838.5" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="start">Red</text>
+<rect x="460.5" y="1853.5" width="17" height="17" rx="4" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<circle cx="495" cy="1862.0" r="7" fill="#2563EB" stroke="#CBD5E1"/>
+<text x="510" y="1866.5" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">Blue</text>
+<text x="620" y="1809" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Radio</text>
+<circle cx="632" cy="1835" r="9" fill="white" stroke="#0284C7" stroke-width="2"/><circle cx="632" cy="1835" r="4.5" fill="#0284C7"/>
+<text x="650" y="1840" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="700" fill="#0F172A" text-anchor="start">Standard delivery</text>
+<circle cx="632" cy="1863" r="9" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+<text x="650" y="1868" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#334155" text-anchor="start">Click and collect</text>
+<text x="800" y="1809" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Size chip</text>
+<rect x="800.5" y="1819.5" width="36" height="32" rx="6" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="818.5" y="1840" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#334155" text-anchor="middle">S</text>
+<rect x="844.5" y="1819.5" width="36" height="32" rx="6" fill="#F0F9FF" stroke="#0284C7" stroke-width="1.5"/>
+<text x="862.5" y="1840" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#0369A1" text-anchor="middle">M</text>
+<rect x="888.5" y="1819.5" width="36" height="32" rx="6" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+<text x="906.5" y="1840" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="600" fill="#334155" text-anchor="middle">L</text>
+<text x="50" y="1955" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#0F172A" text-anchor="start">Chips and badges</text>
+<text x="50" y="1979" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#475569" text-anchor="start">Pills (radius 13 to 15). Colour carries state; text says it too.</text>
+<line x1="50" y1="1993" x2="950" y2="1993" stroke="#E2E8F0"/>
+<rect x="50" y="2019" width="70.859375" height="28" rx="14" fill="#E0F2FE"/>
+<text x="64" y="2038" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#0369A1" text-anchor="start">Red</text>
+<path d="M98.859375 2029l7 7m0-7l-7 7" stroke="#0369A1" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="128.859375" y="2019" width="80.59375" height="28" rx="14" fill="#E0F2FE"/>
+<text x="142.859375" y="2038" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#0369A1" text-anchor="start">Black</text>
+<path d="M187.453125 2029l7 7m0-7l-7 7" stroke="#0369A1" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="217.453125" y="2019" width="117.53125" height="28" rx="14" fill="#E0F2FE"/>
+<text x="231.453125" y="2038" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#0369A1" text-anchor="start">15+ in stock</text>
+<path d="M312.984375 2029l7 7m0-7l-7 7" stroke="#0369A1" stroke-width="1.6" stroke-linecap="round"/>
+<text x="50" y="2071" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Filter chip</text>
+<rect x="340.5" y="2019.5" width="124.140625" height="25" rx="6" fill="#F0F9FF" stroke="#E0F2FE" stroke-width="1"/>
+<text x="350" y="2037" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="600" fill="#0369A1" text-anchor="start">Bulk from S$31.99</text>
+<text x="340" y="2071" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Bulk hint</text>
+<rect x="500" y="2019" width="165.875" height="24" rx="12" fill="#DCFCE7"/>
+<text x="511" y="2035.5" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="600" fill="#16A34A" text-anchor="start">15% bulk discount applied</text>
+<text x="500" y="2071" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Tier badge</text>
+<rect x="50" y="2091" width="139.59375" height="26" rx="13" fill="#FEF3C7"/>
+<circle cx="64" cy="2104" r="3.5" fill="#D97706"/>
+<text x="74" y="2109" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#D97706" text-anchor="start">Pending payment</text>
+<rect x="199.59375" y="2091" width="58.203125" height="26" rx="13" fill="#DCFCE7"/>
+<circle cx="213.59375" cy="2104" r="3.5" fill="#16A34A"/>
+<text x="223.59375" y="2109" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#16A34A" text-anchor="start">Paid</text>
+<rect x="267.796875" y="2091" width="99.34375" height="26" rx="13" fill="#E0F2FE"/>
+<circle cx="281.796875" cy="2104" r="3.5" fill="#0369A1"/>
+<text x="291.796875" y="2109" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Processing</text>
+<rect x="377.140625" y="2091" width="82.78125" height="26" rx="13" fill="#E0F2FE"/>
+<circle cx="391.140625" cy="2104" r="3.5" fill="#0369A1"/>
+<text x="401.140625" y="2109" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0369A1" text-anchor="start">Shipped</text>
+<rect x="469.921875" y="2091" width="90.1875" height="26" rx="13" fill="#DCFCE7"/>
+<circle cx="483.921875" cy="2104" r="3.5" fill="#16A34A"/>
+<text x="493.921875" y="2109" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#16A34A" text-anchor="start">Delivered</text>
+<rect x="570.109375" y="2091" width="93.796875" height="26" rx="13" fill="#F1F5F9"/>
+<circle cx="584.109375" cy="2104" r="3.5" fill="#475569"/>
+<text x="594.109375" y="2109" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="700" fill="#475569" text-anchor="start">Cancelled</text>
+<text x="50" y="2141" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="400" fill="#64748B" text-anchor="start">Order status chips: one per status in the database.</text>
+<text x="50" y="2217" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#0F172A" text-anchor="start">Cards, radii and spacing</text>
+<text x="50" y="2241" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#475569" text-anchor="start">8 px base grid. Pages are 1000 wide with 50 px side margins; mobile is 390 with 16 px.</text>
+<line x1="50" y1="2255" x2="950" y2="2255" stroke="#E2E8F0"/>
+<rect x="50" y="2281" width="200" height="110" rx="12" fill="white"/>
+<text x="66" y="2315" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="#0F172A" text-anchor="start">Card</text>
+<text x="66" y="2337" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="start">White, radius 12,</text>
+<text x="66" y="2355" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="start">no border or 1 px Slate 200.</text>
+<rect x="270.75" y="2281.75" width="198.5" height="108.5" rx="12" fill="#F0F9FF" stroke="#0284C7" stroke-width="1.5"/>
+<text x="286" y="2315" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="#0369A1" text-anchor="start">Selected / highlight</text>
+<text x="286" y="2337" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="start">Accent wash fill with a</text>
+<text x="286" y="2355" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#475569" text-anchor="start">1.5 px accent border.</text>
+<rect x="490" y="2281" width="200" height="110" rx="12" fill="#0F172A"/>
+<text x="506" y="2315" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="white" text-anchor="start">Summary panel</text>
+<text x="506" y="2337" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#CBD5E1" text-anchor="start">Navy, white text,</text>
+<text x="506" y="2355" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12.5" font-weight="400" fill="#CBD5E1" text-anchor="start">accent light for totals.</text>
+<rect x="710" y="2281" width="240" height="110" rx="12" fill="white"/>
+<rect x="710" y="2281" width="240" height="110" rx="12" fill="none" stroke="#E2E8F0" stroke-width="1"/>
+<rect x="726" y="2301" width="40" height="40" rx="6" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="746" y="2363" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">6</text>
+<rect x="780" y="2301" width="40" height="40" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="800" y="2363" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">8</text>
+<rect x="834" y="2301" width="40" height="40" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="854" y="2363" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">12</text>
+<rect x="888" y="2301" width="40" height="40" rx="20" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+<text x="908" y="2363" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">pill</text>
+<text x="726" y="2381" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="400" fill="#64748B" text-anchor="start">Radius</text>
+<text x="50" y="2415" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" fill="#1E293B" text-anchor="start">Spacing</text>
+<rect x="50" y="2427" width="4" height="4" rx="2" fill="#0284C7"/>
+<text x="52.0" y="2493" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">4</text>
+<rect x="102" y="2427" width="8" height="8" rx="2" fill="#0284C7"/>
+<text x="106.0" y="2493" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">8</text>
+<rect x="154" y="2427" width="12" height="12" rx="2" fill="#0284C7"/>
+<text x="160.0" y="2493" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">12</text>
+<rect x="206" y="2427" width="16" height="16" rx="2" fill="#0284C7"/>
+<text x="214.0" y="2493" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">16</text>
+<rect x="258" y="2427" width="24" height="24" rx="2" fill="#0284C7"/>
+<text x="270.0" y="2493" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">24</text>
+<rect x="310" y="2427" width="32" height="32" rx="2" fill="#0284C7"/>
+<text x="326.0" y="2493" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">32</text>
+<rect x="370" y="2427" width="48" height="48" rx="2" fill="#0284C7"/>
+<text x="394.0" y="2493" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">48</text>
+<text x="50" y="2561" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#0F172A" text-anchor="start">Icons</text>
+<text x="50" y="2585" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="13.5" font-weight="400" fill="#475569" text-anchor="start">2 px stroke, round caps, slate or accent. A small set is enough.</text>
+<line x1="50" y1="2599" x2="950" y2="2599" stroke="#E2E8F0"/>
+<rect x="50" y="2625" width="60" height="60" rx="10" fill="white"/>
+<g transform="translate(80,2655)" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="-2" cy="-2" r="7"/><path d="M4 4l7 7"/></g>
+<text x="80" y="2705" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Search</text>
+<rect x="140" y="2625" width="60" height="60" rx="10" fill="white"/>
+<g transform="translate(170,2655)" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="0" cy="-5" r="5"/><path d="M-9 11c0-5 4-8 9-8s9 3 9 8"/></g>
+<text x="170" y="2705" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Account</text>
+<rect x="230" y="2625" width="60" height="60" rx="10" fill="white"/>
+<g transform="translate(260,2655)" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M-11 -9h4l3 14h11l3-10h-16"/><circle cx="-2" cy="9" r="1.6"/><circle cx="9" cy="9" r="1.6"/></g>
+<text x="260" y="2705" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Cart</text>
+<rect x="320" y="2625" width="60" height="60" rx="10" fill="white"/>
+<g transform="translate(350,2655)" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M-9 -8h18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-8l-6 5v-5h-4a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2z"/></g>
+<text x="350" y="2705" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Chat</text>
+<rect x="410" y="2625" width="60" height="60" rx="10" fill="white"/>
+<g transform="translate(440,2655)" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M-8 0l5 5l11-11"/></g>
+<text x="440" y="2705" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Check</text>
+<rect x="500" y="2625" width="60" height="60" rx="10" fill="white"/>
+<g transform="translate(530,2655)" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M-7 -7l14 14m0-14l-14 14"/></g>
+<text x="530" y="2705" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Close</text>
+<rect x="590" y="2625" width="60" height="60" rx="10" fill="white"/>
+<g transform="translate(620,2655)" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M-6 -3l6 6l6-6"/></g>
+<text x="620" y="2705" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Chevron</text>
+<rect x="680" y="2625" width="60" height="60" rx="10" fill="white"/>
+<g transform="translate(710,2655)" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M-10 0h20M3 -7l7 7l-7 7"/></g>
+<text x="710" y="2705" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Arrow</text>
+<rect x="770" y="2625" width="60" height="60" rx="10" fill="white"/>
+<g transform="translate(800,2655)" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><rect x="-8" y="-3" width="16" height="12" rx="2"/><path d="M-4 -3v-3a4 4 0 0 1 8 0v3"/></g>
+<text x="800" y="2705" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Lock</text>
+<rect x="860" y="2625" width="60" height="60" rx="10" fill="white"/>
+<g transform="translate(890,2655)" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="0" cy="0" r="10"/><path d="M0 -1v6m0 -10v.2"/></g>
+<text x="890" y="2705" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="middle">Info</text>
+</svg>

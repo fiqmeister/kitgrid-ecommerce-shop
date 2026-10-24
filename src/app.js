@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const pool = require('./db/database');
 const authRoutes = require('./routes/authRoutes');
+const productRoutes = require('./routes/productRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(cors({ origin: process.env.CLIENT_URL })); //only allows this address to
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
 
 // temporary check: delete once the first real route works
 app.get('/api/health', async (req, res) => {
