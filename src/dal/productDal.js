@@ -53,6 +53,7 @@ function buildFilterSql(filters) {
 }
 // after the filters building, then pass it accordingly by the filters, sort,
 // limit and offset for paging
+// if there is no filter, result will show all active products with their category names
 async function findAll(filters, sort, limit, offset) {
     const filter = buildFilterSql(filters);
 
@@ -63,8 +64,8 @@ async function findAll(filters, sort, limit, offset) {
          JOIN categories ON categories.id = products.category_id
          WHERE products.is_active = 1` +
         filter.sql +
-        ' ORDER BY ' + (SORTS[sort] || SORTS.newest) +
-        ' LIMIT ? OFFSET ?';
+        ` ORDER BY ` + (SORTS[sort] || SORTS.newest) +
+        ` LIMIT ? OFFSET ?`;
 
     const [rows] = await pool.query(sql, filter.params.concat([limit, offset]));
     return rows;
@@ -72,9 +73,57 @@ async function findAll(filters, sort, limit, offset) {
 
 async function count(filters) {
     const filter = buildFilterSql(filters);
-    const sql = 'SELECT COUNT(*) AS total FROM products WHERE products.is_active = 1' + filter.sql;
+    const sql = 
+    `SELECT COUNT(*) AS total 
+    FROM products 
+    WHERE products.is_active = 1` + filter.sql;
     const [rows] = await pool.query(sql, filter.params);
     return rows[0].total;
 }
+// 1 product with its category name
+async function findById(id) {
+    const [rows] = await pool.query(
+        `SELECT products.id, products.name, products.description, products.base_price, products.pitch_surface,
+        products.material, products.weight_grams, products.skill_level, products.durability_rating,
+        products.is_bulk_eligible, categories.name AS category
+        FROM products
+        JOIN categories ON categories.id = products.category_id
+        WHERE products.id = ?
+        AND products.is_active = 1`,
+        [id]
+    );
+    return rows[0];
+}
+// find and return size/colour and stock of the product by using product id
+async function findVariants(id) {
+    const [rows] = await pool.query(
+        `SELECT id, sku, size, colour, age_group, stock
+        FROM product_variants
+        WHERE product_id = ?
+        ORDER BY id`,
+        [id]
+    );
+    return rows;
 
-module.exports = { findAll, count };
+}
+// find tag names of the product
+async function findTags(id) {
+    const [rows] = await pool.query(
+        `SELECT tags.name
+        FROM product_tags
+        JOIN tags ON tags.id = product_tags.tag_id
+        WHERE product_tags.product_id = ?`,
+        [id]
+    );
+    return rows;
+}
+//  bulk discount tiers, lowest first
+async function findBulkDiscount() {
+    const [rows] = await pool.query(
+        `SELECT min_quantity, discount_percent
+        FROM bulk_discount_rules
+        ORDER BY min_quantity ASC`
+    );
+    return rows;
+}
+module.exports = { findAll, count, findById, findVariants, findTags, findBulkDiscount };

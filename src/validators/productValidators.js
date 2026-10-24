@@ -17,5 +17,9 @@ const productListSchema = yup.object ({
     page: yup.number().integer().min(1).default(1),
     limit: yup.number().integer().min(1).max(50).default(12)
 });
+// check the :id is a positive whole number
+const productIdSchema = yup.object ({
+    id: yup.number().integer().positive().required()
+});
 
-module.exports = { productListSchema };
+module.exports = { productListSchema, productIdSchema };

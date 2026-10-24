@@ -2,3 +2,5 @@ node_modules
 .env
 CLAUDE.md
 docs\capstone-brief.md
+sql.sh
+sql.bat
