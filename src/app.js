@@ -3,6 +3,7 @@ const cors = require('cors');
 const pool = require('./db/database');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
 
 // temporary check: delete once the first real route works
 app.get('/api/health', async (req, res) => {
