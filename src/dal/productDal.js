@@ -67,7 +67,7 @@ async function findAll(filters, sort, limit, offset) {
         ` ORDER BY ` + (SORTS[sort] || SORTS.newest) +
         ` LIMIT ? OFFSET ?`;
 
-    const [rows] = await pool.query(sql, filter.params.concat([limit, offset]));
+    const [rows] = await pool.query(sql, filter.params.concat([limit, offset]));// concat joins arrays together into one array
     return rows;
 }
 
