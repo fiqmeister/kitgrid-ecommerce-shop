@@ -3,7 +3,7 @@
 const pool = require('../db/database');
 
 async function findByEmail(email) {
-    const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
+    const [rows] = await pool.query(`SELECT * FROM users WHERE email = ?`, [email]);
     return rows[0];// returns the user row, or undefined if no user has this email
 }
 // user creation will only have 'customer' role since DEFAULT is set as 'customer'
