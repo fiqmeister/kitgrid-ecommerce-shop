@@ -32,6 +32,7 @@ CREATE TABLE orders (
     recipient_name VARCHAR(100) NOT NULL,
     phone VARCHAR(20) NOT NULL,
     address_line1 VARCHAR(128) NOT NULL,
+    unit_number VARCHAR(20),
     address_line2 VARCHAR(128),
     postal_code CHAR(6) NOT NULL,
     stripe_session_id VARCHAR(255),

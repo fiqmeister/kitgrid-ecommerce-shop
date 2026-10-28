@@ -3,12 +3,8 @@
 
 const cartDal = require('../dal/cartDal')
 const productDal = require('../dal/productDal')
+const roundMoney = require('../utils/roundMoney')
 const createError = require('../utils/createError')
-
-// rounds amount to 2 decimals
-function roundMoney(amt) {
-    return Math.round(amt * 100) / 100;
-}
 
 async function getCart(userId) {
     const rows = await cartDal.findCart(userId);
@@ -70,18 +66,21 @@ async function getCart(userId) {
                 }
             }
         }
-        // total values and amount calculated for each product
+        // line total per size = unit price x quantity, before discount (the "Line total" column in the cart)
+        for (const line of group.lines) {
+            line.lineTotal = roundMoney(group.unitPrice * line.quantity);
+        }
 
-        group.subtotal = roundMoney(group.unitPrice * group.totalQuantity); // calc the subtotal
-        group.discountPercent = discountPercent; // set the discount percent
-        group.discount = roundMoney(group.subtotal * discountPercent / 100); // calc the total discount
-        group.total = roundMoney(group.subtotal - group.discount); // calc the final total
+        group.subtotal = roundMoney(group.unitPrice * group.totalQuantity); // all sizes, before discount
+        group.discountPercent = discountPercent;
+        group.discount = roundMoney(group.subtotal * discountPercent / 100); // one bulk discount for the whole product
+        group.total = roundMoney(group.subtotal - group.discount); // the "Product total"
+
         group.nextTier = nextTier; // set the next tier
 
         cartTotalUnits += group.totalQuantity; //total no. of units for the whole cart
         cartSubtotalAmt += group.subtotal; //subtotal for the whole cart
         cartDiscountAmt += group.discount; //total discount amount for the whole cart
-
     }
 
     return {
