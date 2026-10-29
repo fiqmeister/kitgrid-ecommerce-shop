@@ -1,6 +1,4 @@
 // Takes in request and sends the response out. No business rules/logic, No SQL here.
-
-const { ref } = require('yup');
 const authService = require('../services/authService');
 
 async function register(req, res) {
