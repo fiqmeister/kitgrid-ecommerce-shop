@@ -67,14 +67,145 @@ async function createOrder(userId, delivery) {
         throw createError('Some items just went out of stock. Please check your cart and try again', 409);
     }
 
-    return {
-        orderId,
-        status: 'pending_payment',
-        subtotal: order.subtotal,
-        discount: order.discountTotal,
-        deliveryFee: order.deliveryFee,
-        total: order.total,
+    return getOrder(userId, orderId); // the confirmation page shows the full order
+}
+// order history: one page of the user's orders, each with units and a product summary for its card
+async function listOrders(userId, query) {
+    // "1042" or "#1042" in the search box counts as an order number
+    let orderNumber = null;
+    if (query.search) {
+        const withoutHash = query.search.replace('#', '');
+        if (/^\d+$/.test(withoutHash)) { // only digits
+            orderNumber = Number(withoutHash);
+        }
     }
+
+    const filters = {
+        status: query.status,
+        search: query.search,
+        orderNumber: orderNumber,
+    };
+
+    const offset = (query.page - 1) * query.limit; // limit default is 5, set at orderValidators
+    const orders = await orderDal.findOrders(userId, filters, query.sort, query.limit, offset);
+    const total = await orderDal.countOrders(userId, filters);
+
+    // the item lines of every order on this page, in one query
+    const orderIds = [];
+    for (const order of orders) {
+        orderIds.push(order.id);
+    }
+    const itemRows = await orderDal.findItemsByOrderIds(orderIds);
+
+    // build each card: total units, and quantities added up per product name
+    const items = [];
+    for (const order of orders) {
+        const products = [];
+        let totalUnits = 0;
+        for (const row of itemRows) {
+            if (row.order_id === order.id) {
+                totalUnits += row.quantity;
+                // same product already in the summary (another size)? add to it, otherwise start a new entry
+                const existing = products.find(product => product.name === row.product_name);
+                if (existing) {
+                    existing.quantity += row.quantity;
+                } else {
+                    products.push({ name: row.product_name, quantity: row.quantity });
+                }
+            }
+        }
+        items.push({
+            id: order.id,
+            status: order.status,
+            createdAt: order.created_at,
+            total: Number(order.total),
+            totalUnits: totalUnits,
+            products: products,
+        });
+    }
+
+    return {
+        items: items,
+        page: query.page,
+        limit: query.limit,
+        total: total,
+        totalPages: Math.ceil(total / query.limit),
+    };
 }
 
-module.exports = { createOrder };
+// one order with its items grouped by product (like the cart) and its status timeline
+async function getOrder(userId, orderId) {
+    const order = await orderDal.findOrderById(userId, orderId);
+    if (!order) {
+        throw createError('Order not found', 404); // also when the order belongs to someone else
+    }
+    const rows = await orderDal.findOrderItems(orderId);
+    const historyRows = await orderDal.findStatusHistory(orderId);
+
+    // group the snapshot lines by product (rows are sorted by product id), same idea as getCart
+    const products = [];
+    let totalUnits = 0;
+    for (const row of rows) {
+        let group = products[products.length - 1];
+        if (!group || group.productId !== row.product_id) {
+            group = {
+                productId: row.product_id,
+                name: row.product_name,
+                discountPercent: Number(row.discount_percent), // the same on every line of this product
+                totalQuantity: 0,
+                subtotal: 0,
+                lines: [],
+            };
+            products.push(group);
+        }
+        group.lines.push({
+            variantId: row.variant_id,
+            size: row.size,
+            colour: row.colour,
+            ageGroup: row.age_group,
+            quantity: row.quantity,
+            unitPrice: Number(row.unit_price),
+            lineTotal: Number(row.line_total), // before discount, as on the cart page
+        });
+        group.totalQuantity += row.quantity;
+        group.subtotal += Number(row.line_total);
+        totalUnits += row.quantity;
+    }
+
+    // the "Bulk discount (15% on 18 units)" row and "Product total", from the stored snapshot only
+    for (const group of products) {
+        group.subtotal = roundMoney(group.subtotal);
+        group.discount = roundMoney(group.subtotal * group.discountPercent / 100);
+        group.total = roundMoney(group.subtotal - group.discount);
+    }
+
+    // the progress timeline
+    const history = [];
+    for (const row of historyRows) {
+        history.push({ status: row.status, changedAt: row.changed_at });
+    }
+
+    return {
+        id: order.id,
+        status: order.status,
+        createdAt: order.created_at,
+        totalUnits: totalUnits,
+        subtotal: Number(order.subtotal),
+        discount: Number(order.discount_total),
+        deliveryFee: Number(order.delivery_fee),
+        total: Number(order.total),
+        delivery: {
+            recipientName: order.recipient_name,
+            phone: order.phone,
+            addressLine1: order.address_line1,
+            unitNumber: order.unit_number,
+            addressLine2: order.address_line2,
+            postalCode: order.postal_code,
+        },
+        products: products,
+        history: history,
+    };
+}
+
+
+module.exports = { createOrder, listOrders, getOrder };

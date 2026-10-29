@@ -13,9 +13,18 @@ const checkoutSchema = yup.object ({
     addressLine2: yup.string().trim().max(128, 'Address is too long'),
     postalCode: yup.string().trim().matches(/^\d{6}$/, 'Postal code must be 6 digits').required('Postal code is required'),
 });
+//order history query string: search, status filter, sort, paging
+const orderListSchema = yup.object ({
+    search: yup.string().trim().max(100), // number will be worked out in service
+    status: yup.string().oneOf(['pending_payment', 'paid', 'processing', 'shipped', 'delivered', 'cancelled']),
+    sort: yup.string().oneOf(['newest', 'oldest']).default('newest'),
+    page: yup.number().integer().min(1).default(1),
+    limit: yup.number().integer().min(1).max(50).default(5),
+});
+
 // order detail :id in the URL
 const orderIdSchema = yup.object ({
     id: yup.number().integer().positive().required(),
 });
 
-module.exports = { checkoutSchema, orderIdSchema };
+module.exports = { checkoutSchema, orderListSchema, orderIdSchema };
