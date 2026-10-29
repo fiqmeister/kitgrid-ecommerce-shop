@@ -89,7 +89,7 @@ async function getProduct(id) {
             const percent = Number(row.discount_percent);
             const unitPrice = Math.round(basePrice * (100 - percent)) / 100; // rounds to 2 decimals
             bulkTiers.push({
-                minQuantity: row.minQuantity,
+                minQuantity: row.min_quantity,
                 discountPercent: percent,
                 unitPrice
             });
