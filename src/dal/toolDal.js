@@ -33,5 +33,28 @@ async function findSoldItems(variantIds, sinceDate) {
     );
     return rows;
 }
+// T2: how many orders, and their money total, for each status, placed between two dates
+async function countOrdersByStatus(fromDate, toDate) {
+    const [rows] = await pool.query(
+        `SELECT status, COUNT(*) AS order_count, SUM(total) AS total_amount
+        FROM orders
+        WHERE DATE(created_at) BETWEEN ? AND ?
+        GROUP BY status`,
+        [fromDate, toDate]
+    );
+    return rows;
+}
+// T2: orders that need admin's action: waiting to be shipped (paid, processing) or waiting for payment
+// not limited by date: an order from last month that still hasn't shipped needs attention too
+async function findOrdersNeedAttn() {
+    const [rows] = await pool.query(
+        `SELECT id, status, total, created_at
+        FROM orders
+        WHERE status IN ('pending_payment', 'paid', 'processing')
+        ORDER BY created_at`
+    );
+    return rows;
+}
 
-module.exports = { findLowStock, findSoldItems };
+
+module.exports = { findLowStock, findSoldItems, countOrdersByStatus, findOrdersNeedAttn};

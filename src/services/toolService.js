@@ -2,8 +2,15 @@
 // the AI should never do the maths itself, so every number is worked out here
 
 const toolDal = require('../dal/toolDal');
+const createError = require('../utils/createError');
+const roundMoney = require('../utils/roundMoney');
 
-const sales_days = 30; // how far back "recently sold" looks
+
+const sales_days = 30; // how far back "recently sold" 
+const summary_days = 7;   // default summary: the last 7 days, today included
+const unpaid_hours = 24;  // unpaid longer than this needs attention (it is holding stock)
+const list_limit = 10;    // the most orders to list per group
+
 
 // T1, 3 things: low-stock variants, how many sold recently, and a suggested reorder amount
 async function getLowStock() {
@@ -52,5 +59,87 @@ async function getLowStock() {
         items: items,
     };
 }
+// turns a JS date into text like 2026-10-29, using the computer's own (Singapore) time
+function toDateText(date) {
+    const year = date.getFullYear();
+    let month = date.getMonth() + 1; // getMonth() counts from 0 (January = 0)
+    let day = date.getDate();
+    if (month < 10) {
+        month = '0' + month; // 9 becomes "09"
+    }
+    if (day < 10) {
+        day = '0' + day;
+    }
+    return year + '-' + month + '-' + day;
+}
+// T2: order counts and paid revenue for a date range, plus the orders that need the admin attn
+async function getOrderSummary(query) {
+    // 1. the date range: use the dates sent, or default to the last 7 days
+    let toDate = query.to;
+    if (!toDate) {
+        toDate = toDateText(new Date()); // today
+    }
+    let fromDate = query.from;
+    if (!fromDate) {
+        const startDay = new Date();
+        startDay.setDate(startDay.getDate() - (summary_days - 1)); // 6 days ago + today = 7 days
+        fromDate = toDateText(startDay);
+    }
+    if (fromDate > toDate) {
+        throw createError('from must be on or before to', 400);
+    }
 
-module.exports = { getLowStock };
+    // 2. the numbers for the dashboard boxes, from one row per status
+    const statusRows = await toolDal.countOrdersByStatus(fromDate, toDate);
+    let totalOrders = 0;
+    let cancelledOrders = 0;
+    let paidRevenue = 0;
+    for (const row of statusRows) {
+        totalOrders += row.order_count;
+        if (row.status === 'cancelled') {
+            cancelledOrders = row.order_count;
+        } else if (row.status !== 'pending_payment') {
+            paidRevenue += Number(row.total_amount); // paid, processing, shipped, delivered
+        }
+    }
+
+    // 3. orders that need action now: split into "waiting to ship" and "unpaid for too long"
+    const unpaidCutoff = new Date();
+    unpaidCutoff.setHours(unpaidCutoff.getHours() - unpaid_hours); // 24 hours ago
+
+    const attentionRows = await toolDal.findOrdersNeedAttn();
+    const waitingToShip = { count: 0, orders: [] };
+    const unpaidOverLimit = { count: 0, orders: [] };
+
+    for (const order of attentionRows) {
+        const card = {
+            id: order.id,
+            status: order.status,
+            total: Number(order.total),
+            createdAt: order.created_at,
+        };
+        if (order.status === 'paid' || order.status === 'processing') {
+            waitingToShip.count += 1;
+            if (waitingToShip.orders.length < list_limit) {
+                waitingToShip.orders.push(card);
+            }
+        } else if (order.created_at < unpaidCutoff) { // pending_payment, placed over 24 hours ago
+            unpaidOverLimit.count += 1;
+            if (unpaidOverLimit.orders.length < list_limit) {
+                unpaidOverLimit.orders.push(card);
+            }
+        }
+    }
+
+    return {
+        from: fromDate,
+        to: toDate,
+        totalOrders: totalOrders,
+        cancelledOrders: cancelledOrders,
+        paidRevenue: roundMoney(paidRevenue),
+        waitingToShip: waitingToShip,
+        unpaidOver24h: unpaidOverLimit,
+    };
+}
+
+module.exports = { getLowStock, getOrderSummary };
