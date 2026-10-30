@@ -6,10 +6,17 @@ const productDal = require('../dal/productDal')
 const roundMoney = require('../utils/roundMoney')
 const createError = require('../utils/createError')
 
+// get the logged-in user's cart, priced with the bulk rules
 async function getCart(userId) {
     const rows = await cartDal.findCart(userId);
     const rules = await productDal.findBulkDiscount();
+    return priceCart(rows, rules);
+}
 
+// works out the prices for a list of item rows: group by product, bulk discount per product, totals
+// shared by the cart and the N8N quote tool, so both always use the same rules
+// rows must be sorted by product id (the grouping below relies on it)
+function priceCart(rows, rules) {
     // group the rows(items) by product first
     const products = [];
     for (const row of rows) {
@@ -37,7 +44,7 @@ async function getCart(userId) {
         });
         group.totalQuantity += row.quantity;
     }
-
+    
     // bulk discount calculation by tiers for each product(from its total units)
     // also get the whole cart total no. of units(items), subtotal and discount amount
     let cartTotalUnits = 0;
@@ -90,6 +97,7 @@ async function getCart(userId) {
         discount: roundMoney(cartDiscountAmt),
         total: roundMoney(cartSubtotalAmt - cartDiscountAmt),
     };
+
 }
 
 // add item to the cart, if item already there, just add the quantity
@@ -164,4 +172,4 @@ async function mergeCart(userId, items) {
     return getCart(userId);
 }
 
-module.exports = { getCart, addItem, updateItemQuantity, removeItem, mergeCart };
+module.exports = { getCart, priceCart, addItem, updateItemQuantity, removeItem, mergeCart };

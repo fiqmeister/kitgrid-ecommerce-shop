@@ -10,6 +10,15 @@ const roundMoney = require('../utils/roundMoney');
 const delivery_fee_price = 8; // delivery flat fee price
 const free_delivery_units = 15; // 15 or more units/qty in the cart
 
+// delivery fee for a number of units: flat fee, free from 15 units
+// shared by checkout and the N8N quote tool, so both always use the same rule
+function getDeliveryFee(totalUnits) {
+    if (totalUnits >= free_delivery_units) {
+        return 0;
+    }
+    return delivery_fee_price;
+}
+
 async function createOrder(userId, delivery) {
     // the cart and bulk discount the customer see
     const cart = await cartService.getCart(userId);
@@ -42,11 +51,8 @@ async function createOrder(userId, delivery) {
             });
         }
     }
-    // delivery fee logic
-    let deliveryFee = delivery_fee_price;
-    if (cart.totalUnits >= free_delivery_units) {
-        deliveryFee = 0;
-    }
+
+    const deliveryFee = getDeliveryFee(cart.totalUnits); // $8, or free from 15 units
     // build order details
     const order = {
         subtotal: cart.subtotal,
@@ -208,4 +214,4 @@ async function getOrder(userId, orderId) {
 }
 
 
-module.exports = { createOrder, listOrders, getOrder };
+module.exports = { createOrder, listOrders, getOrder, getDeliveryFee };
