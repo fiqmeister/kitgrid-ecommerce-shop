@@ -16,6 +16,14 @@ const variantSearchSchema = yup.object({
     colour: yup.string().trim().max(30, 'colour is too long'),
     size: yup.string().trim().max(20, 'size is too long'),
 });
+// T4: Kit Advisor product search. All optional; with no filters it returns the first 10 products in stock
+const productSearchSchema = yup.object({
+    search: yup.string().trim().max(100, 'search is too long'),
+    category: yup.string().trim().max(50, 'category is too long'),
+    ageGroup: yup.string().oneOf(['mini_junior', 'youth', 'senior'], 'ageGroup must be mini_junior, youth or senior'),
+    size: yup.string().trim().max(20, 'size is too long'),
+    colour: yup.string().trim().max(30, 'colour is too long'),
+    maxPrice: yup.number().typeError('maxPrice must be a number').min(0, 'maxPrice cannot be negative'),
+});
 
-
-module.exports = { orderSummarySchema, variantSearchSchema };
+module.exports = { orderSummarySchema, variantSearchSchema, productSearchSchema };

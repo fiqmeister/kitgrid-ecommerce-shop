@@ -22,5 +22,11 @@ async function searchingVariants(req, res) {
     const result = await toolService.searchVariants(req.cleanQuery);
     res.json(result);
 }
+// GET /api/tools/products?search=&category=&ageGroup=&size=&colour=&maxPrice=
+async function searchingProducts(req, res) {
+    const result = await toolService.searchProducts(req.cleanQuery);
+    res.json(result);
+}
 
-module.exports = { gettingLowStock, gettingOrderSummary, gettingOrdersToShip, searchingVariants };
+
+module.exports = { gettingLowStock, gettingOrderSummary, gettingOrdersToShip, searchingVariants, searchingProducts };

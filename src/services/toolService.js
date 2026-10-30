@@ -11,7 +11,7 @@ const summary_days = 7;   // default summary: the last 7 days, today included
 const unpaid_hours = 24;  // unpaid longer than this needs attention (it is holding stock)
 const list_limit = 10;    // the most orders to list per group
 const variant_limit = 20; // the most variants a lookup returns
-
+const product_limit = 10; // the most products the Kit Advisor search returns
 
 // T1, 3 things: low-stock variants, how many sold recently, and a suggested reorder amount
 async function getLowStock() {
@@ -225,6 +225,51 @@ async function searchVariants(query) {
         items: items,
     };
 }
+// T4: Kit Advisor product search. Products with only the variants a customer can buy right now
+// a product is left out if none of its variants are in stock for the filters sent
+async function searchProducts(query) {
+    // 1. products that match name, category and price
+    const products = await toolDal.findProducts(query);
+
+    // 2. their in-stock variants that match age group, size and colour, in one query
+    const productIds = products.map(product => product.id);
+    const variantRows = await toolDal.findInStockVariants(productIds, query);
+
+    // 3. attach each product's variants; skip products with nothing to sell
+    const items = [];
+    let matchCount = 0;
+    for (const product of products) {
+        const variants = variantRows.filter(variant => variant.product_id === product.id);
+
+        if (variants.length > 0) {
+            matchCount += 1;
+            if (items.length < product_limit) {
+                items.push({
+                    productId: product.id,
+                    name: product.name,
+                    category: product.category,
+                    description: product.description,
+                    unitPrice: Number(product.base_price), // DECIMAL comes back as text
+                    isBulkEligible: product.is_bulk_eligible === 1,
+                    variants: variants.map(variant => ({
+                        variantId: variant.id,
+                        sku: variant.sku,
+                        size: variant.size,
+                        colour: variant.colour,
+                        ageGroup: variant.age_group,
+                        stock: variant.stock,
+                    })),
+                });
+            }
+        }
+    }
+
+    return {
+        count: matchCount,
+        limitReached: matchCount > items.length,
+        items: items,
+    };
+}
 
 
-module.exports = { getLowStock, getOrderSummary, getOrdersToShip, searchVariants };
+module.exports = { getLowStock, getOrderSummary, getOrdersToShip, searchVariants, searchProducts };

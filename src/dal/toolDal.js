@@ -112,6 +112,64 @@ async function findVariants(filters, limit) {
     const [rows] = await pool.query(sql, params);
     return rows;
 }
+// T4: active products for the Kit Advisor, filtered by name, category name and highest unit price
+// only the filters that were sent are added, same idea as findVariants
+async function findProducts(filters) {
+    let sql = `SELECT products.id, products.name, products.description, products.base_price,
+        products.is_bulk_eligible, categories.name AS category
+        FROM products
+        JOIN categories ON categories.id = products.category_id
+        WHERE products.is_active = 1`;
+    const params = [];
+
+    if (filters.search) {
+        sql += ' AND products.name LIKE ?';
+        params.push('%' + filters.search + '%');
+    }
+    if (filters.category) {
+        sql += ' AND categories.name LIKE ?';
+        params.push('%' + filters.category + '%');
+    }
+    if (filters.maxPrice !== undefined) {
+        sql += ' AND products.base_price <= ?';
+        params.push(filters.maxPrice);
+    }
+
+    sql += ' ORDER BY products.name';
+
+    const [rows] = await pool.query(sql, params);
+    return rows;
+}
+// T4: the in-stock variants of these products, filtered by age group, size and colour
+async function findInStockVariants(productIds, filters) {
+    if (productIds.length === 0) {
+        return []; // no products matched, nothing to look up
+    }
+    let sql = `SELECT id, product_id, sku, size, colour, age_group, stock
+        FROM product_variants
+        WHERE product_id IN (?)
+        AND stock > 0`;
+    const params = [productIds];
+
+    if (filters.ageGroup) {
+        sql += ' AND age_group = ?';
+        params.push(filters.ageGroup);
+    }
+    if (filters.size) {
+        sql += ' AND size = ?';
+        params.push(filters.size);
+    }
+    if (filters.colour) {
+        sql += ' AND colour = ?';
+        params.push(filters.colour);
+    }
+
+    sql += ' ORDER BY product_id, id';
+
+    const [rows] = await pool.query(sql, params);
+    return rows;
+}
 
 
-module.exports = { findLowStock, findSoldItems, countOrdersByStatus, findOrdersNeedAttn, findPickList, findOrdersToShip, findVariants};
+module.exports = { findLowStock, findSoldItems, countOrdersByStatus, findOrdersNeedAttn, 
+    findPickList, findOrdersToShip, findVariants, findProducts, findInStockVariants};
