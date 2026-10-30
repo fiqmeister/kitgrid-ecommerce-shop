@@ -10,6 +10,7 @@ const sales_days = 30; // how far back "recently sold"
 const summary_days = 7;   // default summary: the last 7 days, today included
 const unpaid_hours = 24;  // unpaid longer than this needs attention (it is holding stock)
 const list_limit = 10;    // the most orders to list per group
+const variant_limit = 20; // the most variants a lookup returns
 
 
 // T1, 3 things: low-stock variants, how many sold recently, and a suggested reorder amount
@@ -194,5 +195,36 @@ async function getOrdersToShip() {
         deliveries: sectors,
     };
 }
+// T3: find variants and their current low-stock threshold, so the AI can propose a change
+// nothing is saved here: the admin confirms the change on the dashboard
+async function searchVariants(query) {
+    if (!query.search && !query.colour && !query.size) {
+        throw createError('Give at least one of: search, colour, size', 400);
+    }
 
-module.exports = { getLowStock, getOrderSummary, getOrdersToShip };
+    const filters = {
+        search: query.search,
+        colour: query.colour,
+        size: query.size,
+    };
+    const rows = await toolDal.findVariants(filters, variant_limit);
+
+    const items = rows.map(row => ({
+        variantId: row.id,
+        productName: row.product_name,
+        sku: row.sku,
+        colour: row.colour,
+        size: row.size,
+        stock: row.stock,
+        threshold: row.low_stock_threshold,
+    }));
+
+    return {
+        count: items.length,
+        limitReached: items.length === variant_limit,
+        items: items,
+    };
+}
+
+
+module.exports = { getLowStock, getOrderSummary, getOrdersToShip, searchVariants };

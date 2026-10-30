@@ -17,5 +17,10 @@ async function gettingOrdersToShip(req, res) {
     const result = await toolService.getOrdersToShip();
     res.json(result);
 }
+// GET /api/tools/variants?search=&colour=&size=
+async function searchingVariants(req, res) {
+    const result = await toolService.searchVariants(req.cleanQuery);
+    res.json(result);
+}
 
-module.exports = { gettingLowStock, gettingOrderSummary, gettingOrdersToShip };
+module.exports = { gettingLowStock, gettingOrderSummary, gettingOrdersToShip, searchingVariants };

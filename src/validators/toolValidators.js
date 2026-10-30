@@ -10,5 +10,12 @@ const orderSummarySchema = yup.object({
     from: yup.string().trim().matches(datePattern, 'from must be a date like 2026-10-22'),
     to: yup.string().trim().matches(datePattern, 'to must be a date like 2026-10-29'),
 });
+// T3: find variants by product name/SKU, colour and size. All optional, but the service needs at least one
+const variantSearchSchema = yup.object({
+    search: yup.string().trim().max(100, 'search is too long'),
+    colour: yup.string().trim().max(30, 'colour is too long'),
+    size: yup.string().trim().max(20, 'size is too long'),
+});
 
-module.exports = { orderSummarySchema };
+
+module.exports = { orderSummarySchema, variantSearchSchema };

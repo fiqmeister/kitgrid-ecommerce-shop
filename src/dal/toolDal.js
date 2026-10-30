@@ -81,5 +81,37 @@ async function findOrdersToShip() {
     );
     return rows;
 }
+// T3: find variants by product name or SKU, colour and size, with their current low-stock threshold
+// only the filters that were sent are added, same idea as buildFilterSql in productDal
+async function findVariants(filters, limit) {
+    let sql = `SELECT product_variants.id, products.name AS product_name, product_variants.sku,
+        product_variants.colour, product_variants.size, product_variants.stock,
+        product_variants.low_stock_threshold
+        FROM product_variants
+        JOIN products ON products.id = product_variants.product_id
+        WHERE products.is_active = 1`;
+    const params = [];
 
-module.exports = { findLowStock, findSoldItems, countOrdersByStatus, findOrdersNeedAttn, findPickList, findOrdersToShip};
+    if (filters.search) {
+        sql += ' AND (products.name LIKE ? OR product_variants.sku LIKE ?)';
+        params.push('%' + filters.search + '%');
+        params.push('%' + filters.search + '%');
+    }
+    if (filters.colour) {
+        sql += ' AND product_variants.colour = ?';
+        params.push(filters.colour);
+    }
+    if (filters.size) {
+        sql += ' AND product_variants.size = ?';
+        params.push(filters.size);
+    }
+
+    sql += ' ORDER BY products.name, product_variants.id LIMIT ?';
+    params.push(limit);
+
+    const [rows] = await pool.query(sql, params);
+    return rows;
+}
+
+
+module.exports = { findLowStock, findSoldItems, countOrdersByStatus, findOrdersNeedAttn, findPickList, findOrdersToShip, findVariants};
