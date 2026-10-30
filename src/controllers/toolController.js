@@ -12,4 +12,10 @@ async function gettingOrderSummary(req, res) {
     const result = await toolService.getOrderSummary(req.cleanQuery);
     res.json(result);
 }
-module.exports = { gettingLowStock, gettingOrderSummary };
+// GET /api/tools/orders/to-ship
+async function gettingOrdersToShip(req, res) {
+    const result = await toolService.getOrdersToShip();
+    res.json(result);
+}
+
+module.exports = { gettingLowStock, gettingOrderSummary, gettingOrdersToShip };

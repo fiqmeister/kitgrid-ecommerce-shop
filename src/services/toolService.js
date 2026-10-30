@@ -141,5 +141,58 @@ async function getOrderSummary(query) {
         unpaidOver24h: unpaidOverLimit,
     };
 }
+// T6: what to pick off the shelves, and where each order goes, grouped by postal sector
+async function getOrdersToShip() {
+    const pickRows = await toolDal.findPickList();
+    const orderRows = await toolDal.findOrdersToShip();
 
-module.exports = { getLowStock, getOrderSummary };
+    // 1. pick list: one line per item, quantities already added up by the DAL
+    const pickList = [];
+    let totalUnits = 0;
+    for (const row of pickRows) {
+        const quantity = Number(row.total_quantity); // SUM comes back as text
+        totalUnits += quantity;
+        pickList.push({
+            variantId: row.variant_id,
+            sku: row.sku,
+            productName: row.product_name,
+            colour: row.colour,
+            size: row.size,
+            quantity: quantity,
+        });
+    }
+
+    // 2. delivery list: orders grouped by postal sector (first 2 digits of the postal code)
+    const sectors = [];
+    for (const order of orderRows) {
+        const sectorCode = order.postal_code.substring(0, 2); // "520123" becomes "52"
+
+        // this sector already in the list? use it, otherwise start a new group
+        let sector = sectors.find(group => group.sector === sectorCode);
+        if (!sector) {
+            sector = { sector: sectorCode, orders: [] };
+            sectors.push(sector);
+        }
+
+        sector.orders.push({
+            id: order.id,
+            status: order.status,
+            createdAt: order.created_at,
+            recipientName: order.recipient_name,
+            phone: order.phone,
+            addressLine1: order.address_line1,
+            unitNumber: order.unit_number,
+            addressLine2: order.address_line2,
+            postalCode: order.postal_code,
+        });
+    }
+
+    return {
+        orderCount: orderRows.length,
+        totalUnits: totalUnits,
+        pickList: pickList,
+        deliveries: sectors,
+    };
+}
+
+module.exports = { getLowStock, getOrderSummary, getOrdersToShip };

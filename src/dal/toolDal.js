@@ -55,6 +55,31 @@ async function findOrdersNeedAttn() {
     );
     return rows;
 }
+// T6: Pick List. Every item in orders waiting to ship, added up per variant across all those orders
+async function findPickList() {
+    const [rows] = await pool.query(
+        `SELECT order_items.variant_id, product_variants.sku, order_items.product_name,
+        order_items.colour, order_items.size, SUM(order_items.quantity) AS total_quantity
+        FROM order_items
+        JOIN orders ON orders.id = order_items.order_id
+        JOIN product_variants ON product_variants.id = order_items.variant_id
+        WHERE orders.status IN ('paid', 'processing')
+        GROUP BY order_items.variant_id, product_variants.sku, order_items.product_name,
+        order_items.colour, order_items.size
+        ORDER BY order_items.product_name, order_items.variant_id`
+    );
+    return rows;
+}
+// T6: Delivery List. Orders waiting to ship with who and where to deliver, oldest first
+async function findOrdersToShip() {
+    const [rows] = await pool.query(
+        `SELECT id, status, recipient_name, phone, address_line1, unit_number,
+        address_line2, postal_code, created_at
+        FROM orders
+        WHERE status IN ('paid', 'processing')
+        ORDER BY created_at`
+    );
+    return rows;
+}
 
-
-module.exports = { findLowStock, findSoldItems, countOrdersByStatus, findOrdersNeedAttn};
+module.exports = { findLowStock, findSoldItems, countOrdersByStatus, findOrdersNeedAttn, findPickList, findOrdersToShip};
