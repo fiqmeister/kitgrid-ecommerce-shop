@@ -3,7 +3,7 @@
 const router = require('express').Router();
 const toolController = require('../controllers/toolController');
 const validate = require('../middleware/validate');
-const { orderSummarySchema, variantSearchSchema, productSearchSchema } = require('../validators/toolValidators');
+const { orderSummarySchema, variantSearchSchema, productSearchSchema, quoteSchema } = require('../validators/toolValidators');
 
 // T1: get low-stock variants + last 30 days sales + suggested reorder amount
 router.get('/stock/low', toolController.gettingLowStock);
@@ -15,6 +15,8 @@ router.get('/orders/to-ship', toolController.gettingOrdersToShip);
 router.get('/variants', validate(variantSearchSchema, 'query'), toolController.searchingVariants);
 // T4: Kit Advisor product search, in-stock variants only (all filters optional)
 router.get('/products', validate(productSearchSchema, 'query'), toolController.searchingProducts);
+// T5: quote with the same bulk discount and delivery rules as the cart (nothing is saved)
+router.post('/quote', validate(quoteSchema), toolController.gettingQuote);
 
 
 module.exports = router;

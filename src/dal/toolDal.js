@@ -169,7 +169,24 @@ async function findInStockVariants(productIds, filters) {
     const [rows] = await pool.query(sql, params);
     return rows;
 }
+// T5: the variants in a quote, with the same columns as cartDal.findCart (minus quantity)
+// so cartService.priceCart can price them exactly like a cart. Inactive products are left out
+async function findQuoteVariants(variantIds) {
+    const [rows] = await pool.query(
+        `SELECT product_variants.id AS variant_id, product_variants.sku,
+        product_variants.size, product_variants.colour, product_variants.age_group,
+        product_variants.stock, products.name, products.base_price, products.is_bulk_eligible,
+        products.id AS product_id
+        FROM product_variants
+        JOIN products ON products.id = product_variants.product_id
+        WHERE product_variants.id IN (?)
+        AND products.is_active = 1
+        ORDER BY products.id, product_variants.id`,
+        [variantIds]
+    );
+    return rows;
+}
 
 
 module.exports = { findLowStock, findSoldItems, countOrdersByStatus, findOrdersNeedAttn, 
-    findPickList, findOrdersToShip, findVariants, findProducts, findInStockVariants};
+    findPickList, findOrdersToShip, findVariants, findProducts, findInStockVariants, findQuoteVariants};

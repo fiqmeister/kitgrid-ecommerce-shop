@@ -27,6 +27,12 @@ async function searchingProducts(req, res) {
     const result = await toolService.searchProducts(req.cleanQuery);
     res.json(result);
 }
+// POST /api/tools/quote   body: { items: [{ variantId, quantity }] }
+async function gettingQuote(req, res) {
+    const result = await toolService.getQuote(req.body.items);
+    res.json(result);
+}
 
 
-module.exports = { gettingLowStock, gettingOrderSummary, gettingOrdersToShip, searchingVariants, searchingProducts };
+module.exports = { gettingLowStock, gettingOrderSummary, gettingOrdersToShip, searchingVariants, 
+    searchingProducts, gettingQuote };

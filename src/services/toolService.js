@@ -4,6 +4,9 @@
 const toolDal = require('../dal/toolDal');
 const createError = require('../utils/createError');
 const roundMoney = require('../utils/roundMoney');
+const productDal = require('../dal/productDal');
+const cartService = require('./cartService');
+const orderService = require('./orderService');
 
 
 const sales_days = 30; // how far back "recently sold" 
@@ -270,6 +273,68 @@ async function searchProducts(query) {
         items: items,
     };
 }
+// T5: price a list of items with the same rules as the cart and checkout
+// stock problems are reported, not rejected, so the AI can suggest another size or quantity
+async function getQuote(items) {
+    // 1. the variants asked for, in the same row shape as a cart
+    const variantIds = items.map(item => item.variantId);
+    const rows = await toolDal.findQuoteVariants(variantIds);
+
+    // 2. every variant asked for must exist and be on sale
+    for (const item of items) {
+        const row = rows.find(row => row.variant_id === item.variantId);
+        if (!row) {
+            throw createError('Variant ' + item.variantId + ' not found', 404);
+        }
+    }
+
+    // 3. give each row its quantity; if the same variant was sent twice, add them together
+    for (const row of rows) {
+        let quantity = 0;
+        for (const item of items) {
+            if (item.variantId === row.variant_id) {
+                quantity += item.quantity;
+            }
+        }
+        row.quantity = quantity;
+    }
+
+    // 4. price it exactly like a cart, then add the delivery fee
+    const rules = await productDal.findBulkDiscount();
+    const cart = cartService.priceCart(rows, rules);
+    const deliveryFee = orderService.getDeliveryFee(cart.totalUnits);
+
+    // 5. lines asking for more than what is in stock
+    const stockProblems = [];
+    for (const product of cart.products) {
+        for (const line of product.lines) {
+            if (line.quantity > line.stock) {
+                stockProblems.push({
+                    variantId: line.variantId,
+                    productName: product.name,
+                    size: line.size,
+                    colour: line.colour,
+                    requested: line.quantity,
+                    inStock: line.stock,
+                });
+            }
+        }
+    }
+
+    return {
+        products: cart.products,
+        totalUnits: cart.totalUnits,
+        subtotal: cart.subtotal,
+        discount: cart.discount,
+        deliveryFee: deliveryFee,
+        total: roundMoney(cart.total + deliveryFee),
+        allInStock: stockProblems.length === 0,
+        stockProblems: stockProblems,
+    };
+}
 
 
-module.exports = { getLowStock, getOrderSummary, getOrdersToShip, searchVariants, searchProducts };
+
+module.exports = { getLowStock, getOrderSummary, getOrdersToShip, searchVariants, searchProducts,
+    getQuote
+ };

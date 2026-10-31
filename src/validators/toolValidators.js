@@ -1,6 +1,7 @@
-// checks the query strings that N8N sends to the tool routes
+// checks the query strings and body that N8N sends to the tool routes
 
 const yup = require('yup');
+const { addItemSchema } = require('./cartValidators');
 
 // a date like 2026-10-29 (year-month-day), as MariaDB stores it
 const datePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -25,5 +26,9 @@ const productSearchSchema = yup.object({
     colour: yup.string().trim().max(30, 'colour is too long'),
     maxPrice: yup.number().typeError('maxPrice must be a number').min(0, 'maxPrice cannot be negative'),
 });
+// T5: quote. A list of variants and quantities, each checked by the same rules as adding to the cart
+const quoteSchema = yup.object({
+    items: yup.array().of(addItemSchema).min(1, 'Need at least one item').max(50, 'Too many items').required('Items are required'),
+});
 
-module.exports = { orderSummarySchema, variantSearchSchema, productSearchSchema };
+module.exports = { orderSummarySchema, variantSearchSchema, productSearchSchema, quoteSchema };
