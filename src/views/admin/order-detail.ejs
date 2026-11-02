@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/admin-head', { title: 'Order #' + order.id }) %>
+</head>
+<body>
+    <%- include('../partials/admin-nav', { active: 'orders' }) %>
+
+    <main class="container py-4">
+
+        <a href="/admin/orders" class="admin-link">&larr; Orders</a>
+
+        <!-- title row: order number, status badge, date placed -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-2 mb-4">
+            <div class="d-flex align-items-center gap-3">
+                <h1 class="h3 fw-bold mb-0">Order #<%= order.id %></h1>
+                <span class="status-badge status-<%= order.status %>"><%= order.statusLabel %></span>
+            </div>
+            <span class="text-muted-kg">
+                Placed <%= order.createdAt.toLocaleString('en-SG', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' }) %>
+            </span>
+        </div>
+
+        <% if (error) { %>
+            <div class="admin-error mb-4">
+                <span class="admin-error-icon">!</span>
+                <%= error %>
+            </div>
+        <% } %>
+
+        <div class="row g-4">
+
+            <!-- LEFT: items and delivery address -->
+            <div class="col-12 col-lg-8">
+
+                <div class="admin-panel p-0 mb-4">
+                    <h2 class="h5 fw-bold px-4 pt-4 mb-3">Items</h2>
+                    <div class="table-responsive">
+                        <table class="table admin-table align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th class="text-end">Qty</th>
+                                    <th class="text-end">Unit price</th>
+                                    <th class="text-end">Discount</th>
+                                    <th class="text-end">Line total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% order.items.forEach(item => { %>
+                                    <tr>
+                                        <td>
+                                            <div class="fw-bold"><%= item.productName %></div>
+                                            <div class="small text-muted-kg"><%= item.colour %> &middot; Size <%= item.size %></div>
+                                        </td>
+                                        <td class="text-end"><%= item.quantity %></td>
+                                        <td class="text-end">S$<%= item.unitPrice.toFixed(2) %></td>
+                                        <td class="text-end">
+                                            <% if (item.discountPercent > 0) { %>
+                                                <span class="text-discount"><%= item.discountPercent %>%</span>
+                                            <% } else { %>
+                                                <span class="text-muted-kg">&ndash;</span>
+                                            <% } %>
+                                        </td>
+                                        <td class="text-end fw-bold">S$<%= item.lineTotal.toFixed(2) %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- totals: the stored numbers, same layout as checkout and the customer's order page -->
+                    <div class="px-4 py-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Subtotal (<%= order.totalUnits %> units)</span>
+                            <span>S$<%= order.subtotal.toFixed(2) %></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Bulk discount</span>
+                            <span class="text-discount">&minus;S$<%= order.discount.toFixed(2) %></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Delivery fee (free at 15+ units)</span>
+                            <span>S$<%= order.deliveryFee.toFixed(2) %></span>
+                        </div>
+                        <div class="d-flex justify-content-between fw-bold fs-5 border-top pt-2">
+                            <span>Total</span>
+                            <span>S$<%= order.total.toFixed(2) %></span>
+                        </div>
+                        <p class="small text-muted-kg mt-2 mb-0">Prices are the amounts saved with this order. Later price changes do not affect it.</p>
+                    </div>
+                </div>
+
+                <div class="admin-panel">
+                    <h2 class="h5 fw-bold mb-3">Delivery address</h2>
+                    <div class="fw-bold"><%= order.delivery.recipientName %></div>
+                    <div>
+                        <%= order.delivery.addressLine1 %><% if (order.delivery.unitNumber) { %>, #<%= order.delivery.unitNumber %><% } %>
+                    </div>
+                    <% if (order.delivery.addressLine2) { %>
+                        <div><%= order.delivery.addressLine2 %></div>
+                    <% } %>
+                    <div>Singapore <%= order.delivery.postalCode %></div>
+                    <div>Phone: <%= order.delivery.phone %></div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: actions, customer, history -->
+            <div class="col-12 col-lg-4">
+
+                <div class="admin-panel mb-4">
+                    <h2 class="h5 fw-bold mb-3">Update status</h2>
+
+                    <% if (order.nextStatuses.length > 0) { %>
+                        <form method="POST" action="/admin/orders/<%= order.id %>/status">
+                            <label for="status" class="form-label fw-bold small">Change to</label>
+                            <select class="form-select mb-3" id="status" name="status">
+                                <% order.nextStatuses.forEach(value => { %>
+                                    <option value="<%= value %>"><%= statusLabels[value] %></option>
+                                <% }) %>
+                            </select>
+                            <button type="submit" class="btn btn-kg w-100">Update status</button>
+                        </form>
+                        <% if (order.nextStatuses.includes('cancelled')) { %>
+                            <p class="small text-muted-kg mt-2 mb-0">Cancelling puts the items back into stock.</p>
+                        <% } %>
+                    <% } else { %>
+                        <p class="text-muted-kg mb-0">This order is <%= order.statusLabel.toLowerCase() %>. No further changes.</p>
+                    <% } %>
+
+                    <hr>
+
+                    <form method="POST" action="/admin/orders/<%= order.id %>/paid">
+                        <button type="submit" class="btn btn-outline-secondary w-100" <%= order.canMarkPaid ? '' : 'disabled' %>>Mark as paid</button>
+                    </form>
+                    <p class="small text-muted-kg mt-2 mb-0">Only for orders waiting for payment.</p>
+                </div>
+
+                <div class="admin-panel mb-4">
+                    <h2 class="h5 fw-bold mb-3">Customer</h2>
+                    <div class="fw-bold"><%= order.customer.name %></div>
+                    <div><%= order.customer.email %></div>
+                    <% if (order.customer.teamName) { %>
+                        <div class="text-muted-kg"><%= order.customer.teamName %></div>
+                    <% } %>
+                </div>
+
+                <div class="admin-panel">
+                    <h2 class="h5 fw-bold mb-3">Status history</h2>
+                    <ul class="admin-history">
+                        <% order.history.forEach((step, index) => { %>
+                            <li class="<%= index === 0 ? 'current' : '' %>">
+                                <div class="fw-bold"><%= step.statusLabel %></div>
+                                <div class="small text-muted-kg">
+                                    <%= step.changedAt.toLocaleString('en-SG', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }) %>
+                                    &middot; by <%= step.changedBy %>
+                                </div>
+                            </li>
+                        <% }) %>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

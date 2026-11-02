@@ -252,3 +252,58 @@ body {
     border-color: #0284C7;
     color: #FFFFFF;
 }
+/* ---------- order detail page ---------- */
+
+/* green text for discounts: "15%" in the items table and "−S$21.89" in the totals */
+.text-discount {
+    color: #15803D;
+    font-weight: 700;
+}
+
+/* status history: a vertical line with a dot for each step */
+.admin-history {
+    list-style: none;
+    /* no bullet points */
+    padding-left: 0;
+    margin: 0;
+}
+
+.admin-history li {
+    position: relative;
+    /* the dot below is placed relative to this step */
+    padding-left: 28px;
+    /* room on the left for the line and dot */
+    padding-bottom: 20px;
+    border-left: 2px solid #E2E8F0;
+    /* the grey line joining the steps */
+    margin-left: 6px;
+    /* so the dot isn't cut off at the panel edge */
+}
+
+.admin-history li:last-child {
+    border-left-color: transparent;
+    /* the oldest step has nothing below it, so no line */
+    padding-bottom: 0;
+}
+
+.admin-history li::before {
+    content: '';
+    /* an empty box drawn before the text... */
+    position: absolute;
+    left: -8px;
+    /* half the dot's width + the line, so it sits on the line */
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    /* ...made round = the dot */
+    background-color: #FFFFFF;
+    border: 2px solid #CBD5E1;
+    /* older steps: hollow grey circle */
+}
+
+.admin-history li.current::before {
+    background-color: #0284C7;
+    border-color: #0284C7;
+    /* newest step: solid blue dot */
+}
