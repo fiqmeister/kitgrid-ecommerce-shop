@@ -8,7 +8,7 @@
 
     <main class="container py-4">
 
-        <a href="/admin/orders" class="admin-link">&larr; Orders</a>
+        <a href="/admin/orders" class="admin-link">&larr; Back to Orders</a>
 
         <!-- title row: order number, status badge, date placed -->
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-2 mb-4">
@@ -120,7 +120,7 @@
                                     <option value="<%= value %>"><%= statusLabels[value] %></option>
                                 <% }) %>
                             </select>
-                            <button type="submit" class="btn btn-kg w-100">Update status</button>
+                            <button type="submit" class="btn btn-kg fs-6 w-100">Update status</button>
                         </form>
                         <% if (order.nextStatuses.includes('cancelled')) { %>
                             <p class="small text-muted-kg mt-2 mb-0">Cancelling puts the items back into stock.</p>
