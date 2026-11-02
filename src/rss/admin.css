@@ -3,7 +3,7 @@
 /* ---------- whole admin site ---------- */
 body {
     font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
-    background-color: #F8FAFC; 
+    background-color: #F8FAFC;
     color: #0F172A;
 }
 
@@ -18,10 +18,22 @@ body {
     font-size: 20px;
 
 }
+
 .btn-kg:hover,
 .btn-kg:focus {
     background-color: #0369A1;
     color: #FFFFFF;
+}
+
+/* plain blue text link (Reset, View, back links) */
+.admin-link {
+    color: #0284C7;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.admin-link:hover {
+    color: #0369A1;
 }
 
 .admin-logo {
@@ -34,7 +46,8 @@ body {
 
 /* ---------- login page ---------- */
 .admin-login-page {
-    min-height: 100vh; /*full screen height*/
+    min-height: 100vh;
+    /*full screen height*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,7 +56,8 @@ body {
 
 .admin-login-box {
     width: 100%;
-    max-width: 440px; /* the logo and card share this width */
+    max-width: 440px;
+    /* the logo and card share this width */
 }
 
 .admin-login-card {
@@ -58,7 +72,8 @@ body {
 /* red message box: "Invalid email or password." */
 .admin-error {
     display: flex;
-    align-items: center; /* icon and text on one line, centred */
+    align-items: center;
+    /* icon and text on one line, centred */
     gap: 10px;
     background-color: #FEE2E2;
     border: 1px solid #FCA5A5;
@@ -67,32 +82,173 @@ body {
     border-radius: 8px;
     padding: 10px 14px;
 }
+
 .admin-error-icon {
     width: 20px;
     height: 20px;
-    border-radius: 50%; /* turns the square into a circle */
+    border-radius: 50%;
+    /* turns the square into a circle */
     background-color: #DC2626;
     color: #FFFFFF;
     font-size: 13px;
     font-weight: 700;
     display: flex;
     align-items: center;
-    justify-content: center; /* the "!" sits in the middle of the circle */
+    justify-content: center;
+    /* the "!" sits in the middle of the circle */
 }
-
 
 /* ---------- navbar ---------- */
 .admin-nav {
     background-color: #0F172A;
+    padding-top: 0;
+    padding-bottom: 0;
+    /* the links reach the bottom edge, so the underline sits on it */
 }
+
+.admin-logo-nav {
+    color: #FFFFFF;
+    font-size: 36px;
+    padding: 10px 0;
+    margin-right: 10px;
+}
+
+.admin-logo-nav:hover {
+    color: #FFFFFF;
+}
+
 .admin-nav .nav-link {
     color: #CBD5E1;
+    font-weight: 700;
+    padding: 12px 12px;
+    /* tall links fill the bar's height */
+    border-bottom: 5px solid transparent;
+    /* invisible line, so links don't jump when one becomes active */
+    border-top: 5px solid transparent;
+    /* balances the bottom line, so the text sits in the middle */
+
 }
+
 .admin-nav .nav-link:hover {
     color: #FFFFFF;
 }
+
 .admin-nav .nav-link.active {
     color: #FFFFFF;
+    border-bottom-color: #0284C7;
+    /* blue underline on the current page */
+}
+
+.admin-nav-logout {
+    color: #CBD5E1;
     font-weight: 700;
-    border-bottom: 2px solid #FFFFFF;
+    border: none;
+}
+
+.admin-nav-logout:hover {
+    color: #FFFFFF;
+}
+
+
+/* ---------- panels and tables (orders, products, users pages) ---------- */
+.admin-panel {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.admin-panel.p-0 {
+    overflow: hidden;
+    /* the table's corners follow the panel's rounded corners */
+}
+
+.admin-table thead th {
+    background-color: #F1F5F9;
+    /* light grey header row */
+    color: #475569;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 12px 20px;
+}
+
+.admin-table td {
+    padding: 14px 20px;
+}
+
+.admin-table a {
+    color: #0284C7;
+    text-decoration: none;
+}
+
+/* ---------- status badges: a dot + the label in a pill ---------- */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    /* very round ends = pill shape */
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    /* "Pending payment" stays on one line */
+}
+
+.status-badge::before {
+    content: '';
+    /* an empty box drawn before the text... */
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    /* ...made round = the dot */
+    background-color: currentColor;
+    /* same colour as the text */
+}
+
+.status-pending_payment {
+    background-color: #FEF3C7;
+    color: #B45309;
+    /* amber */
+}
+
+.status-paid {
+    background-color: #DCFCE7;
+    color: #15803D;
+    /* green */
+}
+
+.status-processing {
+    background-color: #E0F2FE;
+    color: #0369A1;
+    /* blue */
+}
+
+.status-shipped {
+    background-color: #E0F2FE;
+    color: #0369A1;
+    /* blue */
+}
+
+.status-delivered {
+    background-color: #DCFCE7;
+    color: #15803D;
+    /* green */
+}
+
+.status-cancelled {
+    background-color: #F1F5F9;
+    color: #475569;
+    /* grey */
+}
+
+/* ---------- custom page buttons ---------- */
+.pagination .page-link {
+    color: #0F172A;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #0284C7;
+    border-color: #0284C7;
+    color: #FFFFFF;
 }
