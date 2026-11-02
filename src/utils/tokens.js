@@ -37,5 +37,21 @@ function verifyAccessToken(token) {
 function verifyRefreshToken(token) {
     return jwt.verify(token, process.env.JWT_REFRESH_SECRET);
 }
+// admin dashboard (EJS): one token kept in a cookie, with its own secret and a longer life
+function signAdminToken(user) {
+    return jwt.sign({
+        id: user.id,
+        role: user.role
+    },
+    process.env.ADMIN_JWT_SECRET, {
+        expiresIn: process.env.ADMIN_TOKEN_EXPIRES_IN,
+    });
+}
 
-module.exports = { signAccessToken, signRefreshToken, hashToken, getExpiry, verifyAccessToken, verifyRefreshToken };
+function verifyAdminToken(token) {
+    return jwt.verify(token, process.env.ADMIN_JWT_SECRET);
+}
+
+module.exports = { signAccessToken, signRefreshToken, hashToken, getExpiry, verifyAccessToken, verifyRefreshToken,
+    signAdminToken, verifyAdminToken
+ };

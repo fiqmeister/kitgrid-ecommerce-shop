@@ -1,0 +1,98 @@
+/* admin styles */
+
+/* ---------- whole admin site ---------- */
+body {
+    font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #F8FAFC; 
+    color: #0F172A;
+}
+
+.text-muted-kg {
+    color: #64748B;
+}
+
+.btn-kg {
+    background-color: #0284C7;
+    color: #FFFFFF;
+    font-weight: 500;
+    font-size: 20px;
+
+}
+.btn-kg:hover,
+.btn-kg:focus {
+    background-color: #0369A1;
+    color: #FFFFFF;
+}
+
+.admin-logo {
+    font-family: 'Geom', 'DM Sans', sans-serif;
+    color: #0F172A;
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1;
+}
+
+/* ---------- login page ---------- */
+.admin-login-page {
+    min-height: 100vh; /*full screen height*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.admin-login-box {
+    width: 100%;
+    max-width: 440px; /* the logo and card share this width */
+}
+
+.admin-login-card {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 40px;
+}
+
+/* red message box: "Invalid email or password." */
+.admin-error {
+    display: flex;
+    align-items: center; /* icon and text on one line, centred */
+    gap: 10px;
+    background-color: #FEE2E2;
+    border: 1px solid #FCA5A5;
+    color: #991B1B;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+.admin-error-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; /* turns the square into a circle */
+    background-color: #DC2626;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* the "!" sits in the middle of the circle */
+}
+
+
+/* ---------- navbar ---------- */
+.admin-nav {
+    background-color: #0F172A;
+}
+.admin-nav .nav-link {
+    color: #CBD5E1;
+}
+.admin-nav .nav-link:hover {
+    color: #FFFFFF;
+}
+.admin-nav .nav-link.active {
+    color: #FFFFFF;
+    font-weight: 700;
+    border-bottom: 2px solid #FFFFFF;
+}

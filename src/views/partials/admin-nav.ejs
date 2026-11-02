@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-md navbar-dark admin-nav">
+    <div class="container">
+        <!-- Left: brand -->
+        <a class="navbar-brand fw-bold" href="/admin">KitGrid <span class="text-muted-kg fw-normal">Admin</span></a>
+
+        <!-- Hamburger button for small screens -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminMenu"
+                aria-controls="adminMenu" aria-expanded="false" aria-label="Open menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- hamburger menu for small screens -->
+        <div class="collapse navbar-collapse" id="adminMenu">
+            <ul class="navbar-nav me-auto gap-md-2">
+                <li class="nav-item">
+                    <a class="nav-link <%= locals.active === 'dashboard' ? 'active' : '' %>" href="/admin">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= locals.active === 'orders' ? 'active' : '' %>" href="/admin/orders">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= locals.active === 'products' ? 'active' : '' %>" href="/admin/products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= locals.active === 'users' ? 'active' : '' %>" href="/admin/users">Users</a>
+                </li>
+            </ul>
+
+            <!-- Log out -->
+            <form method="POST" action="/admin/logout" class="m-0 py-2 py-md-0">
+                <button type="submit" class="btn btn-outline-light btn-sm">Log out</button>
+            </form>
+        </div>
+    </div>
+</nav>
