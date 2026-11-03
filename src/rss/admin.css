@@ -1,6 +1,10 @@
 /* admin styles */
 
 /* ---------- whole admin site ---------- */
+html {
+    overflow-y: scroll;
+}
+
 body {
     font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
     background-color: #F8FAFC;
