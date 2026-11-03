@@ -2,6 +2,7 @@
 
 const adminAuthService = require('../services/adminAuthService');
 const adminOrderService = require('../services/adminOrderService');
+const adminUserService = require('../services/adminUserService');
 
 // GET /admin/login
 function showLogin(req, res) {
@@ -55,7 +56,7 @@ async function showOrder(req, res) {
     const order = await adminOrderService.getOrder(req.cleanParams.id);
     res.render('admin/order-detail', {
         active: 'orders',
-        order: order,
+        order,
         statusLabels: adminOrderService.statusLabels, // labels for the "Change to" dropdown
         error: null,
     });
@@ -70,7 +71,7 @@ async function showOrderWithError(res, orderId, err) {
     const order = await adminOrderService.getOrder(orderId);
     res.status(err.statusCode).render('admin/order-detail', {
         active: 'orders',
-        order: order,
+        order,
         statusLabels: adminOrderService.statusLabels,
         error: err.message,
     });
@@ -97,7 +98,25 @@ async function markingPaid(req, res) {
     }
     res.redirect('/admin/orders/' + orderId);
 }
+// GET /admin/users   (filters in the query string, already checked by the validator)
+async function showUsers(req, res) {
+    const query = req.cleanQuery;
+    const result = await adminUserService.listUsers(query);
+
+    // the current filters as text, so the page buttons keep them: "search=ravi&role=customer"
+    const filterQuery = 'search=' + encodeURIComponent(query.search || '') +
+        '&role=' + (query.role || '');
+
+    res.render('admin/users', {
+        active: 'users',
+        result,
+        filters: query, // to fill the form back in with what was searched
+        filterQuery,
+        roleLabels: adminUserService.roleLabels, // for the role dropdown
+    });
+}
 
 
 
-module.exports = { showLogin, loggingIn, loggingOut, showDashboard, showOrders, showOrder, updatingStatus, markingPaid };
+module.exports = { showLogin, loggingIn, loggingOut, showDashboard, showOrders, showOrder, 
+    updatingStatus, markingPaid, showUsers };

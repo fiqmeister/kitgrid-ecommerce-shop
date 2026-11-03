@@ -6,6 +6,7 @@ const requireAdmin = require('../middleware/requireAdminCookie');
 const validate = require('../middleware/validate');
 const { adminOrderListSchema, statusChangeSchema  } = require('../validators/adminOrderValidators');
 const { orderIdSchema } = require('../validators/orderValidators');
+const { adminUserListSchema } = require('../validators/adminUserValidators');
 
 
 // login page and form (open to everyone, otherwise no one could log in)
@@ -24,6 +25,7 @@ router.get('/orders/:id', requireAdmin, validate(orderIdSchema, 'params'), admin
 router.post('/orders/:id/status', requireAdmin, validate(orderIdSchema, 'params'), validate(statusChangeSchema), adminController.updatingStatus);
 // "Mark as paid" button
 router.post('/orders/:id/paid', requireAdmin, validate(orderIdSchema, 'params'), adminController.markingPaid);
-
+// users list (admins only, read-only), with search / role filters and paging
+router.get('/users', requireAdmin, validate(adminUserListSchema, 'query'), adminController.showUsers);
 
 module.exports = router;

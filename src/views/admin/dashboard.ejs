@@ -7,8 +7,24 @@
     <%- include('../partials/admin-nav', { active: 'dashboard' }) %>
 
     <main class="container py-4">
-        <h1 class="h3 mb-1">Dashboard</h1>
-        <p class="text-muted-kg">You are logged in as admin #<%= admin.id %>.</p>
+
+        <!-- title row: page name and today's date -->
+        <div class="d-flex justify-content-between align-items-baseline mb-3">
+            <h1 class="h3 fw-bold mb-0">Dashboard</h1>
+            <span class="text-muted-kg">
+                <%= new Date().toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) %>
+            </span>
+        </div>
+
+        <!-- admin assistant: the chat panel is built on nov04 (N8N) -->
+        <div class="admin-panel">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <h2 class="h5 fw-bold mb-0">Admin assistant</h2>
+                <span class="small text-muted-kg">Read-only: it can look at your data, but only you can change it.</span>
+            </div>
+            <p class="text-muted-kg mt-3 mb-0">Coming soon: ask about this week's orders, low stock and orders waiting to ship.</p>
+        </div>
+
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

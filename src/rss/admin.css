@@ -307,3 +307,24 @@ body {
     border-color: #0284C7;
     /* newest step: solid blue dot */
 }
+/* ---------- role badges (users page) ---------- */
+.role-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    /* pill shape, like the status badges */
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.role-customer {
+    background-color: #F1F5F9;
+    color: #475569;
+    /* grey */
+}
+
+.role-admin {
+    background-color: #0F172A;
+    color: #FFFFFF;
+    /* navy, so admins stand out in the list */
+}
