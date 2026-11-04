@@ -5,6 +5,8 @@ const adminOrderService = require('../services/adminOrderService');
 const adminUserService = require('../services/adminUserService');
 const adminProductService = require('../services/adminProductService');
 const { productFormSchema } = require('../validators/adminProductValidators');
+const adminAssistantService = require('../services/adminAssistantService');
+const { assistantQuestionSchema } = require('../validators/adminAssistantValidators');
 
 
 // GET /admin/login
@@ -31,10 +33,60 @@ function loggingOut(req, res) {
     res.clearCookie('adminToken');
     res.redirect('/admin/login');
 }
-// GET /admin   (placeholder until the dashboard is built)
-function showDashboard(req, res) {
-    res.render('admin/dashboard', { active: 'dashboard' });
+// the quick buttons above the assistant: label on the button, question sent to N8N
+const quickQuestions = [
+    { label: "This week's orders", message: 'What needs attention this week?' },
+    { label: 'Show low stock', message: 'Show low stock' },
+    { label: 'Orders waiting to ship', message: 'Which orders are waiting to ship? List their order numbers.' },
+];
+
+// shows the dashboard. Used for the first visit AND after a question
+// question: what the admin asked ('' on the first visit)
+// answer: { reply, cards, attention, lowStock, proposals } from the assistant, or null
+// error: a message for the red box, or null
+function renderDashboard(res, statusCode, question, answer, error) {
+    res.status(statusCode).render('admin/dashboard', {
+        active: 'dashboard',
+        quickQuestions,
+        question,
+        answer,
+        error,
+    });
 }
+
+// GET /admin
+function showDashboard(req, res) {
+    renderDashboard(res, 200, '', null, null);
+}
+
+// POST /admin/assistant   (form field: message)
+async function askingAssistant(req, res) {
+    const form = req.body || {};
+
+    // 1. check the question (empty or too long: show the dashboard again with the message)
+    let question;
+    try {
+        const cleaned = await assistantQuestionSchema.validate(form);
+        question = cleaned.message;
+    } catch (err) {
+        return renderDashboard(res, 400, form.message || '', null, err.message);
+    }
+
+    // 2. ask N8N. If it is down or fails, show the dashboard with the friendly message
+    let answer;
+    try {
+        answer = await adminAssistantService.askAssistant(question);
+    } catch (err) {
+        if (err.statusCode !== 503) {
+            throw err; // anything unexpected goes to the error handler
+        }
+        return renderDashboard(res, 503, question, null, err.message);
+    }
+
+    // 3. show the answer on the dashboard
+    renderDashboard(res, 200, question, answer, null);
+}
+
 // GET /admin/orders   (filters in the query string, already checked by the validator)
 async function showOrders(req, res) {
     const query = req.cleanQuery;
@@ -228,4 +280,4 @@ async function updatingProduct(req, res) {
 
 module.exports = { showLogin, loggingIn, loggingOut, showDashboard, showOrders, showOrder, 
     updatingStatus, markingPaid, showUsers, showProducts, deactivatingProduct, activatingProduct,
-showNewProduct, showEditProduct, creatingProduct, updatingProduct };
+showNewProduct, showEditProduct, creatingProduct, updatingProduct, askingAssistant };

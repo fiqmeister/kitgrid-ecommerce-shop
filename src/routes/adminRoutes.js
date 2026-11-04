@@ -41,6 +41,8 @@ router.post('/products', requireAdmin, adminController.creatingProduct);
 // Edit product: the filled-in form, and saving it
 router.get('/products/:id/edit', requireAdmin, validate(productIdSchema, 'params'), adminController.showEditProduct);
 router.post('/products/:id', requireAdmin, validate(productIdSchema, 'params'), adminController.updatingProduct);
+// the admin assistant: the question goes to N8N, the answer is shown on the dashboard
+router.post('/assistant', requireAdmin, adminController.askingAssistant);
 
 
 module.exports = router;
