@@ -7,7 +7,7 @@ const validate = require('../middleware/validate');
 const { adminOrderListSchema, statusChangeSchema  } = require('../validators/adminOrderValidators');
 const { orderIdSchema } = require('../validators/orderValidators');
 const { adminUserListSchema } = require('../validators/adminUserValidators');
-const { adminProductListSchema } = require('../validators/adminProductValidators');
+const { adminProductListSchema, thresholdSchema } = require('../validators/adminProductValidators');
 const { productIdSchema } = require('../validators/productValidators');
 
 
@@ -43,6 +43,8 @@ router.get('/products/:id/edit', requireAdmin, validate(productIdSchema, 'params
 router.post('/products/:id', requireAdmin, validate(productIdSchema, 'params'), adminController.updatingProduct);
 // the admin assistant: the question goes to N8N, the answer is shown on the dashboard
 router.post('/assistant', requireAdmin, adminController.askingAssistant);
+// Confirm on the assistant's proposal: saves the new low-stock threshold (the AI itself never saves anything)
+router.post('/variants/:id/threshold', requireAdmin, validate(productIdSchema, 'params'), validate(thresholdSchema), adminController.changingThreshold);
 
 
 module.exports = router;

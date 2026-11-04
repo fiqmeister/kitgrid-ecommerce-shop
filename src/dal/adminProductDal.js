@@ -212,8 +212,32 @@ async function saveProduct(productId, product, variants, tagIds) {
         connection.release();
     }
 }
+// ---------- nov05: low-stock threshold change (the admin assistant's Confirm button) ----------
+
+// one variant with its product name, for the "Threshold saved" message (undefined if not found)
+async function findVariantSummary(variantId) {
+    const [rows] = await pool.query(
+        `SELECT product_variants.id, products.name AS product_name, product_variants.colour,
+        product_variants.size, product_variants.low_stock_threshold
+        FROM product_variants
+        JOIN products ON products.id = product_variants.product_id
+        WHERE product_variants.id = ?`,
+        [variantId]
+    );
+    return rows[0];
+}
+
+// saves a new threshold for one variant. Returns false when no variant has this id
+async function updateThreshold(variantId, threshold) {
+    const [result] = await pool.query(
+        'UPDATE product_variants SET low_stock_threshold = ? WHERE id = ?',
+        [threshold, variantId]
+    );
+    return result.affectedRows > 0;
+}
+
 
 module.exports = { findProducts, countProducts, findCategories, setActive,
     findProductById, findVariantsForProduct, findTagIdsForProduct, findTags,
-    findVariantsBySkus, saveProduct
+    findVariantsBySkus, saveProduct, findVariantSummary, updateThreshold
  };

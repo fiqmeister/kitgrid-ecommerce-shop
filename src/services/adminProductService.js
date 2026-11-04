@@ -205,6 +205,32 @@ async function saveProduct(productId, form) {
     }
     return savedId;
 }
+// ---------- nov05: low-stock threshold change (the admin assistant's Confirm button) ----------
+
+// saves the new threshold the admin confirmed. 404 when the variant does not exist
+async function changeThreshold(variantId, threshold) {
+    const found = await adminProductDal.updateThreshold(variantId, threshold);
+    if (!found) {
+        throw createError('Variant not found', 404);
+    }
+}
+
+// one variant for the green "Threshold saved" message, read back from the database
+// returns null when the variant does not exist (the message is then simply not shown)
+async function getVariantSummary(variantId) {
+    const row = await adminProductDal.findVariantSummary(variantId);
+    if (!row) {
+        return null;
+    }
+    return {
+        productName: row.product_name,
+        colour: row.colour,
+        size: row.size,
+        threshold: row.low_stock_threshold,
+    };
+}
 
 
-module.exports = { listProducts, listCategories, setActive, getFormOptions, emptyForm, getProductForm, saveProduct };
+module.exports = { listProducts, listCategories, setActive, getFormOptions, emptyForm, getProductForm, saveProduct,
+    changeThreshold, getVariantSummary
+ };

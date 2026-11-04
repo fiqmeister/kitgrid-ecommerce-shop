@@ -1,154 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <%- include('../partials/admin-head', { title: 'Dashboard' }) %>
 </head>
+
 <body>
     <%- include('../partials/admin-nav', { active: 'dashboard' }) %>
 
-    <main class="container py-4">
+        <main class="container py-4">
 
-        <!-- title row: page name and today's date -->
-        <div class="d-flex justify-content-between align-items-baseline mb-3">
-            <h1 class="h3 fw-bold mb-0">Dashboard</h1>
-            <span class="text-muted-kg">
-                <%= new Date().toLocaleDateString('en-SG', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) %>
-            </span>
-        </div>
-
-        <div class="admin-panel">
-
-            <!-- header: name on the left, the read-only promise on the right -->
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-                <h2 class="h5 fw-bold mb-0 d-flex align-items-center gap-2">
-                    <span class="assistant-icon">&#10022;</span> Admin assistant
-                </h2>
-                <span class="small text-muted-kg">Read-only: it can look at your data, but only you can change it.</span>
+            <!-- title row: page name and today's date -->
+            <div class="d-flex justify-content-between align-items-baseline mb-3">
+                <h1 class="h3 fw-bold mb-0">Dashboard</h1>
+                <span class="text-muted-kg">
+                    <%= new Date().toLocaleDateString('en-SG', { weekday: 'short' , day: 'numeric' , month: 'short' ,
+                        year: 'numeric' }) %>
+                </span>
             </div>
 
-            <!-- quick buttons: each one sends its own question (a separate form from the text box below) -->
-            <form method="POST" action="/admin/assistant" class="d-flex flex-wrap gap-2">
-                <% quickQuestions.forEach(quick => { %>
-                    <button type="submit" name="message" value="<%= quick.message %>"
-                        class="assistant-chip <%= question === quick.message ? 'active' : '' %>"><%= quick.label %></button>
-                <% }) %>
-            </form>
+            <div class="admin-panel">
 
-            <hr class="my-4">
-
-            <% if (!question) { %>
-                <!-- first visit: nothing asked yet -->
-                <p class="text-muted-kg mb-0">Ask about this week's orders, low stock or orders waiting to ship. Answers take about 10 to 60 seconds.</p>
-            <% } else { %>
-                <!-- the admin's question, on the right like a chat -->
-                <div class="text-end mb-3">
-                    <span class="assistant-question"><%= question %></span>
+                <!-- header: name on the left, the read-only promise on the right -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                    <h2 class="h5 fw-bold mb-0 d-flex align-items-center gap-2">
+                        <span class="assistant-icon">&#10022;</span> Admin assistant
+                    </h2>
+                    <span class="small text-muted-kg">Read-only: it can look at your data, but only you can change
+                        it.</span>
                 </div>
-            <% } %>
-
-            <% if (error) { %>
-                <div class="admin-error mb-3">
-                    <span class="admin-error-icon">!</span>
-                    <%= error %>
-                </div>
-            <% } %>
-
-            <% if (answer) { %>
-                <!-- the answer -->
-                <div class="d-flex align-items-center gap-2 mb-1">
-                    <span class="assistant-icon assistant-icon-small">&#10022;</span>
-                    <span class="small fw-bold">Assistant</span>
-                </div>
-                <p class="mb-3"><%= answer.reply %></p>
-
-                <!-- number cards (up to 4 in a row) -->
-                <% if (answer.cards.length > 0) { %>
-                    <div class="row g-3 mb-3">
-                        <% answer.cards.forEach(card => { %>
-                            <div class="col-6 col-md-3">
-                                <div class="assistant-card">
-                                    <div class="assistant-card-value tone-<%= card.tone %>"><%= card.value %></div>
-                                    <div class="small text-muted-kg"><%= card.label %></div>
-                                </div>
-                            </div>
-                        <% }) %>
+                <!-- after Confirm: what was saved, read back from the database -->
+                <% if (notice) { %>
+                    <div class="admin-success mb-3">
+                        <%= notice %>
                     </div>
-                <% } %>
+                    <% } %>
 
-                <!-- things to act on, with a coloured dot -->
-                <% if (answer.attention.length > 0) { %>
-                    <h3 class="h6 fw-bold">Needs attention</h3>
-                    <ul class="list-unstyled mb-3">
-                        <% answer.attention.forEach(item => { %>
-                            <li class="mb-1"><span class="assistant-dot dot-<%= item.tone %>"></span><%= item.text %></li>
-                        <% }) %>
-                    </ul>
-                <% } %>
 
-                <!-- low-stock table (phone scrolls sideways) -->
-                <% if (answer.lowStock.length > 0) { %>
-                    <div class="table-responsive mb-3">
-                        <table class="table admin-table align-middle mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Variant</th>
-                                    <th class="text-end">Stock</th>
-                                    <th class="text-end">Threshold</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% answer.lowStock.forEach(row => { %>
-                                    <tr>
-                                        <td class="fw-bold"><%= row.productName %></td>
-                                        <td><%= row.colour %> &middot; <%= row.size %></td>
-                                        <td class="text-end fw-bold"><span class="<%= row.outOfStock ? 'stock-note-out' : 'stock-note-low' %>"><%= row.stock %></span></td>
-                                        <td class="text-end"><%= row.threshold %></td>
-                                        <td class="text-end">
-                                            <% if (row.outOfStock) { %><span class="alert-badge alert-out">Out of stock</span><% } %>
-                                        </td>
-                                    </tr>
+                        <!-- quick buttons: each one sends its own question (a separate form from the text box below) -->
+                        <form method="POST" action="/admin/assistant" class="d-flex flex-wrap gap-2">
+                            <% quickQuestions.forEach(quick=> { %>
+                                <button type="submit" name="message" value="<%= quick.message %>"
+                                    class="assistant-chip <%= question === quick.message ? 'active' : '' %>">
+                                    <%= quick.label %>
+                                </button>
                                 <% }) %>
-                            </tbody>
-                        </table>
-                    </div>
-                <% } %>
+                        </form>
 
-                <!-- proposed threshold change: shown now, the Confirm button is wired up on nov05 -->
-                <% answer.proposals.forEach(proposal => { %>
-                    <div class="assistant-proposal mb-2">
-                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                            <div>
-                                <div class="small fw-bold text-primary-kg">Proposed change</div>
-                                <div class="fw-bold"><%= proposal.productName %> &middot; <%= proposal.colour %> &middot; Size <%= proposal.size %></div>
-                                <div class="small">Low-stock threshold:
-                                    <span class="text-muted-kg"><%= proposal.currentThreshold %></span>
-                                    &rarr; <span class="fw-bold"><%= proposal.newThreshold %></span>
+                        <hr class="my-4">
+
+                        <% if (!question) { %>
+                            <!-- first visit: nothing asked yet -->
+                            <p class="text-muted-kg mb-0">Ask about this week's orders, low stock or orders waiting to
+                                ship. Answers take about 10 to 60 seconds.</p>
+                            <% } else { %>
+                                <!-- the admin's question, on the right like a chat -->
+                                <div class="text-end mb-3">
+                                    <span class="assistant-question">
+                                        <%= question %>
+                                    </span>
                                 </div>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-kg fs-6 px-4" disabled>Confirm</button>
-                                <a href="/admin" class="btn btn-outline-secondary px-4">Cancel</a>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="small text-muted-kg mb-3">Nothing is saved until you press Confirm.</p>
-                <% }) %>
-            <% } %>
+                                <% } %>
 
-            <hr class="my-4">
+                                    <% if (error) { %>
+                                        <div class="admin-error mb-3">
+                                            <span class="admin-error-icon">!</span>
+                                            <%= error %>
+                                        </div>
+                                        <% } %>
 
-            <!-- ask your own question (on a "too long" error, your text is kept so you can shorten it) -->
-            <form method="POST" action="/admin/assistant" class="d-flex gap-2">
-                <input type="text" class="form-control" name="message" placeholder="Ask about orders or stock..."
-                    value="<%= error && !answer ? question : '' %>" aria-label="Your question">
-                <button type="submit" class="btn btn-kg fs-6 px-4">Ask</button>
-            </form>
-        </div>
+                                            <% if (answer) { %>
+                                                <!-- the answer -->
+                                                <div class="d-flex align-items-center gap-2 mb-1">
+                                                    <span class="assistant-icon assistant-icon-small">&#10022;</span>
+                                                    <span class="small fw-bold">Assistant</span>
+                                                </div>
+                                                <p class="mb-3">
+                                                    <%= answer.reply %>
+                                                </p>
 
-    </main>
+                                                <!-- number cards (up to 4 in a row) -->
+                                                <% if (answer.cards.length> 0) { %>
+                                                    <div class="row g-3 mb-3">
+                                                        <% answer.cards.forEach(card=> { %>
+                                                            <div class="col-6 col-md-3">
+                                                                <div class="assistant-card">
+                                                                    <div
+                                                                        class="assistant-card-value tone-<%= card.tone %>">
+                                                                        <%= card.value %>
+                                                                    </div>
+                                                                    <div class="small text-muted-kg">
+                                                                        <%= card.label %>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <% }) %>
+                                                    </div>
+                                                    <% } %>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+                                                        <!-- things to act on, with a coloured dot -->
+                                                        <% if (answer.attention.length> 0) { %>
+                                                            <h3 class="h6 fw-bold">Needs attention</h3>
+                                                            <ul class="list-unstyled mb-3">
+                                                                <% answer.attention.forEach(item=> { %>
+                                                                    <li class="mb-1"><span
+                                                                            class="assistant-dot dot-<%= item.tone %>"></span>
+                                                                        <%= item.text %>
+                                                                    </li>
+                                                                    <% }) %>
+                                                            </ul>
+                                                            <% } %>
+
+                                                                <!-- low-stock table (phone scrolls sideways) -->
+                                                                <% if (answer.lowStock.length> 0) { %>
+                                                                    <div class="table-responsive mb-3">
+                                                                        <table
+                                                                            class="table admin-table align-middle mb-0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Product</th>
+                                                                                    <th>Variant</th>
+                                                                                    <th class="text-end">Stock</th>
+                                                                                    <th class="text-end">Threshold</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <% answer.lowStock.forEach(row=> { %>
+                                                                                    <tr>
+                                                                                        <td class="fw-bold">
+                                                                                            <%= row.productName %>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <%= row.colour %> &middot;
+                                                                                                <%= row.size %>
+                                                                                        </td>
+                                                                                        <td class="text-end fw-bold">
+                                                                                            <span
+                                                                                                class="<%= row.outOfStock ? 'stock-note-out' : 'stock-note-low' %>">
+                                                                                                <%= row.stock %>
+                                                                                            </span>
+                                                                                        </td>
+                                                                                        <td class="text-end">
+                                                                                            <%= row.threshold %>
+                                                                                        </td>
+                                                                                        <td class="text-end">
+                                                                                            <% if (row.outOfStock) { %>
+                                                                                                <span
+                                                                                                    class="alert-badge alert-out">Out
+                                                                                                    of stock</span>
+                                                                                                <% } %>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <% }) %>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <% } %>
+
+                                                                        <!-- the Confirm button is wired up -->
+                                                                        <% answer.proposals.forEach(proposal=> { %>
+                                                                            <div class="assistant-proposal mb-2">
+                                                                                <div
+                                                                                    class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                                                                                    <div>
+                                                                                        <div
+                                                                                            class="small fw-bold text-primary-kg">
+                                                                                            Proposed change</div>
+                                                                                        <div class="fw-bold">
+                                                                                            <%= proposal.productName %>
+                                                                                                &middot; <%=
+                                                                                                    proposal.colour %>
+                                                                                                    &middot; Size <%=
+                                                                                                        proposal.size %>
+                                                                                        </div>
+                                                                                        <div class="small">Low-stock
+                                                                                            threshold:
+                                                                                            <span class="text-muted-kg">
+                                                                                                <%= proposal.currentThreshold
+                                                                                                    %>
+                                                                                            </span>
+                                                                                            &rarr; <span
+                                                                                                class="fw-bold">
+                                                                                                <%= proposal.newThreshold
+                                                                                                    %>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="d-flex gap-2">
+                                                                                        <!-- Confirm sends only the variant id (in the address) and the new number. The server checks both -->
+                                                                                        <form method="POST"
+                                                                                            action="/admin/variants/<%= proposal.variantId %>/threshold">
+                                                                                            <input type="hidden"
+                                                                                                name="threshold"
+                                                                                                value="<%= proposal.newThreshold %>">
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-kg fs-6 px-4">Confirm</button>
+                                                                                        </form>
+                                                                                        <a href="/admin"
+                                                                                            class="btn btn-outline-secondary px-4">Cancel</a>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <p class="small text-muted-kg mb-3">Nothing
+                                                                                is saved until you press Confirm.</p>
+                                                                            <% }) %>
+                                                                                <% } %>
+
+                                                                                    <hr class="my-4">
+
+                                                                                    <!-- ask your own question (on a "too long" error, your text is kept so you can shorten it) -->
+                                                                                    <form method="POST"
+                                                                                        action="/admin/assistant"
+                                                                                        class="d-flex gap-2">
+                                                                                        <input type="text"
+                                                                                            class="form-control"
+                                                                                            name="message"
+                                                                                            placeholder="Ask about orders or stock..."
+                                                                                            value="<%= error && !answer ? question : '' %>"
+                                                                                            aria-label="Your question">
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-kg fs-6 px-4">Ask</button>
+                                                                                    </form>
+            </div>
+
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

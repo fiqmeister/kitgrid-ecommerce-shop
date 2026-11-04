@@ -44,20 +44,35 @@ const quickQuestions = [
 // question: what the admin asked ('' on the first visit)
 // answer: { reply, cards, attention, lowStock, proposals } from the assistant, or null
 // error: a message for the red box, or null
-function renderDashboard(res, statusCode, question, answer, error) {
+function renderDashboard(res, statusCode, question, answer, error, notice) {
     res.status(statusCode).render('admin/dashboard', {
         active: 'dashboard',
         quickQuestions,
         question,
         answer,
         error,
+        notice
     });
 }
 
-// GET /admin
-function showDashboard(req, res) {
-    renderDashboard(res, 200, '', null, null);
+// GET /admin   (?thresholdSaved=2 right after a confirmed threshold change)
+async function showDashboard(req, res) {
+    let notice = null;
+
+    // Number('abc') and Number(undefined) give NaN, and NaN > 0 is false, so a bad or missing value is ignored
+    const savedId = Number(req.query.thresholdSaved);
+    if (savedId > 0) {
+        // read the variant back from the database: the message shows what was REALLY saved
+        const variant = await adminProductService.getVariantSummary(savedId);
+        if (variant) {
+            notice = 'Threshold saved: ' + variant.productName + ' · ' + variant.colour +
+                ' · Size ' + variant.size + ' is now ' + variant.threshold + '.';
+        }
+    }
+
+    renderDashboard(res, 200, '', null, null, notice);
 }
+
 
 // POST /admin/assistant   (form field: message)
 async function askingAssistant(req, res) {
@@ -86,6 +101,16 @@ async function askingAssistant(req, res) {
     // 3. show the answer on the dashboard
     renderDashboard(res, 200, question, answer, null);
 }
+// POST /admin/variants/:id/threshold   (form field: threshold), the Confirm button on a proposal
+// id and threshold were already checked by the validators in the route
+async function changingThreshold(req, res) {
+    const variantId = req.cleanParams.id;
+    await adminProductService.changeThreshold(variantId, req.body.threshold);
+
+    // Post/Redirect/Get: this DOES change data, so F5 must not send it again
+    res.redirect('/admin?thresholdSaved=' + variantId);
+}
+
 
 // GET /admin/orders   (filters in the query string, already checked by the validator)
 async function showOrders(req, res) {
@@ -280,4 +305,4 @@ async function updatingProduct(req, res) {
 
 module.exports = { showLogin, loggingIn, loggingOut, showDashboard, showOrders, showOrder, 
     updatingStatus, markingPaid, showUsers, showProducts, deactivatingProduct, activatingProduct,
-showNewProduct, showEditProduct, creatingProduct, updatingProduct, askingAssistant };
+showNewProduct, showEditProduct, creatingProduct, updatingProduct, askingAssistant, changingThreshold };

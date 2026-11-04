@@ -49,5 +49,16 @@ const productFormSchema = yup.object({
     // Variants: the empty rows are removed by the controller BEFORE this check
     variants: yup.array().of(variantRowSchema).min(1, 'Add at least one variant'),
 });
+// threshold change from the admin assistant's Confirm button (form field: threshold)
+// the AI only proposed the number, so the server checks it again here
+const thresholdSchema = yup.object({
+    threshold: yup.number()
+        .typeError('Threshold must be a number')
+        .integer('Threshold must be a whole number')
+        .min(0, 'Threshold cannot be negative')
+        .max(1000, 'Threshold cannot be above 1000')
+        .required('Threshold is required'),
+});
 
-module.exports = { adminProductListSchema, productFormSchema };
+
+module.exports = { adminProductListSchema, productFormSchema, thresholdSchema };
