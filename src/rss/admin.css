@@ -332,3 +332,123 @@ body {
     color: #FFFFFF;
     /* navy, so admins stand out in the list */
 }
+/* ---------- products page ---------- */
+
+/* alert badges: a pill like the role badges */
+.alert-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    text-decoration: none;
+    /* "Out of stock" stays on one line */
+}
+
+a.alert-low {
+    background-color: #FEF3C7;
+    color: #B45309;
+    /* amber, the same as "Pending payment" */
+}
+
+a.alert-out {
+    background-color: #FEE2E2;
+    color: #B91C1C;
+    /* red */
+}
+
+.alert-inactive {
+    background-color: #F1F5F9;
+    color: #475569;
+    /* grey, the same as "Cancelled" */
+}
+
+/* a deactivated product: the whole row is faded */
+.row-inactive td {
+    color: #94A3B8;
+}
+
+/* a <button> that looks like a text link (Deactivate / Activate) */
+.admin-text-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.text-danger-kg {
+    color: #DC2626;
+    /* red, as the wireframe's Delete */
+}
+
+.text-success-kg {
+    color: #15803D;
+    /* green */
+}
+/* ---------- product form ---------- */
+
+/* green box: "Product saved." */
+.admin-success {
+    background-color: #DCFCE7;
+    border: 1px solid #86EFAC;
+    color: #166534;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+
+/* tags: the real checkbox is hidden, the label is the chip you click */
+.tag-check {
+    position: absolute;
+    opacity: 0;
+    /* invisible but still a real checkbox (keyboard and screen readers still work) */
+}
+
+.tag-chip {
+    padding: 6px 14px;
+    border: 1px solid #E2E8F0;
+    border-radius: 999px;
+    font-weight: 700;
+    color: #475569;
+    cursor: pointer;
+}
+
+.tag-check:checked + .tag-chip {
+    /* "+" = the label right after a TICKED checkbox */
+    background-color: #E0F2FE;
+    border-color: #0284C7;
+    color: #0369A1;
+}
+
+.tag-check:focus-visible + .tag-chip {
+    outline: 2px solid #0284C7;
+    /* shows which chip is selected when using the Tab key */
+}
+
+/* variants table: boxes don't get squashed on small screens (the table scrolls instead) */
+.variant-table td {
+    padding: 8px;
+    min-width: 110px;
+}
+
+/* stock box colours for the alerts */
+.stock-low {
+    border-color: #F59E0B;
+    background-color: #FFFBEB;
+}
+
+.stock-out {
+    border-color: #DC2626;
+    background-color: #FEF2F2;
+}
+
+.stock-note-low {
+    color: #B45309;
+}
+
+.stock-note-out {
+    color: #B91C1C;
+}
+

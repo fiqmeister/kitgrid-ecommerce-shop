@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/admin-head', { title: 'Products' }) %>
+</head>
+
+<body>
+    <%- include('../partials/admin-nav', { active: 'products' }) %>
+
+        <main class="container py-4">
+
+            <!-- title row: name + count on the left, Add button on the right -->
+            <div class="d-flex justify-content-between align-items-baseline mb-3">
+                <h1 class="h3 fw-bold mb-0">Products</h1>
+                <span class="text-muted-kg">
+                    <%= result.total %> products
+                </span>
+            </div>
+
+            <!-- filters -->
+            <form method="GET" action="/admin/products" class="admin-panel">
+                <div class="row g-3 align-items-end">
+                    <div class="col-12 col-md-4">
+                        <label for="search" class="form-label fw-bold small">Search</label>
+                        <input type="text" class="form-control" id="search" name="search" placeholder="Product name"
+                            value="<%= filters.search || '' %>">
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label for="category" class="form-label fw-bold small">Category</label>
+                        <select class="form-select" id="category" name="category">
+                            <option value="">All categories</option>
+                            <% categories.forEach(category=> { %>
+                                <option value="<%= category.id %>" <%=filters.category===String(category.id)
+                                    ? 'selected' : '' %>><%= category.name %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <label for="stock" class="form-label fw-bold small">Stock</label>
+                        <select class="form-select" id="stock" name="stock">
+                            <option value="">All</option>
+                            <option value="low" <%=filters.stock==='low' ? 'selected' : '' %>>Low stock</option>
+                            <option value="out" <%=filters.stock==='out' ? 'selected' : '' %>>Out of stock</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3 d-flex align-items-center justify-content-md-end gap-3">
+                        <button type="submit" class="btn btn-kg fs-6">Apply</button>
+                        <a href="/admin/products" class="admin-link">Reset</a>
+                    </div>
+                </div>
+            </form>
+            <div class="my-3 text-end">
+                <a href="/admin/products/new" class="btn btn-kg fs-6">+ Add product</a>
+            </div>
+
+            <% if (result.products.length===0) { %>
+
+                <div class="admin-panel text-center text-muted-kg py-5">No products match these filters.</div>
+
+                <% } else { %>
+
+                    <!-- products table (phone scrolls sideways) -->
+                    <div class="admin-panel p-0 table-responsive">
+                        <table class="table admin-table align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th class="text-end">Price</th>
+                                    <th>Bulk</th>
+                                    <th class="text-end">Units</th>
+                                    <th>Alerts</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% result.products.forEach(product=> { %>
+                                    <tr class="<%= product.isActive ? '' : 'row-inactive' %>">
+                                        <td class="fw-bold">
+                                            <%= product.name %>
+                                        </td>
+                                        <td>
+                                            <%= product.categoryName %>
+                                        </td>
+                                        <td class="text-end fw-bold">S$<%= product.basePrice.toFixed(2) %>
+                                        </td>
+                                        <td>
+                                            <%= product.isBulkEligible ? 'Yes' : 'No' %>
+                                        </td>
+                                        <td class="text-end">
+                                            <%= product.totalUnits %>
+                                        </td>
+                                        <td>
+                                            <% if (!product.isActive) { %>
+                                                <span class="alert-badge alert-inactive">Inactive</span>
+                                                <% } else if (product.alert==='out' ) { %>
+                                                    <a href="/admin/products/<%= product.id %>/edit#variants" class="alert-badge alert-out">Out of stock</a>
+                                                    <% } else if (product.alert==='low' ) { %>
+                                                        <a href="/admin/products/<%= product.id %>/edit#variants" class="alert-badge alert-low">Low stock</a>
+                                                        <% } %>
+                                        </td>
+                                        <td class="text-end text-nowrap">
+                                            <a href="/admin/products/<%= product.id %>/edit"
+                                                class="fw-bold me-3">Edit</a>
+                                            <% if (product.isActive) { %>
+                                                <form method="POST"
+                                                    action="/admin/products/<%= product.id %>/deactivate"
+                                                    class="d-inline">
+                                                    <button type="submit"
+                                                        class="admin-text-button text-danger-kg">Deactivate</button>
+                                                </form>
+                                                <% } else { %>
+                                                    <form method="POST"
+                                                        action="/admin/products/<%= product.id %>/activate"
+                                                        class="d-inline">
+                                                        <button type="submit"
+                                                            class="admin-text-button text-success-kg">Activate</button>
+                                                    </form>
+                                                    <% } %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- "Showing 1 to ..." and the page buttons -->
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3">
+                        <span class="text-muted-kg small">
+                            Showing <%= result.firstShown %> to <%= result.lastShown %> of <%= result.total %>
+                        </span>
+
+                        <% if (result.totalPages> 1) { %>
+                            <ul class="pagination mb-0">
+                                <li class="page-item <%= result.page <= 1 ? 'disabled' : '' %>">
+                                    <a class="page-link"
+                                        href="/admin/products?<%= filterQuery %>&page=<%= result.page - 1 %>">Prev</a>
+                                </li>
+                                <% for (let p=1; p <=result.totalPages; p++) { %>
+                                    <li class="page-item <%= p === result.page ? 'active' : '' %>">
+                                        <a class="page-link" href="/admin/products?<%= filterQuery %>&page=<%= p %>">
+                                            <%= p %>
+                                        </a>
+                                    </li>
+                                    <% } %>
+                                        <li class="page-item <%= result.page >= result.totalPages ? 'disabled' : '' %>">
+                                            <a class="page-link"
+                                                href="/admin/products?<%= filterQuery %>&page=<%= result.page + 1 %>">Next</a>
+                                        </li>
+                            </ul>
+                            <% } %>
+                    </div>
+
+                    <% } %>
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

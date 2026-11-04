@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/admin-head', { title: productId ? 'Edit product' : 'Add product' }) %>
+</head>
+
+<body>
+    <%- include('../partials/admin-nav', { active: 'products' }) %>
+
+    <%
+        // the words shown in the dropdowns (the database stores the short codes)
+        const pitchLabels = { FG: 'Firm ground', AG: 'Artificial turf', indoor: 'Indoor', all: 'All surfaces' };
+        const skillLabels = { youth: 'Youth', amateur: 'Amateur', pro: 'Pro' };
+        const ageLabels = { mini_junior: 'Mini junior', youth: 'Youth', senior: 'Senior' };
+
+        // the variant rows to draw: the product's variants, then 3 empty rows for new ones
+        const blankRow = { id: '', size: '', colour: '', sku: '', ageGroup: '', stock: '', lowStockThreshold: '10' };
+        const variantRows = form.variants.concat([blankRow, blankRow, blankRow]);
+
+        const tickedTags = form.tagIds || []; // nothing ticked = the field is missing
+    %>
+
+    <main class="container py-4">
+
+        <a href="/admin/products" class="admin-link">&larr; Back to Products</a>
+        <h1 class="h3 fw-bold mt-2 mb-4"><%= productId ? 'Edit product' : 'Add product' %></h1>
+
+        <% if (saved) { %>
+            <div class="admin-success mb-4">Product saved.</div>
+        <% } %>
+        <% if (message) { %>
+            <div class="admin-error mb-4">
+                <span class="admin-error-icon">!</span>
+                <%= message %>
+            </div>
+        <% } %>
+
+        <!-- Add sends to /admin/products, Edit sends to /admin/products/<id> -->
+        <form method="POST" action="<%= productId ? '/admin/products/' + productId : '/admin/products' %>" novalidate>
+
+            <!-- ========== Basic details ========== -->
+            <div class="admin-panel mb-4">
+                <h2 class="h5 fw-bold mb-3">Basic details</h2>
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label for="name" class="form-label fw-bold small">Name</label>
+                        <input type="text" class="form-control <%= errors.name ? 'is-invalid' : '' %>"
+                            id="name" name="name" value="<%= form.name %>">
+                        <% if (errors.name) { %><div class="invalid-feedback d-block"><%= errors.name %></div><% } %>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label for="categoryId" class="form-label fw-bold small">Category</label>
+                        <select class="form-select <%= errors.categoryId ? 'is-invalid' : '' %>" id="categoryId" name="categoryId">
+                            <option value="">Choose a category</option>
+                            <% categories.forEach(category => { %>
+                                <option value="<%= category.id %>" <%= form.categoryId === String(category.id) ? 'selected' : '' %>><%= category.name %></option>
+                            <% }) %>
+                        </select>
+                        <% if (errors.categoryId) { %><div class="invalid-feedback d-block"><%= errors.categoryId %></div><% } %>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label for="basePrice" class="form-label fw-bold small">Base price (S$)</label>
+                        <input type="number" step="0.01" min="0" class="form-control <%= errors.basePrice ? 'is-invalid' : '' %>"
+                            id="basePrice" name="basePrice" value="<%= form.basePrice %>">
+                        <% if (errors.basePrice) { %>
+                            <div class="invalid-feedback d-block"><%= errors.basePrice %></div>
+                        <% } else { %>
+                            <div class="form-text">Before bulk discounts.</div>
+                        <% } %>
+                    </div>
+                    <div class="col-12">
+                        <label for="description" class="form-label fw-bold small">Description</label>
+                        <textarea class="form-control <%= errors.description ? 'is-invalid' : '' %>" id="description"
+                            name="description" rows="2"><%= form.description %></textarea>
+                        <% if (errors.description) { %><div class="invalid-feedback d-block"><%= errors.description %></div><% } %>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="isBulkEligible" name="isBulkEligible"
+                                <%= form.isBulkEligible === 'on' ? 'checked' : '' %>>
+                            <label for="isBulkEligible" class="form-check-label fw-bold">Eligible for bulk discounts (10+ / 15+ / 25+ units)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== Specifications ========== -->
+            <div class="admin-panel mb-4">
+                <h2 class="h5 fw-bold mb-1">Specifications</h2>
+                <p class="small text-muted-kg mb-3">Shown on the shop's product page and used for filtering and the Kit Advisor.</p>
+                <div class="row g-3">
+                    <div class="col-12 col-md-4">
+                        <label for="pitchSurface" class="form-label fw-bold small">Pitch surface</label>
+                        <select class="form-select" id="pitchSurface" name="pitchSurface">
+                            <option value="">Not set</option>
+                            <% Object.keys(pitchLabels).forEach(value => { %>
+                                <option value="<%= value %>" <%= form.pitchSurface === value ? 'selected' : '' %>><%= pitchLabels[value] %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label for="skillLevel" class="form-label fw-bold small">Skill level</label>
+                        <select class="form-select" id="skillLevel" name="skillLevel">
+                            <option value="">Not set</option>
+                            <% Object.keys(skillLabels).forEach(value => { %>
+                                <option value="<%= value %>" <%= form.skillLevel === value ? 'selected' : '' %>><%= skillLabels[value] %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label for="material" class="form-label fw-bold small">Material</label>
+                        <input type="text" class="form-control <%= errors.material ? 'is-invalid' : '' %>"
+                            id="material" name="material" value="<%= form.material %>">
+                        <% if (errors.material) { %><div class="invalid-feedback d-block"><%= errors.material %></div><% } %>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label for="weightGrams" class="form-label fw-bold small">Weight (grams)</label>
+                        <input type="number" min="0" class="form-control <%= errors.weightGrams ? 'is-invalid' : '' %>"
+                            id="weightGrams" name="weightGrams" value="<%= form.weightGrams %>">
+                        <% if (errors.weightGrams) { %><div class="invalid-feedback d-block"><%= errors.weightGrams %></div><% } %>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label for="durabilityRating" class="form-label fw-bold small">Durability rating</label>
+                        <input type="number" min="1" max="5" class="form-control <%= errors.durabilityRating ? 'is-invalid' : '' %>"
+                            id="durabilityRating" name="durabilityRating" value="<%= form.durabilityRating %>">
+                        <% if (errors.durabilityRating) { %>
+                            <div class="invalid-feedback d-block"><%= errors.durabilityRating %></div>
+                        <% } else { %>
+                            <div class="form-text">1 (low) to 5 (high).</div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== Tags ========== -->
+            <div class="admin-panel mb-4">
+                <h2 class="h5 fw-bold mb-3">Tags</h2>
+                <div class="d-flex flex-wrap gap-2">
+                    <% tags.forEach(tag => { %>
+                        <!-- the box is hidden by CSS; the label is the clickable "chip" -->
+                        <input type="checkbox" class="tag-check" id="tag-<%= tag.id %>" name="tagIds[]" value="<%= tag.id %>"
+                            <%= tickedTags.includes(String(tag.id)) ? 'checked' : '' %>>
+                        <label for="tag-<%= tag.id %>" class="tag-chip"><%= tag.name %></label>
+                    <% }) %>
+                </div>
+            </div>
+
+            <!-- ========== Variants ========== (id="variants": the list's alert badges jump here) -->
+            <div class="admin-panel mb-4" id="variants">
+                <h2 class="h5 fw-bold mb-1">Variants</h2>
+                <p class="small text-muted-kg mb-3">Each size and colour is its own row, with its own stock. Fill in an empty row to add a variant.</p>
+
+                <div class="table-responsive">
+                    <table class="table admin-table variant-table align-top mb-0">
+                        <thead>
+                            <tr>
+                                <th>Size</th>
+                                <th>Colour</th>
+                                <th>SKU</th>
+                                <th>Age group</th>
+                                <th>Stock</th>
+                                <th>Low-stock threshold</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% variantRows.forEach((row, index) => {
+                                // this row's error for one field, e.g. rowError('sku') → errors['variants[2].sku']
+                                const rowError = field => errors['variants[' + index + '].' + field];
+
+                                // stock alert for this row (only when both boxes hold a number)
+                                let stockAlert = null;
+                                if (row.stock !== '' && row.lowStockThreshold !== '') {
+                                    if (Number(row.stock) === 0) {
+                                        stockAlert = 'out';
+                                    } else if (Number(row.stock) <= Number(row.lowStockThreshold)) {
+                                        stockAlert = 'low';
+                                    }
+                                }
+                            %>
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="variants[<%= index %>][id]" value="<%= row.id %>">
+                                        <input type="text" class="form-control <%= rowError('size') ? 'is-invalid' : '' %>"
+                                            name="variants[<%= index %>][size]" value="<%= row.size %>" aria-label="Size">
+                                        <% if (rowError('size')) { %><div class="invalid-feedback d-block"><%= rowError('size') %></div><% } %>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control <%= rowError('colour') ? 'is-invalid' : '' %>"
+                                            name="variants[<%= index %>][colour]" value="<%= row.colour %>" aria-label="Colour">
+                                        <% if (rowError('colour')) { %><div class="invalid-feedback d-block"><%= rowError('colour') %></div><% } %>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control <%= rowError('sku') ? 'is-invalid' : '' %>"
+                                            name="variants[<%= index %>][sku]" value="<%= row.sku %>" aria-label="SKU">
+                                        <% if (rowError('sku')) { %><div class="invalid-feedback d-block"><%= rowError('sku') %></div><% } %>
+                                    </td>
+                                    <td>
+                                        <select class="form-select" name="variants[<%= index %>][ageGroup]" aria-label="Age group">
+                                            <option value="">Not set</option>
+                                            <% Object.keys(ageLabels).forEach(value => { %>
+                                                <option value="<%= value %>" <%= row.ageGroup === value ? 'selected' : '' %>><%= ageLabels[value] %></option>
+                                            <% }) %>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="number" min="0"
+                                            class="form-control <%= rowError('stock') ? 'is-invalid' : '' %> <%= stockAlert ? 'stock-' + stockAlert : '' %>"
+                                            name="variants[<%= index %>][stock]" value="<%= row.stock %>" aria-label="Stock">
+                                        <% if (rowError('stock')) { %>
+                                            <div class="invalid-feedback d-block"><%= rowError('stock') %></div>
+                                        <% } else if (stockAlert === 'out') { %>
+                                            <div class="small fw-bold stock-note-out">Out of stock</div>
+                                        <% } else if (stockAlert === 'low') { %>
+                                            <div class="small fw-bold stock-note-low">Low stock</div>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <input type="number" min="0" class="form-control <%= rowError('lowStockThreshold') ? 'is-invalid' : '' %>"
+                                            name="variants[<%= index %>][lowStockThreshold]" value="<%= row.lowStockThreshold %>" aria-label="Low-stock threshold">
+                                        <% if (rowError('lowStockThreshold')) { %><div class="invalid-feedback d-block"><%= rowError('lowStockThreshold') %></div><% } %>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <% if (errors.variants) { %>
+                    <div class="invalid-feedback d-block mt-2"><%= errors.variants %></div>
+                <% } %>
+                <p class="small text-muted-kg mt-3 mb-0">Need more rows? Save, and 3 new empty rows appear. To stop selling a variant, set its stock to 0.</p>
+            </div>
+
+            <!-- ========== buttons ========== -->
+            <div class="d-flex justify-content-end gap-3 mb-4">
+                <a href="/admin/products" class="btn btn-outline-secondary px-4">Cancel</a>
+                <button type="submit" class="btn btn-kg fs-6 px-5">Save</button>
+            </div>
+        </form>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -7,6 +7,9 @@ const validate = require('../middleware/validate');
 const { adminOrderListSchema, statusChangeSchema  } = require('../validators/adminOrderValidators');
 const { orderIdSchema } = require('../validators/orderValidators');
 const { adminUserListSchema } = require('../validators/adminUserValidators');
+const { adminProductListSchema } = require('../validators/adminProductValidators');
+const { productIdSchema } = require('../validators/productValidators');
+
 
 
 // login page and form (open to everyone, otherwise no one could log in)
@@ -27,5 +30,17 @@ router.post('/orders/:id/status', requireAdmin, validate(orderIdSchema, 'params'
 router.post('/orders/:id/paid', requireAdmin, validate(orderIdSchema, 'params'), adminController.markingPaid);
 // users list (admins only, read-only), with search / role filters and paging
 router.get('/users', requireAdmin, validate(adminUserListSchema, 'query'), adminController.showUsers);
+// products list (admins only), with search / category / stock filters and paging
+router.get('/products', requireAdmin, validate(adminProductListSchema, 'query'), adminController.showProducts);
+// Deactivate / Activate buttons (nothing is deleted)
+router.post('/products/:id/deactivate', requireAdmin, validate(productIdSchema, 'params'), adminController.deactivatingProduct);
+router.post('/products/:id/activate', requireAdmin, validate(productIdSchema, 'params'), adminController.activatingProduct);
+// Add product: the empty form, and saving it
+router.get('/products/new', requireAdmin, adminController.showNewProduct);
+router.post('/products', requireAdmin, adminController.creatingProduct);
+// Edit product: the filled-in form, and saving it
+router.get('/products/:id/edit', requireAdmin, validate(productIdSchema, 'params'), adminController.showEditProduct);
+router.post('/products/:id', requireAdmin, validate(productIdSchema, 'params'), adminController.updatingProduct);
+
 
 module.exports = router;
