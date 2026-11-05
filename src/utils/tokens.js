@@ -41,7 +41,8 @@ function verifyRefreshToken(token) {
 function signAdminToken(user) {
     return jwt.sign({
         id: user.id,
-        role: user.role
+        role: user.role,
+        csrfToken: crypto.randomBytes(32).toString('hex'),// every admin form sends it back, and the server checks it matches the one in this token
     },
     process.env.ADMIN_JWT_SECRET, {
         expiresIn: process.env.ADMIN_TOKEN_EXPIRES_IN,

@@ -23,6 +23,7 @@ function requireAdmin(req, res, next) {
 
     req.admin = payload;        // for controllers: req.admin.id
     res.locals.admin = payload; // for EJS pages: every page can use "admin"
+    res.locals.csrfToken = payload.csrfToken; // for EJS forms: the hidden _csrf field reads it
     next();
 }
 

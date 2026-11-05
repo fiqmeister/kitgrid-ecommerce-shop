@@ -108,6 +108,7 @@
                                                 <form method="POST"
                                                     action="/admin/products/<%= product.id %>/deactivate"
                                                     class="d-inline">
+                                                    <%- include('../partials/csrf-field') %>
                                                     <button type="submit"
                                                         class="admin-text-button text-danger-kg">Deactivate</button>
                                                 </form>
@@ -115,6 +116,7 @@
                                                     <form method="POST"
                                                         action="/admin/products/<%= product.id %>/activate"
                                                         class="d-inline">
+                                                        <%- include('../partials/csrf-field') %>
                                                         <button type="submit"
                                                             class="admin-text-button text-success-kg">Activate</button>
                                                     </form>

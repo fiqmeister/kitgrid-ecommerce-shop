@@ -38,6 +38,7 @@
 
         <!-- Add sends to /admin/products, Edit sends to /admin/products/<id> -->
         <form method="POST" action="<%= productId ? '/admin/products/' + productId : '/admin/products' %>" novalidate>
+            <%- include('../partials/csrf-field') %>
 
             <!-- ========== Basic details ========== -->
             <div class="admin-panel mb-4">

@@ -114,6 +114,7 @@
 
                     <% if (order.nextStatuses.length > 0) { %>
                         <form method="POST" action="/admin/orders/<%= order.id %>/status">
+                            <%- include('../partials/csrf-field') %>
                             <label for="status" class="form-label fw-bold small">Change to</label>
                             <select class="form-select mb-3" id="status" name="status">
                                 <% order.nextStatuses.forEach(value => { %>
@@ -132,6 +133,7 @@
                     <hr>
 
                     <form method="POST" action="/admin/orders/<%= order.id %>/paid">
+                        <%- include('../partials/csrf-field') %>
                         <button type="submit" class="btn btn-outline-secondary w-100" <%= order.canMarkPaid ? '' : 'disabled' %>>Mark as paid</button>
                     </form>
                     <p class="small text-muted-kg mt-2 mb-0">Only for orders waiting for payment.</p>
