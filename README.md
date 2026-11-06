@@ -3,7 +3,7 @@
 > Online store for football coaches and team managers: matchday kits, training wear, training equipment and coach and staff apparel, with bulk pricing and an AI Kit Advisor. Open to individual players too.
 
 **Deployed URL:** TODO (deployment is planned for later; during development everything runs locally)
-**Admin dashboard:** `/admin` on the local server (TODO: add the local URL and port)
+**Admin dashboard:** `http://localhost:3000/admin` on the local server (the port comes from `PORT` in `.env`)
 **Test admin login:** TODO (create a demo account; never commit real credentials)
 
 ---
@@ -14,7 +14,7 @@
 
 **Product categories:** Matchday Kits, Training Wear, Training Equipment, Coach & Staff Apparel.
 
-**Business context:** TODO (1 to 2 sentences on who the shop serves and why existing shops fall short for team buyers)
+**Business context:** Most sportswear shops are built for one shopper buying one shirt in one size. A coach kitting out a squad has to add every size separately, cannot see the bulk price until checkout (or has to email a teamwear supplier for a quote), and only finds out at the end that a size is out of stock. In Singapore this buyer is often a volunteer coach or team manager of a school team, academy or amateur league side, working to a fixed budget. KitGrid makes the team order the main path (all sizes on one grid, bulk prices shown upfront, stock checked before checkout), while individual players can still buy a single item like in any other shop.
 
 **Goals**
 - Let a coach go from a brief ("U12 team of 16, S$800 budget") to a stock-checked bundle in one chat.
@@ -53,7 +53,7 @@ TODO: refine the acceptance criteria as you build, and add stories from your own
 
 ### Wireframes / mockups
 
-Designed in Figma (link: TODO). All customer frames are drawn: Home, Product list, Product detail, Cart, Checkout step 1 (Delivery), Checkout step 2 (Review & pay), Login/Register, Order confirmation, Order history and detail, Team profile, Kit Advisor panel (team and personal mode), States (loading, empty, error), Mobile (Home, Product detail, Cart) and the Design system sheet. All admin frames are drawn: Admin sign in, Orders list, Order detail (with status history and Mark as paid), Dashboard with the admin assistant panel, Products list, Product form (with football details and variants) and Users list.
+Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNEqBSj6JBGxTi/kitgrid?node-id=0-1&t=alvIKCQRt4xwdID4-1). All customer frames are drawn: Home, Product list, Product detail, Cart, Checkout step 1 (Delivery), Checkout step 2 (Review & pay), Login/Register, Order confirmation, Order history and detail, Team profile, Kit Advisor panel (team and personal mode), States (loading, empty, error), Mobile (Home, Product detail, Cart) and the Design system sheet. All admin frames are drawn: Admin sign in, Orders list, Order detail (with status history and Mark as paid), Dashboard with the admin assistant panel, Products list, Product form (with football details and variants) and Users list.
 
 ### Five Planes of UI/UX
 
@@ -80,7 +80,8 @@ Designed in Figma (link: TODO). All customer frames are drawn: Home, Product lis
 - 2-step checkout (Delivery, Review & pay) with transactional stock deduction and Stripe Checkout in test mode
 - Order lifecycle (pending payment, paid, processing, shipped, delivered, cancelled) with status history (audit trail) and order history search
 - Flat delivery fee of S$8.00, free on orders of 15+ items; Singapore delivery addresses only
-- EJS admin dashboard (orders, products, users) with sessions and CSRF protection
+- EJS admin dashboard (orders, products, users) with its own admin login (JWT in an `httpOnly`, `sameSite: strict` cookie), CSRF protection on every admin form, and a login rate limit
+- Login rate limits: 5 failed logins per 15 minutes per IP address on the admin login and the customer API login (successful logins are not counted)
 - Optional team profile (never required at checkout)
 - AI Kit Advisor (customer) and AI admin assistant, built with N8N; the advisor has a team mode (bundles with quantities) and a personal mode (single items); the admin assistant summarizes orders and the delivery backlog, flags low stock and proposes threshold changes that the admin confirms
 
@@ -88,20 +89,31 @@ Designed in Figma (link: TODO). All customer frames are drawn: Home, Product lis
 
 - **Bulk discount:** the tier is chosen from the total units of one product in the cart (all sizes and colours added together), then the percentage applies to that whole product line. Units of different products are never added together. The server calculates it; the price and discount are copied into `order_items` as a snapshot, so later price changes never alter past orders.
 - **Delivery fee:** flat S$8.00, S$0.00 when the order has 15 or more items.
-- **Stock deduction:** TODO (describe the DB transaction)
-- **Cart merge:** TODO (describe how guest and saved carts combine)
-- **Search:** TODO (describe how filters build the SQL query, parameterized)
+- **Stock deduction:** checkout runs in one database transaction. It creates the order, then for each item runs `UPDATE product_variants SET stock = stock - ? WHERE id = ? AND stock >= ?`. If any item updates 0 rows (not enough stock), the whole transaction is rolled back, so no order is created and no stock changes. Otherwise it saves the `order_items` price snapshot, the first `order_status_history` row (`pending_payment`) and empties the cart, then commits. Cancelling an order puts the items back into stock in the same way (one transaction with the status change).
+- **Cart merge:** after login, the React app sends the guest cart to `POST /api/cart/merge`. For each item the server adds the guest quantity to the quantity already saved for that account, capped at the variant's stock. An item is only saved when its quantity goes up, so out-of-stock items are skipped and saved quantities are never reduced. The final stock check happens at checkout.
+- **Search:** the product list query starts with `WHERE products.is_active = 1`, and each filter that was sent adds one `AND ...` condition with a `?` placeholder (search text, category, price range, pitch surface, skill level, age group, colours, tag). Filters on variants or tags use `products.id IN (SELECT product_id ...)`. Sorting only uses fixed texts from a list (newest, price low to high, price high to low), never text typed by the user. Paging uses `LIMIT ? OFFSET ?`, and a second query counts the total for the page buttons. The size and minimum-in-stock filters (stories 1 and 11) are not built yet.
+- **Admin CSRF token:** at admin login, a random value (`crypto.randomBytes(32)`) is stored inside the signed admin JWT. Every admin form sends it back in a hidden `_csrf` field, and a middleware compares the two before any other check; a missing or wrong value is refused with 403.
 
 ### AI features
 
 - **Kit Advisor (grounded + structured):** TODO (describe the N8N tools it calls, the JSON bundle it returns in team mode, and the single-item answer in personal mode)
-- **Admin assistant (grounded + structured):** a panel on the EJS admin dashboard, visible to admin sessions only. The admin clicks a quick button ("This week's orders", "Show low stock") or types a question. An N8N agent calls two read-only `/tools/admin` endpoints (API key): `orders-summary` (counts by status, revenue and the delivery backlog, meaning `paid` or `processing` orders not yet `shipped` and how long they have waited, for a date range and optional status) and `low-stock` (variants whose `stock` is at or below their `low_stock_threshold`). The agent returns JSON (`summary`, `low_stock`, `needs_attention`) that the page shows as a short summary plus tables, using figures from the database only. To change a threshold, the admin asks in plain language; the agent returns a proposed change (product and new value), the page shows it with a Confirm button, and only Confirm posts to an admin route (session and CSRF) that validates the value (a whole number in a fixed range, for example 0 to 500) and saves it. The agent has no write access.
+- **Admin assistant (grounded + structured):** a panel on the EJS admin dashboard, for logged-in admins only. The admin clicks a quick button ("This week's orders", "Show low stock", "Orders waiting to ship") or types a question (up to 300 characters). Express sends the question to an N8N webhook (protected by a secret header) and waits up to 90 seconds. The N8N agent answers only from four read-only `/api/tools` endpoints (API key):
+  - `GET /api/tools/stock/low`: variants whose `stock` is at or below their `low_stock_threshold`, with units sold in the last 30 days
+  - `GET /api/tools/orders/summary`: counts by status, paid revenue and unpaid orders older than 24 hours, for a date range
+  - `GET /api/tools/orders/to-ship`: paid or processing orders not yet shipped, with items and addresses grouped by postal district (a pick list for delivery)
+  - `GET /api/tools/variants`: finds a variant by name, colour, size or SKU (used for threshold changes)
+
+  The agent returns JSON (`reply`, `cards`, `attention`, `lowStock`, `proposals`) that the page shows as a short reply, summary cards, a "Needs attention" list and a low-stock table. To change a threshold, the admin asks in plain language; the agent returns a proposal (variant, current and new value), the page shows it with a Confirm button, and only Confirm posts to an admin route (admin cookie and CSRF token) that checks the value is a whole number from 0 to 1000 and saves it. The agent has no write access, and the server re-checks every value: in testing the AI once proposed 2000 and the server refused it. If N8N is down, slow or returns an empty answer, the page shows "The assistant is not available right now" instead of an error. Model: Groq (`openai/gpt-oss-120b`), with Google Gemini as the fallback model in N8N.
 
 ### Known limitations / bugs
 
 - Guest checkout is not supported: guests can fill a cart, but must log in or register to check out.
 - Singapore delivery addresses only, with one flat delivery fee.
 - Payments use Stripe test mode only.
+- Login rate-limit counts are kept in the server's memory: they reset when the server restarts and would not be shared between several servers. Register is not rate limited.
+- Admin log out only deletes the cookie. The admin JWT itself stays valid until it expires, so a stolen cookie would keep working until then.
+- The admin assistant uses free LLM tiers, so an answer can take 10 to 60 seconds, and it can be unavailable when the provider is busy or rate limited.
+- An admin form refused by the CSRF check or the threshold rule shows a plain JSON error page instead of the dashboard.
 - TODO (add more honestly as you find them)
 
 ### Pending features
@@ -141,20 +153,21 @@ Out of scope for now (deliberately dropped to keep the project feasible):
 | Backend | Node.js, Express |
 | Admin UI | EJS (server-rendered) |
 | Database | MariaDB via `mysql2` (connection pool, raw SQL written in the DAL only) |
-| Security | JWT, `csrf-csrf`, `express-rate-limit`, `cors` (restricted to `CLIENT_URL`), bcrypt |
+| Security | JWT (`jsonwebtoken`), CSRF token kept in the admin JWT (own middleware, Node `crypto`), `express-rate-limit`, `cors` (restricted to `CLIENT_URL`), bcrypt, Yup validation on every input |
 | Payments | Stripe Checkout (test mode, hosted page; webhooks forwarded to the laptop with the Stripe CLI) |
-| AI | N8N agents, LLM provider TODO |
+| AI | N8N agents (run locally with `npx n8n`); LLM: Groq (`openai/gpt-oss-120b`), with Google Gemini (`gemini-flash-lite-latest`) as the fallback |
 | Testing | TODO (for example Jest, Supertest) |
 | Hosting | TODO (deployment planned for later). During development, MariaDB, the Express API, the React app and N8N run locally |
 
-**Repo:** TODO (GitHub link)
+**Repo:** https://github.com/fiqmeister/kitgrid-ecommerce-shop
 
 ### Architecture
 
 ```
 React SPA  --JWT-->  Express API  -->  Controllers -> Services -> DAL -> MariaDB
-EJS admin  --session + CSRF-->  Express
-N8N agent  --API key-->  /tools endpoints
+EJS admin  --admin JWT cookie + CSRF token-->  Express /admin
+Express    --webhook secret header-->  N8N agent
+N8N agent  --API key-->  Express /api/tools (read-only)
 ```
 
 ### Data model (summary)
@@ -175,10 +188,11 @@ src/db/
 ├── reset.sql       drops every table (use it only to rebuild from scratch)
 ├── schema.sql      creates the database (utf8mb4) and every table
 ├── seed.sql        starting data: categories, bulk discount rules, an admin and a test customer, a team profile, sample products with variants, tags
+├── demo.sql        demo data: extra customers and orders #1001 to #1037 in every status, so the admin pages and the assistant have something to show
 └── migrations/     numbered .sql files for later structure changes (01_..., 02_...)
 ```
 
-Run order: `reset.sql` (only for a clean rebuild), then `schema.sql`, then `seed.sql`, then any files in `migrations/` in number order. All SQL lives in the DAL and uses `?` placeholders.
+Run order: `reset.sql` (only for a clean rebuild), then `schema.sql`, then `seed.sql`, then `demo.sql` (optional), then any files in `migrations/` in number order. All SQL lives in the DAL and uses `?` placeholders.
 
 ---
 
@@ -201,6 +215,9 @@ Run order: `reset.sql` (only for a clean rebuild), then `schema.sql`, then `seed
 | 6 | Bulk tier uses total units across sizes | Add 4 + 8 + 6 of one jersey in three sizes | 18 units get 15% off | |
 | 7 | Free delivery at 15+ items | Check out with 15 items, then with 14 | S$0.00, then S$8.00 | |
 | 8 | Low-stock flag and threshold change | Set a variant's stock at or below its threshold, then ask the admin assistant to change the threshold | The variant appears in the low-stock list; the new threshold is saved only after Confirm | |
+| 9 | AI proposal outside the allowed range | Ask the assistant to set a threshold to 2000, then press Confirm | 400 "Threshold cannot be above 1000"; nothing is saved | |
+| 10 | Forged admin form is refused | In DevTools, change the hidden `_csrf` value of a Deactivate form to `abc`, then submit | 403 "This form has expired. Reload the page and try again."; the product stays active | |
+| 11 | Login rate limit | Enter a wrong admin password 5 times, then try a 6th time with the correct password | The 6th try shows "Too many failed logins. Please wait 15 minutes and try again." (status 429) | |
 
 Note: unhandled exceptions and console errors count as failing tests, so check the browser console on every page.
 
@@ -220,16 +237,22 @@ DB_PORT=
 DB_USER=
 DB_PASSWORD=
 DB_NAME=
+CLIENT_URL=
 JWT_ACCESS_SECRET=
 JWT_REFRESH_SECRET=
-SESSION_SECRET=
-CSRF_SECRET=
+ACCESS_TOKEN_EXPIRES_IN=
+REFRESH_TOKEN_EXPIRES_IN=
+ADMIN_JWT_SECRET=
+ADMIN_TOKEN_EXPIRES_IN=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
-N8N_WEBHOOK_URL=
 N8N_TOOLS_API_KEY=
-CLIENT_URL=
+N8N_ADMIN_WEBHOOK_URL=
+N8N_ADMIN_WEBHOOK_KEY=
+N8N_ADVISOR_WEBHOOK_URL=
 ```
+
+`N8N_TOOLS_API_KEY` is the key N8N sends to `/api/tools`; `N8N_ADMIN_WEBHOOK_KEY` is the secret header Express sends to the N8N admin webhook. The Stripe and Kit Advisor values are used once those features are built.
 
 - **Local setup:** TODO (clone, `npm install` in the project root for the API and again in `/client`, create `.env` from `.env.example`, run `schema.sql` then `seed.sql`, start the API and the client, start N8N, and run the Stripe CLI to forward webhooks)
 - **Deployment steps:** TODO (deploy later). Also TODO: a pre-demo checklist (MariaDB, API, client, N8N and the Stripe CLI all running).
