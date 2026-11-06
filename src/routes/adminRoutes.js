@@ -5,15 +5,19 @@ const adminController = require('../controllers/adminController');
 const requireAdmin = require('../middleware/requireAdminCookie');
 const checkCsrf = require('../middleware/checkCsrf');
 const validate = require('../middleware/validate');
+const { adminLoginLimiter } = require('../middleware/loginLimiters');
 const { adminOrderListSchema, statusChangeSchema  } = require('../validators/adminOrderValidators');
 const { orderIdSchema } = require('../validators/orderValidators');
 const { adminUserListSchema } = require('../validators/adminUserValidators');
 const { adminProductListSchema, thresholdSchema } = require('../validators/adminProductValidators');
 const { productIdSchema } = require('../validators/productValidators');
 
+
+
 // login page and form (open to everyone, otherwise no one could log in)
 router.get('/login', adminController.showLogin);
-router.post('/login', adminController.loggingIn);
+// adminLoginLimiter: after 5 failed tries in 15 minutes, this IP is blocked from trying again for a while
+router.post('/login', adminLoginLimiter, adminController.loggingIn);
 // sign out (POST form in the header)
 router.post('/logout', requireAdmin, checkCsrf, adminController.loggingOut);
 // dashboard (admins only)
