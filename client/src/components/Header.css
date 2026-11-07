@@ -1,0 +1,46 @@
+/* styles for Header.jsx only. Colours come from the variables in index.css */
+
+/* navy strip: "FREE DELIVERY ON ORDERS OF 15+ ITEMS" */
+.kg-banner {
+    background-color: var(--kg-navy);
+    color: var(--kg-white);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 10px 16px;
+}
+
+/* white bar with the logo */
+.kg-header-main {
+    background-color: var(--kg-white);
+    border-bottom: 1px solid var(--kg-slate-200);
+}
+
+/* "Log in / Register" and "Cart" */
+.kg-header-link {
+    color: var(--kg-navy);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.kg-header-link:hover {
+    color: var(--kg-accent);
+}
+
+/* category menu row */
+.kg-category-nav {
+    background-color: var(--kg-white);
+    border-bottom: 1px solid var(--kg-slate-200);
+}
+
+.kg-category-link {
+    color: var(--kg-navy);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap; /* keeps "Coach & Staff Apparel" on one line; on phones the row scrolls sideways instead (overflow-auto) */
+}
+
+.kg-category-link:hover {
+    color: var(--kg-accent);
+}

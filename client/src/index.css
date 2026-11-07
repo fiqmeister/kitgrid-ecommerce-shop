@@ -1,0 +1,55 @@
+/* ---------- colours ----------
+   written once here, then used everywhere as var(--kg-navy) etc.
+   to change a colour later, change it only in this list */
+:root {
+    --kg-navy: #0F172A;         /* headings, dark buttons, footer */
+    --kg-slate: #64748B;        /* secondary text */
+    --kg-slate-700: #334155;    /* body text */
+    --kg-slate-300: #CBD5E1;    /* input borders */
+    --kg-slate-200: #E2E8F0;    /* card borders, dividers */
+    --kg-slate-100: #F1F5F9;    /* fills, table headers */
+    --kg-page: #F8FAFC;         /* page background */
+    --kg-white: #FFFFFF;        /* cards, inputs */
+    --kg-accent: #0284C7;       /* the one action colour: main buttons, links */
+    --kg-accent-dark: #0369A1;  /* button hover, text on accent tint */
+    --kg-accent-light: #38BDF8; /* highlights on navy */
+    --kg-accent-tint: #E0F2FE;  /* chips, selected */
+    --kg-success: #16A34A;      /* in stock, discounts, paid */
+    --kg-error: #DC2626;        /* errors */
+}
+
+/* ---------- whole shop ---------- */
+body {
+    font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; /* same as admin.css */
+    background-color: var(--kg-page);
+    color: var(--kg-slate-700);
+    font-size: 14px; /* "Body 14 / 400" in the design system */
+}
+
+h1, h2, h3 {
+    color: var(--kg-navy);
+    font-weight: 700;
+}
+
+/* the "kitgrid彡" logo text, same font as the admin logo */
+.kg-logo {
+    font-family: 'Geom', 'DM Sans', sans-serif;
+    font-weight: 700;
+    color: var(--kg-navy);
+    font-size: 38px;
+    line-height: 1;
+    text-decoration: none;
+}
+
+/* the main blue button ("Primary" in the design system): add to cart, checkout, pay */
+.btn-kg-primary {
+    background-color: var(--kg-accent);
+    color: var(--kg-white);
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.btn-kg-primary:hover {
+    background-color: var(--kg-accent-dark);
+    color: var(--kg-white);
+}

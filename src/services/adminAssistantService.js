@@ -18,7 +18,7 @@ async function askAssistant(question) {
                 'x-webhook-key': process.env.N8N_ADMIN_WEBHOOK_KEY, // N8N refuses the call without it (403)
             },
             body: JSON.stringify({ message: question }), // N8N reads it as body.message
-            signal: AbortSignal.timeout(wait_seconds * 1000), // give up after 45 seconds
+            signal: AbortSignal.timeout(wait_seconds * 1000), // give up after 90 seconds
         });
     } catch (err) {
         // fetch itself failed: N8N is not running, the address is wrong, or it took too long
