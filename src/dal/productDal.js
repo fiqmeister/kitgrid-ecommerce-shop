@@ -44,6 +44,14 @@ function buildFilterSql(filters) {
         sql += ' AND products.id IN (SELECT product_id FROM product_variants WHERE colour IN (?))';
         params.push(filters.colours);
     }
+    if (filters.size.length > 0) {
+        sql += ' AND products.id IN (SELECT product_id FROM product_variants WHERE size IN (?))';
+        params.push(filters.size);
+    }
+    if (filters.minStock) {
+        sql += ' AND products.id IN (SELECT product_id FROM product_variants GROUP BY product_id HAVING SUM(stock) >= ?)'; // show products whose stock meet the ? (min stock)
+        params.push(filters.minStock);
+    }
     if (filters.tag) {
         sql += ' AND products.id IN (SELECT product_tags.product_id FROM product_tags JOIN tags ON tags.id = product_tags.tag_id WHERE tags.name = ?)';
         params.push(filters.tag);
@@ -59,7 +67,7 @@ async function findAll(filters, sort, limit, offset) {
 
     const sql =
         `SELECT products.id, products.name, products.base_price, products.pitch_surface,
-                products.skill_level, products.material, categories.name AS category
+                products.skill_level, products.material, products.is_bulk_eligible, categories.name AS category
          FROM products
          JOIN categories ON categories.id = products.category_id
          WHERE products.is_active = 1` +
@@ -94,7 +102,8 @@ async function findById(id) {
     );
     return rows[0];
 }
-// find and return size/colour and stock of the product by using product id
+// find and return size/colour, age_group and stock of a product by using product id
+// for product detail page, query specific to the product id
 async function findVariants(id) {
     const [rows] = await pool.query(
         `SELECT id, sku, size, colour, age_group, stock
@@ -104,7 +113,6 @@ async function findVariants(id) {
         [id]
     );
     return rows;
-
 }
 // find tag names of the product
 async function findTags(id) {
@@ -126,4 +134,16 @@ async function findBulkDiscount() {
     );
     return rows;
 }
-module.exports = { findAll, count, findById, findVariants, findTags, findBulkDiscount };
+// variants of SEVERAL products in 1 query, productIds: [3, 5, 8, ...]
+// for product list(client-side)
+async function findVariantsForProducts(productIds) {
+    const [rows] = await pool.query(
+        `SELECT product_id, colour, age_group, stock
+        FROM product_variants
+        WHERE product_id IN (?)
+        ORDER BY id`,
+        [productIds]
+    );
+    return rows;
+}
+module.exports = { findAll, count, findById, findVariants, findTags, findBulkDiscount, findVariantsForProducts };
