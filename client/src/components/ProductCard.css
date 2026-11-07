@@ -1,0 +1,78 @@
+/* styles for ProductCard.jsx only. Colours come from the variables in index.css */
+
+/* the Card */
+.kg-card {
+    background-color: var(--kg-white);
+    border: 1px solid var(--kg-slate-200);
+    border-radius: 12px;
+    overflow: hidden; /* keeps the grey image box inside the rounded corners */
+}
+
+/* grey img placeholder */
+.kg-card-image {
+    background-color: var(--kg-slate-300);
+    color: var(--kg-slate);
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+/* product name */
+.kg-card-title {
+    font-size: 17px;
+    margin-bottom: 4px;
+}
+
+/* small grey lines */
+.kg-card-meta {
+    color: var(--kg-slate);
+    font-size: 13px;
+}
+
+/* round colour dot */
+.kg-colour-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--kg-slate-300);
+    display: inline-block;
+}
+
+/* "Bulk from ..." chip */
+.kg-bulk-chip {
+    background-color: var(--kg-accent-tint);
+    color: var(--kg-accent-dark);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    align-self: flex-start; /* chip only as wide as its text */
+}
+
+/* "S$38.00" */
+.kg-card-price {
+    color: var(--kg-navy);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* "/ unit" next to the price */
+.kg-card-unit {
+    color: var(--kg-slate);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.kg-stock-in {
+    color: var(--kg-success);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.kg-stock-out {
+    color: var(--kg-error);
+    font-size: 13px;
+    font-weight: 600;
+}

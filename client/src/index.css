@@ -19,6 +19,10 @@
 }
 
 /* ---------- whole shop ---------- */
+html {
+    overflow-y: scroll;
+}
+
 body {
     font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; /* same as admin.css */
     background-color: var(--kg-page);
@@ -41,7 +45,7 @@ h1, h2, h3 {
     text-decoration: none;
 }
 
-/* the main blue button ("Primary" in the design system): add to cart, checkout, pay */
+/* the main blue button: add to cart, checkout, pay */
 .btn-kg-primary {
     background-color: var(--kg-accent);
     color: var(--kg-white);
@@ -51,5 +55,17 @@ h1, h2, h3 {
 
 .btn-kg-primary:hover {
     background-color: var(--kg-accent-dark);
+    color: var(--kg-white);
+}
+/* the navy button: select sizes, reorder, create account */
+.btn-kg-dark {
+    background-color: var(--kg-navy);
+    color: var(--kg-white);
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.btn-kg-dark:hover {
+    background-color: var(--kg-slate-700);
     color: var(--kg-white);
 }
