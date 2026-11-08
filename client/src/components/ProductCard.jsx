@@ -4,7 +4,7 @@ import './ProductCard.css';
 
 // database values → the words the customer sees (same wording as the wireframe's Age group filter)
 const ageGroupLabels = {
-  mini_junior: 'Mini (U6–U9)',
+  mini_junior: 'Mini / Kids (U6–U9)',
   youth: 'Youth (U10–U16)',
   senior: 'Senior',
 };
