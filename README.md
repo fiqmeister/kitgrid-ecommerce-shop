@@ -91,7 +91,8 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 - **Delivery fee:** flat S$8.00, S$0.00 when the order has 15 or more items.
 - **Stock deduction:** checkout runs in one database transaction. It creates the order, then for each item runs `UPDATE product_variants SET stock = stock - ? WHERE id = ? AND stock >= ?`. If any item updates 0 rows (not enough stock), the whole transaction is rolled back, so no order is created and no stock changes. Otherwise it saves the `order_items` price snapshot, the first `order_status_history` row (`pending_payment`) and empties the cart, then commits. Cancelling an order puts the items back into stock in the same way (one transaction with the status change).
 - **Cart merge:** after login, the React app sends the guest cart to `POST /api/cart/merge`. For each item the server adds the guest quantity to the quantity already saved for that account, capped at the variant's stock. An item is only saved when its quantity goes up, so out-of-stock items are skipped and saved quantities are never reduced. The final stock check happens at checkout.
-- **Search:** the product list query starts with `WHERE products.is_active = 1`, and each filter that was sent adds one `AND ...` condition with a `?` placeholder (search text, category, price range, pitch surface, skill level, age group, colours, tag). Filters on variants or tags use `products.id IN (SELECT product_id ...)`. Sorting only uses fixed texts from a list (newest, price low to high, price high to low), never text typed by the user. Paging uses `LIMIT ? OFFSET ?`, and a second query counts the total for the page buttons. The size and minimum-in-stock filters (stories 1 and 11) are not built yet.
+- **Search:** the product list query starts with `WHERE products.is_active = 1`, and each filter that was sent adds one `AND ...` condition with a `?` placeholder (search text, category, price range, pitch surface, skill level, age group, colours, sizes, minimum in stock, tag). Filters on variants or tags use `products.id IN (SELECT product_id ...)`. Minimum in stock counts the total stock of all sizes of a product (`GROUP BY product_id HAVING SUM(stock) >= ?`). Sorting only uses fixed texts from a list (newest, price low to high, price high to low), never text typed by the user. Paging uses `LIMIT ? OFFSET ?` (12 products per page), and a second query counts the total for the page buttons. The colours, age groups and total stock on the product cards come from one extra query for all products on the page (`WHERE product_id IN (?)`), not one query per product. The "Bulk from" price on a card is the base price with the highest bulk tier applied.
+- **Shop filters live in the URL:** in the React shop, every filter, the sort, the search words and the page number are kept in the address bar (for example `/products?categoryId=1&size=M,L&sort=price_asc`). Changing a filter copies the current URL with `URLSearchParams`, changes one value, removes `page` (so the customer starts again at page 1) and moves to the new URL. The product list fetches again whenever the URL changes. So a filtered list can be bookmarked or shared, the browser Back button undoes the last filter, and a refresh keeps the filters. A header category link or a new search starts from an empty URL. Removing a chip in "Active filters" removes only that one value.
 - **Admin CSRF token:** at admin login, a random value (`crypto.randomBytes(32)`) is stored inside the signed admin JWT. Every admin form sends it back in a hidden `_csrf` field, and a middleware compares the two before any other check; a missing or wrong value is refused with 403.
 
 ### AI features
@@ -114,6 +115,9 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 - Admin log out only deletes the cookie. The admin JWT itself stays valid until it expires, so a stolen cookie would keep working until then.
 - The admin assistant uses free LLM tiers, so an answer can take 10 to 60 seconds, and it can be unavailable when the provider is busy or rate limited.
 - An admin form refused by the CSRF check or the threshold rule shows a plain JSON error page instead of the dashboard.
+- The React shop keeps the customer's access and refresh tokens in `localStorage`. Any JavaScript on the page can read `localStorage`, so a cross-site scripting (XSS) bug could leak the tokens. This was accepted to keep the project simple. React escapes text it displays, and the access token is short-lived. An `httpOnly` cookie (as the admin side uses) would be safer.
+- If a customer changes two filters very quickly, a slow first answer can arrive after the second and briefly show the older results. Changing any filter again fixes it.
+- Product cards show a grey placeholder box instead of product photos.
 - TODO (add more honestly as you find them)
 
 ### Pending features
@@ -149,7 +153,7 @@ Out of scope for now (deliberately dropped to keep the project feasible):
 
 | Area | Technology |
 |---|---|
-| Frontend | React, Jotai, Formik, Yup, JavaScript |
+| Frontend | React 19 with Vite (in `/client`), wouter (pages and links), axios (API calls; interceptors add the access token and refresh it once on a 401), Bootstrap 5.3 (grid and form styles) with KitGrid colours as CSS variables, JavaScript. Planned: Jotai, Formik, Yup |
 | Backend | Node.js, Express |
 | Admin UI | EJS (server-rendered) |
 | Database | MariaDB via `mysql2` (connection pool, raw SQL written in the DAL only) |
@@ -218,6 +222,9 @@ Run order: `reset.sql` (only for a clean rebuild), then `schema.sql`, then `seed
 | 9 | AI proposal outside the allowed range | Ask the assistant to set a threshold to 2000, then press Confirm | 400 "Threshold cannot be above 1000"; nothing is saved | |
 | 10 | Forged admin form is refused | In DevTools, change the hidden `_csrf` value of a Deactivate form to `abc`, then submit | 403 "This form has expired. Reload the page and try again."; the product stays active | |
 | 11 | Login rate limit | Enter a wrong admin password 5 times, then try a 6th time with the correct password | The 6th try shows "Too many failed logins. Please wait 15 minutes and try again." (status 429) | |
+| 12 | Shop filters combine and stay in the URL | On `/products`, open Matchday Kits, tick size M, sort by price low to high, then press F5 | 3 products, cheapest first; after F5 the same filters, chips and sort are still shown | |
+| 13 | Search starts a new list | Open Matchday Kits, then search `tee` in the header | The category is dropped; the title reads Results for "tee" with a `"tee" ×` chip; removing the chip empties the search box | |
+| 14 | Expired access token is refreshed once | In DevTools, replace `accessToken` in `localStorage` with an invalid value (keep a valid `refreshToken`), then make a request that needs login | Network tab: 401, then `POST /api/auth/refresh` 200, then the same request 200 | |
 
 Note: unhandled exceptions and console errors count as failing tests, so check the browser console on every page.
 
@@ -251,6 +258,8 @@ N8N_ADMIN_WEBHOOK_URL=
 N8N_ADMIN_WEBHOOK_KEY=
 N8N_ADVISOR_WEBHOOK_URL=
 ```
+
+The React app has its own `client/.env` (copy `client/.env.example`) with a single value, `VITE_API_URL` (the API address, for example `http://localhost:3000/api`). Vite puts every `VITE_` value into the JavaScript sent to the browser, so no secret ever goes in this file.
 
 `N8N_TOOLS_API_KEY` is the key N8N sends to `/api/tools`; `N8N_ADMIN_WEBHOOK_KEY` is the secret header Express sends to the N8N admin webhook. The Stripe and Kit Advisor values are used once those features are built.
 
