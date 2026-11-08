@@ -36,11 +36,16 @@
 
 .kg-category-link {
     color: var(--kg-navy);
-    font-weight: 600;
+    font-weight: 500;
     text-decoration: none;
     white-space: nowrap; /* keeps "Coach & Staff Apparel" on one line; on phones the row scrolls sideways instead (overflow-auto) */
 }
 
 .kg-category-link:hover {
     color: var(--kg-accent);
+}
+
+.kg-category-link.active {
+    font-weight: 700;
+    text-decoration: none;
 }

@@ -1,0 +1,28 @@
+/* styles for Pagination.jsx only */
+
+/* the square page buttons: ‹ 1 2 › */
+.kg-page-btn {
+    min-width: 36px;
+    height: 36px;
+    background-color: var(--kg-white);
+    border: 1px solid var(--kg-slate-300);
+    border-radius: 8px;
+    color: var(--kg-navy);
+    font-weight: 600;
+}
+
+.kg-page-btn:hover:not(:disabled) {
+    border-color: var(--kg-accent);
+}
+
+/* the page you are on: solid blue */
+.kg-page-btn.active {
+    background-color: var(--kg-accent);
+    border-color: var(--kg-accent);
+    color: var(--kg-white);
+}
+
+/* ‹ on page 1 and › on the last page */
+.kg-page-btn:disabled {
+    opacity: 0.4;
+}

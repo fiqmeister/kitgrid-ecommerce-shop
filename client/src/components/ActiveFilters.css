@@ -1,0 +1,15 @@
+/* styles for ActiveFilters.jsx only: the "Filter chip" chip */
+.kg-filter-chip {
+    background-color: var(--kg-accent-tint);
+    color: var(--kg-accent-dark);
+    border: 1px solid transparent;
+    border-radius: 15px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* show it can be clicked */
+.kg-filter-chip:hover {
+    border-color: var(--kg-accent);
+}
