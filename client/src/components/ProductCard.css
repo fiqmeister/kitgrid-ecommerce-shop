@@ -31,15 +31,6 @@
     font-size: 13px;
 }
 
-/* round colour dot */
-.kg-colour-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: 1px solid var(--kg-slate-300);
-    display: inline-block;
-}
-
 /* "Bulk from ..." chip */
 .kg-bulk-chip {
     background-color: var(--kg-accent-tint);

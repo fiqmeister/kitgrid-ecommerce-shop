@@ -1,0 +1,70 @@
+/* styles for FilterSidebar.jsx only. Colours come from the variables in index.css */
+
+/* the white Filters box */
+.kg-filters {
+    background-color: var(--kg-white);
+    border: 1px solid var(--kg-slate-200);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.kg-filters-title {
+    font-size: 17px;
+    margin-bottom: 0;
+}
+
+/* "Clear all" button */
+.kg-link-button {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--kg-accent);
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.kg-link-button:hover {
+    text-decoration: underline;
+}
+
+/* each section (Price, Colour...) with a thin line above it */
+.kg-filter-group {
+    border-top: 1px solid var(--kg-slate-200);
+    padding: 12px 0;
+}
+
+/* "Price (S$)", "Colour"... */
+.kg-filter-label {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* "Size chip" */
+.kg-size-chip {
+    min-width: 40px;
+    height: 36px;
+    background-color: var(--kg-white);
+    border: 1px solid var(--kg-slate-300);
+    border-radius: 8px;
+    color: var(--kg-navy);
+    font-weight: 600;
+}
+
+/* a chosen size */
+.kg-size-chip.active {
+    border-color: var(--kg-accent);
+    background-color: var(--kg-accent-tint);
+    color: var(--kg-accent-dark);
+}
+
+.kg-stock-box {
+    max-width: 120px;
+}
+
+/* "Total across all sizes" */
+.kg-filter-hint {
+    color: var(--kg-slate);
+    font-size: 12px;
+    margin-top: 4px;
+}

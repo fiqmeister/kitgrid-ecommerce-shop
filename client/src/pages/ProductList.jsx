@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { Link, useSearch } from 'wouter';
 import api from '../api';
 import ProductCard from '../components/ProductCard';
+import FilterSidebar from '../components/FilterSidebar';
 
 export default function ProductList() {
   // the text after "?" in the address bar, e.g. "categoryId=2&size=M" ("" when there is none)
@@ -30,7 +31,7 @@ export default function ProductList() {
     fetchProducts();
   }, [search]); // runs again every time the part after "?" changes (another category, filter, page...)
 
-  // decide what goes in the main area: one of the 4 states from kitgrid_states_v2
+  // 4 states: loading, error, 
   let content;
   if (loading) {
     content = <p className="kg-card-meta">Loading products…</p>;
@@ -47,7 +48,7 @@ export default function ProductList() {
   } else {
     content = (
       // Bootstrap grid: 1 card per row on phones, 2 on tablets, 3 on laptops (like the wireframe)
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4">
         {result.items.map(product => (
           <div className="col" key={product.id}>
             <ProductCard product={product} />
@@ -59,12 +60,20 @@ export default function ProductList() {
 
   return (
     <>
+    {/* title and item count */}
       <div className="d-flex justify-content-between align-items-baseline mb-3">
         <h1>All products</h1>
         {/* only show the count once the products have arrived */}
         {!loading && !error && <span className="kg-card-meta">{result.total} items</span>}
       </div>
-      {content}
+      <div className="row g-4">
+        <div className="col-lg-3">
+            <FilterSidebar />
+        </div>
+        <div className="col-lg-9">
+          {content}  
+        </div>
+      </div>
     </>
   );
 }
