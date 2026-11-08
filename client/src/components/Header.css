@@ -17,6 +17,28 @@
     border-bottom: 1px solid var(--kg-slate-200);
 }
 
+/* the search box */
+.kg-search {
+    flex: 1 1 100%;
+    order: 3;
+}
+
+/* laptops (992px and wider, Bootstrap's "lg"): back in the middle of the bar, up to 420px wide */
+@media (min-width: 992px) {
+    .kg-search {
+        flex: 0 1 420px;
+        order: 0;
+        margin-left: auto;
+    }
+}
+
+/* light grey box like the wireframe */
+.kg-search .form-control {
+    background-color: var(--kg-slate-100);
+    border-color: var(--kg-slate-300);
+    border-radius: 8px;
+}
+
 /* "Log in / Register" and "Cart" */
 .kg-header-link {
     color: var(--kg-navy);
