@@ -50,6 +50,19 @@
     color: var(--kg-accent);
 }
 
+/* "Hi, Alex Tan" when logged in */
+.kg-header-user {
+    color: var(--kg-navy);
+    font-weight: 600;
+}
+
+/* the Log out button looks like the other header links, not like a grey button */
+.kg-logout-button {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
 /* category menu row */
 .kg-category-nav {
     background-color: var(--kg-white);

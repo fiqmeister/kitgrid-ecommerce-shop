@@ -72,6 +72,7 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 ### Major features
 
 - Customer and admin roles with JWT (access + refresh tokens, blacklist)
+- Customer log in and register on one page, with inline validation (the same Yup rules as the server) and Show/Hide password. A new account is logged in straight away. The header shows the customer's name, and Log out revokes the refresh token on the server
 - Product catalog with football-specific columns (nullable per category), variants (size, colour, age group, SKU, stock)
 - Multi-criteria product search (category, price, colour, age group, size, minimum in stock)
 - Cart: guest, logged-in, merged on login
@@ -153,7 +154,7 @@ Out of scope for now (deliberately dropped to keep the project feasible):
 
 | Area | Technology |
 |---|---|
-| Frontend | React 19 with Vite (in `/client`), wouter (pages and links), axios (API calls; interceptors add the access token and refresh it once on a 401), Bootstrap 5.3 (grid and form styles) with KitGrid colours as CSS variables, JavaScript. Planned: Jotai, Formik, Yup |
+| Frontend | React 19 with Vite (in `/client`), wouter (pages and links), axios (API calls; interceptors add the access token and refresh it once on a 401), Bootstrap 5.3 (grid and form styles) with KitGrid colours as CSS variables, Jotai (the logged-in customer shared by the header and the forms, through a user store hook that also saves it in `localStorage`), Formik with Yup (forms with inline validation), JavaScript |
 | Backend | Node.js, Express |
 | Admin UI | EJS (server-rendered) |
 | Database | MariaDB via `mysql2` (connection pool, raw SQL written in the DAL only) |
@@ -211,7 +212,7 @@ Run order: `reset.sql` (only for a clean rebuild), then `schema.sql`, then `seed
 
 | # | Test | Steps | Expected result | Pass? |
 |---|---|---|---|---|
-| 1 | Register and log in | TODO | TODO | |
+| 1 | Register and log in | On `/login`, fill in "Create an account" with a new email and the password `password1`. Then log out and log in again with the same details on the left card | Register 201, then login 200. The header shows "Hi, (name)" straight away. Logging in again works. Wrong password: "Invalid email or password" and no refresh request | |
 | 2 | Guest cart merges after login | TODO | TODO | |
 | 3 | Order reduces stock | TODO | TODO | |
 | 4 | Customer cannot open `/admin` | TODO | TODO | |
@@ -225,6 +226,8 @@ Run order: `reset.sql` (only for a clean rebuild), then `schema.sql`, then `seed
 | 12 | Shop filters combine and stay in the URL | On `/products`, open Matchday Kits, tick size M, sort by price low to high, then press F5 | 3 products, cheapest first; after F5 the same filters, chips and sort are still shown | |
 | 13 | Search starts a new list | Open Matchday Kits, then search `tee` in the header | The category is dropped; the title reads Results for "tee" with a `"tee" ×` chip; removing the chip empties the search box | |
 | 14 | Expired access token is refreshed once | In DevTools, replace `accessToken` in `localStorage` with an invalid value (keep a valid `refreshToken`), then make a request that needs login | Network tab: 401, then `POST /api/auth/refresh` 200, then the same request 200 | |
+| 15 | Log out revokes the refresh token | Log in, copy the `refreshToken` from `localStorage`, click Log out, then send that token to `POST /api/auth/refresh` | Log out: 204, the header shows "Log in / Register", and `localStorage` is empty. The refresh call: 401 "Invalid refresh token" | |
+| 16 | Inline validation before sending | On `/login`, click Create account with empty boxes, then type the password `abcdefgh` | "Name is required", "Email is required", "Password is required", then "Password must include a number". No request is sent | |
 
 Note: unhandled exceptions and console errors count as failing tests, so check the browser console on every page.
 
