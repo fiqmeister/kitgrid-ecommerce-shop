@@ -1,0 +1,30 @@
+/* the white Log in / Create account cards (LoginForm and RegisterForm) */
+.kg-auth-card {
+    background-color: var(--kg-white);
+    border-radius: 12px;
+    padding: 24px;
+    height: 100%; /* both cards the same height when side by side */
+}
+
+.kg-auth-subtitle {
+    color: var(--kg-slate);
+    margin-bottom: 24px;
+}
+
+/* the "Show" / "Hide" text button inside the password box */
+.kg-show-button {
+    color: var(--kg-accent);
+    font-weight: 600;
+    font-size: 12px;
+    border: 1px solid var(--kg-slate-300);
+    border-left: none;
+    background-color: var(--kg-white);
+}
+
+.kg-auth-note {
+    color: var(--kg-slate);
+    font-size: 13px;
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 0;
+}
