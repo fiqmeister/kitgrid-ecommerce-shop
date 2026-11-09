@@ -2,6 +2,7 @@
 .kg-auth-card {
     background-color: var(--kg-white);
     border-radius: 12px;
+    border: 1px solid var(--kg-slate-200);
     padding: 24px;
     height: 100%; /* both cards the same height when side by side */
 }

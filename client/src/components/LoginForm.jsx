@@ -80,7 +80,7 @@ export default function LoginForm() {
                 )}
             </Formik>
 
-            <p className="kg-auth-note">No account yet? Create one on the right.</p>
+            <p className="kg-auth-note">No account yet? Create one now!</p>
         </div>
     );
 }
