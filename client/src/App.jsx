@@ -3,6 +3,7 @@ import { Router, Route } from 'wouter';
 import Header from './components/Header'; // import Header
 import ProductList from './pages/ProductList';
 import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/login" component={LoginForm}>
             <h1>Log in / Register</h1>
           </Route>
+          <Route path="/register" component={RegisterForm}/>
           <Route path="/cart">
             <h1>Cart</h1>
           </Route>
