@@ -50,6 +50,9 @@ api.interceptors.response.use(
       // the refresh token is also expired or was revoked: the user must log in again
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      // load the login page, every atom start again
+      window.location.href = '/login';
       throw error;
     }
 

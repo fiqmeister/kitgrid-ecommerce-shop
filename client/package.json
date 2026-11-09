@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "axios": "^1.21.0",
+    "formik": "^2.4.9",
+    "jotai": "^3.0.2",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "wouter": "^3.13.0"
+    "wouter": "^3.13.0",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",

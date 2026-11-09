@@ -5,6 +5,7 @@ import ProductList from './pages/ProductList';
 
 
 function App() {
+
   return (
     <>
       <Header /> {/* the Header on every page */}
