@@ -1,12 +1,7 @@
 // the chips above the product grid: one chip per filter in the address bar, × removes just that one (kitgrid_product_list_v2)
 import { useSearch, useLocation } from 'wouter';
 import './ActiveFilters.css';
-
-const ageGroupLabels = {
-  mini_junior: 'Mini / Kids (U6–U9)',
-  youth: 'Youth (U10–U16)',
-  senior: 'Senior',
-};
+import ageGroupLabels from '../ageGroups';
 
 export default function ActiveFilters() {
   const search = useSearch();

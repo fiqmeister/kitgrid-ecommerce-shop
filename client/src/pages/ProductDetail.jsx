@@ -1,7 +1,7 @@
 // the product detail page: /products/5
 // step 1: loads one product and shows the top info and the "Product details" card
 // the colour picker, size table, bulk tiers and totals come in the next steps
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect} from 'react';
 import { Link } from 'wouter';
 import api from '../api';
 import categories from '../categories';
