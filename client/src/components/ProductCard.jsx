@@ -1,13 +1,7 @@
 // one product in the product grid: image box, name, age group, colour dots, bulk price, price, stock, button
 import { Link } from 'wouter';
 import './ProductCard.css';
-
-// database values → the words the customer sees (same wording as the wireframe's Age group filter)
-const ageGroupLabels = {
-  mini_junior: 'Mini / Kids (U6–U9)',
-  youth: 'Youth (U10–U16)',
-  senior: 'Senior',
-};
+import ageGroupLabels from '../ageGroups';
 
 // product: one item from GET /api/products, e.g. { id, name, basePrice, colours, ageGroups, totalStock, bulkFromPrice, ... }
 export default function ProductCard({ product }) {

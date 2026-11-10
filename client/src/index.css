@@ -16,6 +16,8 @@
     --kg-accent-tint: #E0F2FE;  /* chips, selected */
     --kg-success: #16A34A;      /* in stock, discounts, paid */
     --kg-error: #DC2626;        /* errors */
+    --kg-success-light: #4ADE80; /* discount line on the navy summary box */
+
 }
 
 /* ---------- whole shop ---------- */

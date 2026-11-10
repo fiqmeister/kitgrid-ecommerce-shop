@@ -1,0 +1,14 @@
+/* styles for Breadcrumb.jsx only */
+.kg-breadcrumb {
+    color: var(--kg-slate);
+    font-size: 13px;
+}
+
+.kg-breadcrumb a {
+    color: var(--kg-slate);
+    text-decoration: none;
+}
+
+.kg-breadcrumb a:hover {
+    text-decoration: underline;
+}

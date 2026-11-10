@@ -1,0 +1,152 @@
+/* styles for ProductDetail.jsx only. Colours come from the variables in index.css */
+
+/* big grey image placeholder: shorter on phones (mobile-first), taller on laptops */
+.kg-detail-image {
+    background-color: var(--kg-slate-300);
+    color: var(--kg-slate);
+    border-radius: 12px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+@media (min-width: 992px) {
+    .kg-detail-image {
+        height: 440px;
+    }
+}
+
+/* "S$38.00": bigger than the price on the cards */
+.kg-detail-price {
+    color: var(--kg-navy);
+    font-size: 30px;
+    font-weight: 700;
+}
+
+/* one fact: grey label on the left, bold value next to it, a thin line underneath */
+.kg-spec-row {
+    display: flex;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--kg-slate-100);
+}
+
+.kg-spec-row span {
+    color: var(--kg-slate);
+    width: 120px;
+    flex-shrink: 0; /* the label keeps its width even when the value is long */
+}
+
+.kg-spec-row strong {
+    color: var(--kg-navy);
+}
+
+/* "Colour:" and other small bold labels */
+.kg-detail-label {
+    color: var(--kg-navy);
+    font-weight: 600;
+}
+
+/* one round colour button */
+.kg-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--kg-slate-300); /* so White is still visible */
+    padding: 0;
+}
+
+/* the chosen colour gets a blue ring with a small gap */
+.kg-swatch-selected {
+    outline: 2px solid var(--kg-accent);
+    outline-offset: 3px;
+}
+
+/* navy header row, like the wireframe */
+.kg-size-table thead th {
+    background-color: var(--kg-navy);
+    color: var(--kg-white);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* out-of-stock rows are greyed out */
+.kg-size-table .kg-size-out td {
+    color: var(--kg-slate-300);
+}
+
+/* the small number box on the right */
+.kg-qty-input {
+    width: 80px;
+    display: inline-block;
+    text-align: center;
+}
+/* one bulk tier box */
+.kg-tier {
+    background-color: var(--kg-white);
+    border: 1px solid var(--kg-slate-200);
+    border-radius: 8px;
+    padding: 8px;
+    text-align: center;
+    height: 100%; /* all boxes in a row the same height */
+}
+
+/* the tier the customer has reached */
+.kg-tier-active {
+    border: 2px solid var(--kg-accent);
+    background-color: var(--kg-accent-tint);
+}
+
+/* "10–14 units" and "Standard" */
+.kg-tier-range {
+    color: var(--kg-slate);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Tier box: "Standard" (navy) or "10% off" (green) */
+.kg-tier-label {
+    color: var(--kg-navy);
+    font-size: 17px;
+    font-weight: 700;
+}
+
+/* "10% off" */
+.kg-tier-off {
+    color: var(--kg-success);
+}
+
+/* the navy summary box */
+.kg-summary {
+    background-color: var(--kg-navy);
+    color: var(--kg-white);
+    border-radius: 12px;
+    padding: 20px 24px;
+}
+
+/* one line: label on the left, amount on the right */
+.kg-summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+}
+
+.kg-summary-discount {
+    color: var(--kg-success-light);
+}
+
+/* the Total line: a divider above it and a bigger blue amount */
+.kg-summary-total {
+    border-top: 1px solid var(--kg-slate-700);
+    margin-top: 8px;
+    padding-top: 10px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.kg-summary-total strong {
+    color: var(--kg-accent-light);
+    font-size: 24px;
+}
