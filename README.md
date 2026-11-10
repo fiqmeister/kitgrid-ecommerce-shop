@@ -76,7 +76,7 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 - Product catalog with football-specific columns (nullable per category), variants (size, colour, age group, SKU, stock)
 - Multi-criteria product search (category, price, colour, age group, size, minimum in stock)
 - Cart: guest, logged-in, merged on login
-- Matrix quantity grid on product pages (enter every size, add in one click)
+- Matrix quantity grid on product pages: pick a colour, then type a quantity for every size in one table (capped at the stock; out-of-stock sizes are disabled). The bulk tier reached is highlighted and the units, subtotal, discount and total update as you type. Adding every size to the cart in one click comes with the cart
 - Bulk discount tiers per product: 10+ units = 10%, 15+ = 15%, 25+ = 20% (units counted across all sizes of that product)
 - 2-step checkout (Delivery, Review & pay) with transactional stock deduction and Stripe Checkout in test mode
 - Order lifecycle (pending payment, paid, processing, shipped, delivered, cancelled) with status history (audit trail) and order history search
@@ -94,6 +94,7 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 - **Cart merge:** after login, the React app sends the guest cart to `POST /api/cart/merge`. For each item the server adds the guest quantity to the quantity already saved for that account, capped at the variant's stock. An item is only saved when its quantity goes up, so out-of-stock items are skipped and saved quantities are never reduced. The final stock check happens at checkout.
 - **Search:** the product list query starts with `WHERE products.is_active = 1`, and each filter that was sent adds one `AND ...` condition with a `?` placeholder (search text, category, price range, pitch surface, skill level, age group, colours, sizes, minimum in stock, tag). Filters on variants or tags use `products.id IN (SELECT product_id ...)`. Minimum in stock counts the total stock of all sizes of a product (`GROUP BY product_id HAVING SUM(stock) >= ?`). Sorting only uses fixed texts from a list (newest, price low to high, price high to low), never text typed by the user. Paging uses `LIMIT ? OFFSET ?` (12 products per page), and a second query counts the total for the page buttons. The colours, age groups and total stock on the product cards come from one extra query for all products on the page (`WHERE product_id IN (?)`), not one query per product. The "Bulk from" price on a card is the base price with the highest bulk tier applied.
 - **Shop filters live in the URL:** in the React shop, every filter, the sort, the search words and the page number are kept in the address bar (for example `/products?categoryId=1&size=M,L&sort=price_asc`). Changing a filter copies the current URL with `URLSearchParams`, changes one value, removes `page` (so the customer starts again at page 1) and moves to the new URL. The product list fetches again whenever the URL changes. So a filtered list can be bookmarked or shared, the browser Back button undoes the last filter, and a refresh keeps the filters. A header category link or a new search starts from an empty URL. Removing a chip in "Active filters" removes only that one value.
+- **Live total on the product page:** the quantities typed are kept in one object keyed by variant id (one colour + one size), so switching colour keeps what was typed. The page adds up the units of every size and colour, picks the highest tier reached, then works out subtotal = price × units, discount = subtotal × percent, total = subtotal − discount, rounding to cents at each step. These are the same steps and the same rounding as the server's cart (`priceCart` in `src/services/cartService.js`), so the total on the product page matches the cart. The tier boxes show "10% off" rather than a per-unit price, because a rounded per-unit price times the units can differ from the real total by a few cents (S$9.50 × 85% = S$8.08 a unit, but 15 units cost S$121.12, not S$121.20).
 - **Admin CSRF token:** at admin login, a random value (`crypto.randomBytes(32)`) is stored inside the signed admin JWT. Every admin form sends it back in a hidden `_csrf` field, and a middleware compares the two before any other check; a missing or wrong value is refused with 403.
 
 ### AI features
@@ -118,7 +119,8 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 - An admin form refused by the CSRF check or the threshold rule shows a plain JSON error page instead of the dashboard.
 - The React shop keeps the customer's access and refresh tokens in `localStorage`. Any JavaScript on the page can read `localStorage`, so a cross-site scripting (XSS) bug could leak the tokens. This was accepted to keep the project simple. React escapes text it displays, and the access token is short-lived. An `httpOnly` cookie (as the admin side uses) would be safer.
 - If a customer changes two filters very quickly, a slow first answer can arrive after the second and briefly show the older results. Changing any filter again fixes it.
-- Product cards show a grey placeholder box instead of product photos.
+- Product cards and product pages show a grey placeholder box instead of product photos.
+- On a product page, sizes are listed in the order they were added to the database, not smallest to biggest (for example S, M, L, then the kids' sizes).
 - TODO (add more honestly as you find them)
 
 ### Pending features
@@ -228,6 +230,10 @@ Run order: `reset.sql` (only for a clean rebuild), then `schema.sql`, then `seed
 | 14 | Expired access token is refreshed once | In DevTools, replace `accessToken` in `localStorage` with an invalid value (keep a valid `refreshToken`), then make a request that needs login | Network tab: 401, then `POST /api/auth/refresh` 200, then the same request 200 | |
 | 15 | Log out revokes the refresh token | Log in, copy the `refreshToken` from `localStorage`, click Log out, then send that token to `POST /api/auth/refresh` | Log out: 204, the header shows "Log in / Register", and `localStorage` is empty. The refresh call: 401 "Invalid refresh token" | |
 | 16 | Inline validation before sending | On `/login`, click Create account with empty boxes, then type the password `abcdefgh` | "Name is required", "Email is required", "Password is required", then "Password must include a number". No request is sent | |
+| 17 | Product page tier counts all sizes and colours | On the Matchday Jersey page, type Navy S 4 and Navy L 5, then switch to Red and type Red S 6 | 15 units; the "15–24 units / 15% off" box is highlighted; S$570.00 − S$85.50 = S$484.50 | |
+| 18 | Product page total uses the cart's rounding | On the Training Bib page (S$9.50), type 15 | S$142.50 − S$21.38 = S$121.12 (the same total the cart shows for 15 bibs) | |
+| 19 | Quantity is capped at stock | On the Matchday Jersey page, choose Red and type 10 for size M (3 in stock) | The box changes to 3; Red Youth XS (out of stock) is greyed out and cannot be typed in | |
+| 20 | Unknown product | Open `/products/999` and `/products/abc` | "Sorry, we could not find this product." with a Back to all products button | |
 
 Note: unhandled exceptions and console errors count as failing tests, so check the browser console on every page.
 
