@@ -10,5 +10,8 @@ router.post('/items', authenticate, validate(addItemSchema), cartController.addi
 router.put('/items/:variantId', authenticate, validate(variantIdSchema, 'params'), validate(updateItemSchema), cartController.updatingItemQuantity);
 router.delete('/items/:variantId', authenticate, validate(variantIdSchema, 'params'), cartController.removingItem);
 router.post('/merge', authenticate, validate(mergeCartSchema), cartController.mergingCart);
+// the guest cart's prices: NO authenticate (guests have no token); nothing is saved
+router.post('/quote', validate(mergeCartSchema), cartController.quotingCart);
+
 
 module.exports = router;

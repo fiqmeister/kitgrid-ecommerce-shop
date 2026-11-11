@@ -1,3 +1,5 @@
+const toolService = require('../services/toolService');
+const roundMoney = require('../utils/roundMoney');
 const cartService = require('../services/cartService');
 
 // the logged-in user's cart
@@ -28,5 +30,19 @@ async function mergingCart(req, res) {
     const cart = await cartService.mergeCart(req.user.id, req.body.items);
     res.json(cart);
 }
+// POST /api/cart/quote   body: { items: [{ variantId, quantity }] }   (the guest cart, no login)
+// uses the Kit Advisor's quote (same bulk rules as the cart), but sends back the cart fields only:
+async function quotingCart(req, res) {
+    const quote = await toolService.getQuote(req.body.items);
+    res.json({
+        products: quote.products,
+        totalUnits: quote.totalUnits,
+        subtotal: quote.subtotal,
+        discount: quote.discount,
+        total: roundMoney(quote.subtotal - quote.discount), // the cart total, without delivery
+        allInStock: quote.allInStock,       // false when a size asks for more than the stock
+        stockProblems: quote.stockProblems, // which sizes, so the cart page can warn the customer
+    });
+}
 
-module.exports = { gettingCart, addingItem, updatingItemQuantity, removingItem, mergingCart };
+module.exports = { gettingCart, addingItem, updatingItemQuantity, removingItem, mergingCart, quotingCart };
