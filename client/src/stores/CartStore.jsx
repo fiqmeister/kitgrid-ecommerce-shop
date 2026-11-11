@@ -76,6 +76,11 @@ export const useCart = () => {
             await priceGuestCart(newGuestCart);
         }
     };
+    // empty the guest cart
+    const clearGuestCart = () => {
+        saveGuestCart([]);
+        setCart(emptyCart);
+    };
 
-    return { cart, fetchCart, addToCart };
+    return { cart, fetchCart, addToCart, clearGuestCart };
 };

@@ -4,6 +4,7 @@ import Header from './components/Header'; // import Header
 import ProductList from './pages/ProductList';
 import LoginPage from './pages/LoginPage';
 import ProductDetail from './pages/ProductDetail';
+import CartPage from './pages/CartPage';
 
 
 function App() {
@@ -22,8 +23,10 @@ function App() {
           <Route path="/products" component={ProductList}/>
           <Route path="/products/:id" component={ProductDetail} />
           <Route path="/login" component={LoginPage}/>
-          <Route path="/cart">
-            <h1>Cart</h1>
+          <Route path="/cart" component={CartPage}/>
+          <Route path="/checkout">
+            <h1>Checkout</h1>
+            <p>Coming soon</p>
           </Route>
         </Router>
       </main>

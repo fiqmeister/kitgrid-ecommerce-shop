@@ -1,0 +1,81 @@
+/* styles for CartProductCard.jsx only. Colours come from the variables in index.css */
+
+/* small grey image placeholder next to the name */
+.kg-cart-image {
+    background-color: var(--kg-slate-300);
+    color: var(--kg-slate);
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0; /* stays square even when the name is long */
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+}
+
+/* the product name is a link, but looks like a heading */
+.kg-cart-name {
+    color: var(--kg-navy);
+    text-decoration: none;
+}
+
+.kg-cart-name:hover {
+    color: var(--kg-accent);
+}
+
+/* "15% bulk discount applied": a green pill */
+.kg-discount-chip {
+    background-color: #DCFCE7; /* very light green */
+    color: var(--kg-success);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+/* light grey header row, like the cart wireframe */
+.kg-cart-table thead th {
+    background-color: var(--kg-slate-100);
+    color: var(--kg-slate);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* "Only 4 in stock" under a size */
+.kg-cart-warning {
+    color: var(--kg-error);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* the discount and product total lines under the table */
+.kg-cart-totals {
+    padding-top: 12px;
+}
+
+.kg-cart-total-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 0;
+}
+
+.kg-cart-discount {
+    color: var(--kg-success);
+}
+
+.kg-cart-product-total {
+    color: var(--kg-navy);
+    font-size: 18px;
+}
+
+/* "Add 3 more for 15% off this item." */
+.kg-next-tier {
+    background-color: var(--kg-accent-tint);
+    color: var(--kg-accent-dark);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 12px;
+}
