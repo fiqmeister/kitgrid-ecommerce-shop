@@ -84,3 +84,13 @@
     font-weight: 700;
     text-decoration: none;
 }
+/* the small blue number next to "Cart" */
+.kg-cart-badge {
+    background-color: var(--kg-accent);
+    color: var(--kg-white);
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 999px; /* a pill shape, round at any width */
+    padding: 1px 7px;
+    margin-left: 4px;
+}

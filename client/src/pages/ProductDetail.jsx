@@ -9,6 +9,8 @@ import ageGroupLabels from '../ageGroups';
 import './ProductDetail.css';
 import Breadcrumb from '../components/Breadcrumb';
 import roundMoney from '../roundMoney';
+import { useCart } from '../stores/CartStore';
+import { useUser } from '../stores/UserStore';
 
 // params comes from the Route: <Route path="/products/:id" component={ProductDetail} />
 // for /products/5, params is { id: "5" } (always text)
@@ -18,6 +20,13 @@ export default function ProductDetail({ params }) {
     const [error, setError] = useState('');
     const [selectedColour, setSelectedColour] = useState(''); // e.g. "Navy": which sizes the table shows
     const [quantities, setQuantities] = useState({}); // { variantId: quantity }, e.g. { 1: 4, 3: 6 }
+    // for cart section
+    const [adding, setAdding] = useState(false);    // true while the Add to cart request runs
+    const [cartMessage, setCartMessage] = useState(''); // "Added to your cart."
+    const [cartError, setCartError] = useState('');
+    const { addToCart } = useCart();
+    const { user } = useUser();
+
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -29,6 +38,9 @@ export default function ProductDetail({ params }) {
                 setProduct(response.data);
                 setSelectedColour(response.data.colours[0]); //start on the 1st colour
                 setQuantities({}); // a new product starts with nothing typed
+                setCartMessage(''); // don't show the last product's message on a new product
+                setCartError('');
+
             } catch (err) {
                 // 404 = no such product (or hidden by the admin), 400 = the id is not a number (/products/abc)
                 if (err.response && (err.response.status === 404 || err.response.status === 400)) {
@@ -116,6 +128,28 @@ export default function ProductDetail({ params }) {
     const discount = roundMoney(subtotal * discountPercent / 100);     // one discount for the whole product
     const total = roundMoney(subtotal - discount);
 
+    // "Add all selected to cart": every size with a quantity, across all colours, in one go
+    async function handleAddToCart() {
+        const items = [];
+        for (const variant of product.variants) {
+            const quantity = quantities[variant.id] || 0;
+            if (quantity > 0) {
+                items.push({ variantId: variant.id, quantity: quantity }); // empty sizes are left out
+            }
+        }
+
+        setAdding(true);
+        setCartMessage('');
+        setCartError('');
+        try {
+            await addToCart(items);
+            setCartMessage('Added to your cart.');
+            setQuantities({}); // empty the boxes, ready for the next colour or product
+        } catch (err) {
+            setCartError(err.response ? err.response.data.error : 'Cannot reach the server. Please try again later.');
+        }
+        setAdding(false);
+    }
 
     return (
         <>
@@ -262,7 +296,28 @@ export default function ProductDetail({ params }) {
                             <strong>S${total.toFixed(2)}</strong>
                         </div>
                     </div>
-                    {/* the "Add all selected to cart" button comes with the cart (next feature) */}
+                    {/* disabled until at least one size has a quantity, and while the request runs */}
+                    <button
+                        type="button"
+                        className="btn btn-kg-primary w-100 mt-3 py-2"
+                        onClick={handleAddToCart}
+                        disabled={totalUnits === 0 || adding}
+                    >
+                        {adding ? 'Adding…' : 'Add all selected to cart'}
+                    </button>
+
+                    {/* the guest note from the wireframe, only for guests */}
+                    {!user && (
+                        <p className="kg-card-meta text-center mt-2">You can fill your cart as a guest. Log in to check out.</p>
+                    )}
+
+                    {/* role="status" makes screen readers announce the message */}
+                    {cartMessage && (
+                        <div className="alert alert-success mt-3 mb-0" role="status">
+                            {cartMessage} <Link href="/cart">View cart</Link>
+                        </div>
+                    )}
+                    {cartError && <div className="alert alert-danger mt-3 mb-0">{cartError}</div>}
 
                 </div>
             </div>

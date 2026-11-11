@@ -5,6 +5,7 @@ import './Header.css';
 import categories from '../categories';
 import api from '../api';
 import { useUser } from '../stores/UserStore';
+import { useCart } from '../stores/CartStore';
 
 export default function Header() {
 
@@ -20,6 +21,21 @@ export default function Header() {
 
     // the logged-in customer (null = nobody), shared with the login form through the Jotai atom
     const { user, clearLogin } = useUser();
+    const { cart, fetchCart } = useCart();
+
+    // load the cart when the app starts, and again whenever someone logs in or out
+    // (logged in → the saved cart; guest → the localStorage cart), so the badge is right after F5
+    useEffect(() => {
+        const loadCart = async () => {
+            try {
+                await fetchCart();
+            } catch (err) {
+                console.error(err); // the badge just stays empty; the cart page shows the real error
+            }
+        };
+        loadCart();
+    }, [user]);
+
 
     // Log out: tell the server to revoke the refresh token, then forget everything in the browser
     async function logOut() {
@@ -79,7 +95,12 @@ export default function Header() {
                             <Link href="/login" className="kg-header-link">Log in / Register</Link>
                         )}
 
-                        <Link href="/cart" className="kg-header-link">Cart</Link>
+                        {/* the badge shows how many products are in the cart (like the wireframe), hidden when empty */}
+                        <Link href="/cart" className="kg-header-link" aria-label={'Cart, ' + cart.products.length + ' products'}>
+                            Cart
+                            {cart.products.length > 0 && <span className="kg-cart-badge">{cart.products.length}</span>}
+                        </Link>
+
                     </div>
                 </div>
             </div>
