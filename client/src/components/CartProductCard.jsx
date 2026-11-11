@@ -5,8 +5,9 @@
 import { Link } from 'wouter';
 import ageGroupLabels from '../ageGroups';
 import './CartProductCard.css';
+import CartQuantity from './CartQuantity';
 
-export default function CartProductCard({ product }) {
+export default function CartProductCard({ product, disabled, onQuantityChange, onRemove }) {
     return (
         <div className="kg-card p-3 p-md-4 mb-3">
 
@@ -23,6 +24,15 @@ export default function CartProductCard({ product }) {
                         <span className="kg-discount-chip">{product.discountPercent}% bulk discount applied</span>
                     )}
                 </div>
+                {/* ms-auto pushes it to the right, align-self-start keeps it at the top */}
+                <button
+                    type="button"
+                    className="btn btn-link kg-cart-remove ms-auto align-self-start"
+                    onClick={() => onRemove(product)}
+                    disabled={disabled}
+                >
+                    Remove
+                </button>
             </div>
 
             {/* one row per size; "In stock" and "Unit price" are hidden on phones (d-none d-md-table-cell)
@@ -55,14 +65,22 @@ export default function CartProductCard({ product }) {
                             </td>
                             <td className="d-none d-md-table-cell">{line.stock}</td>
                             <td className="d-none d-md-table-cell">S${product.unitPrice.toFixed(2)}</td>
-                            {/* 3b turns this into a number box */}
-                            <td className="text-center">{line.quantity}</td>
+                            <td className="text-center">
+                                <CartQuantity
+                                    quantity={line.quantity}
+                                    stock={line.stock}
+                                    label={product.name + ' ' + line.colour + ' ' + line.size}
+                                    disabled={disabled}
+                                    onUpdateValue={(newQuantity) => onQuantityChange(line.variantId, newQuantity)}
+                                />
+                            </td>
+
                             <td className="text-end fw-semibold">S${line.lineTotal.toFixed(2)}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-
+            <div className="kg-card-meta mt-2">Enter 0 to remove a size.</div>
             {/* the product's bulk discount (one for all its sizes) and its total */}
             <div className="kg-cart-totals">
                 {product.discount > 0 && (

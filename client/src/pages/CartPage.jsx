@@ -11,7 +11,9 @@ export default function CartPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [notSold, setNotSold] = useState(false); // true when a guest's cart holds a product that is no longer sold
-    const { cart, fetchCart, clearGuestCart } = useCart();
+    const [updating, setUpdating] = useState(false); // true while a quantity change or Remove is saving
+    const [updateError, setUpdateError] = useState('');
+    const { cart, fetchCart, clearGuestCart, modifyQuantity, removeProduct } = useCart();
     const { user } = useUser();
 
     // load a fresh cart when the page opens (stock and prices may have changed since the items were added),
@@ -41,6 +43,34 @@ export default function CartPage() {
         clearGuestCart();
         setNotSold(false); // the empty cart message shows instead
     }
+
+    // a quantity box was changed; answers true/false so the box knows whether to put the old number back
+    async function handleQuantityChange(variantId, quantity) {
+        setUpdating(true);
+        setUpdateError('');
+        let saved = true;
+        try {
+            await modifyQuantity(variantId, quantity);
+        } catch (err) {
+            setUpdateError(err.response ? err.response.data.error : 'Cannot reach the server. Please try again later.');
+            saved = false;
+        }
+        setUpdating(false);
+        return saved;
+    }
+
+    // the Remove button on a product card
+    async function handleRemove(product) {
+        setUpdating(true);
+        setUpdateError('');
+        try {
+            await removeProduct(product);
+        } catch (err) {
+            setUpdateError(err.response ? err.response.data.error : 'Cannot reach the server. Please try again later.');
+        }
+        setUpdating(false);
+    }
+
 
     const breadcrumbItems = [{ label: 'Home', href: '/' }, { label: 'Cart' }];
 
@@ -86,7 +116,7 @@ export default function CartPage() {
             }
         }
     }
-
+    
     return (
         <>
             <Breadcrumb items={breadcrumbItems} />
@@ -104,12 +134,14 @@ export default function CartPage() {
                     Some sizes ask for more than we have in stock. Please lower the quantities marked in red before you check out.
                 </div>
             )}
+            { updateError && <div className="alert alert-danger">{updateError}</div> }
 
             <div className="row g-4">
                 {/* left: one card per product */}
                 <div className="col-lg-8">
                     {cart.products.map(product => (
-                        <CartProductCard key={product.productId} product={product} />
+                        <CartProductCard key={product.productId} product={product} disabled={updating}
+                        onQuantityChange={handleQuantityChange} onRemove={handleRemove}/>
                     ))}
                 </div>
 

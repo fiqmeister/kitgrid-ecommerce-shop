@@ -79,3 +79,15 @@
     border-radius: 6px;
     margin-top: 12px;
 }
+/* "Remove": a grey text button, red on hover */
+.kg-cart-remove {
+    color: var(--kg-slate);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0;
+}
+
+.kg-cart-remove:hover {
+    color: var(--kg-error);
+}

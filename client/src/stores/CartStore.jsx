@@ -82,5 +82,48 @@ export const useCart = () => {
         setCart(emptyCart);
     };
 
-    return { cart, fetchCart, addToCart, clearGuestCart };
+        // change one size's quantity (0 removes it): the quantity box on the cart page
+    const modifyQuantity = async (variantId, quantity) => {
+        if (user) {
+            // PUT sets the new quantity; the server checks the stock, and 0 removes the size
+            const response = await api.put('/cart/items/' + variantId, { quantity: quantity });
+            setCart(response.data);
+        } else {
+            let newGuestCart;
+            if (quantity === 0) {
+                // keep every item except this one
+                newGuestCart = guestCart.filter(item => item.variantId !== variantId);
+            } else {
+                // a NEW object for the changed item, the same objects for the others
+                newGuestCart = guestCart.map(item =>
+                    item.variantId === variantId ? { variantId: variantId, quantity: quantity } : item
+                );
+            }
+            saveGuestCart(newGuestCart);
+            await priceGuestCart(newGuestCart);
+        }
+    };
+
+    // the Remove button: take out every size of one product
+    const removeProduct = async (product) => {
+        if (user) {
+            // the API removes one size at a time, so one DELETE per size;
+            // each answer is the whole cart, so the last one is the up-to-date cart
+            let response;
+            for (const line of product.lines) {
+                response = await api.delete('/cart/items/' + line.variantId);
+            }
+            setCart(response.data);
+        } else {
+            // keep only the items that are NOT one of this product's sizes
+            const newGuestCart = guestCart.filter(item =>
+                !product.lines.find(line => line.variantId === item.variantId)
+            );
+            saveGuestCart(newGuestCart);
+            await priceGuestCart(newGuestCart);
+        }
+    };
+
+
+    return { cart, fetchCart, addToCart, clearGuestCart, modifyQuantity, removeProduct };
 };
