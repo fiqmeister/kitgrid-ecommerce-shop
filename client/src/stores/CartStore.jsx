@@ -72,8 +72,8 @@ export const useCart = () => {
                     };
                 }
             }
-            saveGuestCart(newGuestCart);
             await priceGuestCart(newGuestCart);
+            saveGuestCart(newGuestCart);
         }
     };
     // empty the guest cart
@@ -99,8 +99,8 @@ export const useCart = () => {
                     item.variantId === variantId ? { variantId: variantId, quantity: quantity } : item
                 );
             }
-            saveGuestCart(newGuestCart);
             await priceGuestCart(newGuestCart);
+            saveGuestCart(newGuestCart);
         }
     };
 
@@ -119,8 +119,8 @@ export const useCart = () => {
             const newGuestCart = guestCart.filter(item =>
                 !product.lines.find(line => line.variantId === item.variantId)
             );
-            saveGuestCart(newGuestCart);
             await priceGuestCart(newGuestCart);
+            saveGuestCart(newGuestCart);
         }
     };
     // after log in / register: move the guest's items into the customer's saved cart, then empty the guest cart
