@@ -6,6 +6,7 @@ import { useLocation } from 'wouter';
 import api from '../api';
 import { useUser } from '../stores/UserStore';
 import './AuthCard.css';
+import { useCart } from '../stores/CartStore';
 
 // the same rules as loginSchema on the server (authValidators.js), so the customer sees the message before sending
 const validationSchema = Yup.object({
@@ -21,6 +22,7 @@ const initialValues = {
 export default function LoginForm() {
     const [, setLocation] = useLocation();
     const { saveLogin } = useUser();
+    const { mergeGuestCart } = useCart();
 
     const [showPassword, setShowPassword] = useState(false); // the "Show" button: false = dots, true = letters
     const [serverError, setServerError] = useState('');      // the red box: a message from the API, e.g. "Invalid email or password"
@@ -29,8 +31,20 @@ export default function LoginForm() {
         setServerError(''); // clear the old message before trying again
         try {
             const response = await api.post('/auth/login', values);
+            // move the guest cart into the account BEFORE saveLogin: saveLogin changes `user`, which makes the
+            // Header reload the cart, so the merged items must already be in the database by then
+            let hadGuestItems = false;
+            try {
+                hadGuestItems = await mergeGuestCart(response.data.accessToken);
+            } catch (mergeError) {
+                // the login still works; the guest cart stays in this browser, so nothing is lost
+                console.error(mergeError);
+            }
+
             saveLogin(response.data);  // saves the tokens and the user, and fills the atom
-            setLocation('/products');
+            // came with a cart → back to it ("Your cart is kept"), otherwise to the products
+            setLocation(hadGuestItems ? '/cart' : '/products');
+            
         } catch (e) {
             // the API sends { error: '...' } for 401 (wrong email or password), 429 (too many tries) and 400
             // no response at all means Express is not running

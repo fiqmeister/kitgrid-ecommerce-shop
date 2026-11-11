@@ -82,7 +82,7 @@ export const useCart = () => {
         setCart(emptyCart);
     };
 
-        // change one size's quantity (0 removes it): the quantity box on the cart page
+    // change one size's quantity (0 removes it): the quantity box on the cart page
     const modifyQuantity = async (variantId, quantity) => {
         if (user) {
             // PUT sets the new quantity; the server checks the stock, and 0 removes the size
@@ -123,7 +123,22 @@ export const useCart = () => {
             await priceGuestCart(newGuestCart);
         }
     };
+    // after log in / register: move the guest's items into the customer's saved cart, then empty the guest cart
+    // accessToken: the token from the login answer (it isn't in localStorage yet: LoginForm calls this BEFORE saveLogin)
+    // answers true when there was something to move, false when the guest cart was empty
+    const mergeGuestCart = async (accessToken) => {
+        if (guestCart.length === 0) {
+            return false; // nothing to move, no request
+        }
+        // merge adds each quantity on top of the saved cart, caps at the stock, and skips products no longer sold
+        await api.post('/cart/merge', { items: guestCart }, {
+            headers: { Authorization: 'Bearer ' + accessToken }, // api.js can't add it yet, so we do
+        });
+        saveGuestCart([]); // moved, so the guest list is emptied
+        return true;
+    };
 
 
-    return { cart, fetchCart, addToCart, clearGuestCart, modifyQuantity, removeProduct };
+
+    return { cart, fetchCart, addToCart, clearGuestCart, modifyQuantity, removeProduct, mergeGuestCart };
 };

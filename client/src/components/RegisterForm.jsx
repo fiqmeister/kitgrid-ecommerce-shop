@@ -6,6 +6,7 @@ import { useLocation } from 'wouter';
 import api from '../api';
 import { useUser } from '../stores/UserStore';
 import './AuthCard.css';
+import { useCart } from '../stores/CartStore';
 
 // the same rules as registerSchema on the server (authValidators.js)
 const validationSchema = Yup.object({
@@ -26,6 +27,7 @@ const initialValues = {
 export default function RegisterForm() {
     const [, setLocation] = useLocation();
     const { saveLogin } = useUser();
+    const { mergeGuestCart } = useCart();
 
     const [showPassword, setShowPassword] = useState(false);
     const [serverError, setServerError] = useState('');
@@ -38,8 +40,20 @@ export default function RegisterForm() {
 
             // 2. log in with the same email and password, to get the tokens
             const response = await api.post('/auth/login', { email: values.email, password: values.password });
-            saveLogin(response.data);
-            setLocation('/products');
+            // move the guest cart into the account BEFORE saveLogin: saveLogin changes `user`, which makes the
+            // Header reload the cart, so the merged items must already be in the database by then
+            let hadGuestItems = false;
+            try {
+                hadGuestItems = await mergeGuestCart(response.data.accessToken);
+            } catch (mergeError) {
+                // the login still works; the guest cart stays in this browser, so nothing is lost
+                console.error(mergeError);
+            }
+
+            saveLogin(response.data);  // saves the tokens and the user, and fills the atom
+            // came with a cart → back to it ("Your cart is kept"), otherwise to the products
+            setLocation(hadGuestItems ? '/cart' : '/products');
+
         } catch (e) {
             // e.g. 409 "Email is already registered"
             if (e.response) {
