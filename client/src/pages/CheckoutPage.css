@@ -1,0 +1,56 @@
+/* styles for CheckoutPage.jsx only. Colours come from the variables in index.css */
+
+/* the step bar: circle + label, a line, circle + label */
+.kg-steps {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.kg-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--kg-slate);
+    font-weight: 600;
+}
+
+.kg-step-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--kg-slate-300);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+/* the step you're on: blue circle, navy text */
+.kg-step-active {
+    color: var(--kg-navy);
+}
+
+.kg-step-active .kg-step-circle {
+    background-color: var(--kg-accent);
+    border-color: var(--kg-accent);
+    color: var(--kg-white);
+}
+
+/* a finished step: green circle with a tick */
+.kg-step-done .kg-step-circle {
+    background-color: var(--kg-success);
+    border-color: var(--kg-success);
+    color: var(--kg-white);
+}
+
+/* the line between the steps, green once step 1 is done */
+.kg-step-line {
+    flex: 0 1 120px; /* up to 120px, shrinks on phones */
+    height: 2px;
+    background-color: var(--kg-slate-300);
+}
+
+.kg-step-line-done {
+    background-color: var(--kg-success);
+}

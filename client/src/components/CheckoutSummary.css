@@ -1,0 +1,57 @@
+/* styles for CheckoutSummary.jsx only. Colours come from the variables in index.css */
+
+/* "Edit cart" */
+.kg-checkout-link {
+    color: var(--kg-accent);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* the short product list, with a line under it */
+.kg-checkout-products {
+    border-bottom: 1px solid var(--kg-slate-200);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+/* small grey square instead of a product photo */
+.kg-checkout-thumb {
+    background-color: var(--kg-slate-300);
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.kg-checkout-name {
+    color: var(--kg-navy);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* one line: label on the left, amount on the right */
+.kg-checkout-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+}
+
+.kg-checkout-discount,
+.kg-checkout-free {
+    color: var(--kg-success);
+}
+
+/* the Total line: a divider above it and a bigger amount */
+.kg-checkout-total {
+    border-top: 1px solid var(--kg-slate-200);
+    margin-top: 8px;
+    padding-top: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--kg-navy);
+}
+
+.kg-checkout-total strong {
+    font-size: 26px;
+}

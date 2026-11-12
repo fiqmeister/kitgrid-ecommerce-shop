@@ -94,3 +94,9 @@
     padding: 1px 7px;
     margin-left: 4px;
 }
+/* "Secure checkout" in the checkout header */
+.kg-checkout-secure {
+    color: var(--kg-slate);
+    font-size: 14px;
+    font-weight: 600;
+}
