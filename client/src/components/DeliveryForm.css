@@ -1,0 +1,22 @@
+/* styles for DeliveryForm.jsx only. Colours come from the variables in index.css */
+
+/* the small headings: Contact, Delivery address, Delivery method */
+.kg-form-section {
+    color: var(--kg-navy);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+/* the email box: grey, so it looks different from the boxes you can type in */
+.kg-readonly {
+    background-color: var(--kg-slate-100);
+}
+
+/* the one delivery method, styled like a selected option */
+.kg-delivery-method {
+    border: 1px solid var(--kg-slate-700);
+    background-color: var(--kg-slate-100);
+    border-radius: 8px;
+    padding: 12px 16px;
+}

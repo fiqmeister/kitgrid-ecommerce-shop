@@ -48,7 +48,7 @@ export default function CheckoutSummary({ cart, deliveryFee, showProducts }) {
             <div className="kg-checkout-row">
                 <span>Delivery</span>
                 <span className={deliveryFee === 0 ? 'kg-checkout-free' : ''}>
-                    {deliveryFee === 0 ? 'Free' : 'S$' + deliveryFee.toFixed(2)}
+                    {deliveryFee === 0 ? 'FREE' : 'S$' + deliveryFee.toFixed(2)}
                 </span>
             </div>
             {/* how far from free delivery, e.g. 9 units → "Add 6 more items for free delivery." */}

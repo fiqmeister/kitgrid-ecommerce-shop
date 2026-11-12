@@ -7,6 +7,7 @@ import { useUser } from '../stores/UserStore';
 import CheckoutSummary from '../components/CheckoutSummary';
 import getDeliveryFee from '../deliveryFee';
 import './CheckoutPage.css';
+import DeliveryForm from '../components/DeliveryForm';
 
 export default function CheckoutPage() {
     const [loading, setLoading] = useState(true);
@@ -14,6 +15,16 @@ export default function CheckoutPage() {
     const [step, setStep] = useState(1); // 1 = Delivery, 2 = Review & place order
     const { cart, fetchCart } = useCart();
     const { user } = useUser();
+    // the delivery details: kept HERE, not in the form, so they survive going to step 2 and back
+    // (the form disappears in step 2, and Formik forgets its values when it disappears)
+    const [delivery, setDelivery] = useState({
+        recipientName: user ? user.name : '', // filled from the account; the customer can change it
+        recipientPhoneNum: '',
+        postalCode: '',
+        unitNumber: '',
+        addressLine1: '',
+        addressLine2: '',
+    });
 
     // load a fresh cart: the full Header (which normally loads it) is not shown on the checkout
     useEffect(() => {
@@ -33,6 +44,11 @@ export default function CheckoutPage() {
         };
         loadCart();
     }, [user]);
+    // Continue on the delivery form: keep the values, then show step 2
+    const handleContinue = (values) => {
+        setDelivery(values);
+        setStep(2);
+    };
 
     // early returns: after all the hooks above
     if (!user) {
@@ -101,18 +117,19 @@ export default function CheckoutPage() {
                 {/* left: the step's content (step 2 of this feature puts the delivery form here) */}
                 <div className="col-lg-8">
                     {step === 1 && (
-                        <div className="kg-card p-4">
-                            <h1 className="h4">Delivery</h1>
-                            <p className="kg-card-meta">The delivery form comes next.</p>
-                            <button type="button" className="btn btn-kg-primary" onClick={() => setStep(2)}>
-                                Continue (test)
-                            </button>
-                        </div>
+                        <DeliveryForm initialValues={delivery} email={user.email}
+                            deliveryFee={deliveryFee} onContinue={handleContinue} />
                     )}
                     {step === 2 && (
                         <div className="kg-card p-4">
                             <h1 className="h4">Review your order</h1>
-                            <p className="kg-card-meta">The review comes after the form.</p>
+                            {/* test only: shows the kept values. Step 3 turns this into the real delivery card */}
+                            <p className="mb-1">{delivery.recipientName}, +65 {delivery.recipientPhoneNum}</p>
+                            <p className="mb-1">
+                                {delivery.unitNumber && '#' + delivery.unitNumber + ', '}{delivery.addressLine1}
+                            </p>
+                            {delivery.addressLine2 && <p className="mb-1">{delivery.addressLine2}</p>}
+                            <p>Singapore {delivery.postalCode}</p>
                             <button type="button" className="btn btn-kg-dark" onClick={() => setStep(1)}>
                                 Back to delivery (test)
                             </button>
