@@ -1,0 +1,63 @@
+/* styles for OrderConfirmationPage.jsx only. Colours come from the variables in index.css */
+
+/* the big green tick in the thank-you box */
+.kg-confirm-tick {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--kg-success);
+    color: var(--kg-white);
+    font-size: 28px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* the status chip, e.g. "Pending payment" (amber: waiting for something) */
+.kg-status-chip {
+    background-color: #FEF3C7;
+    color: #92400E;
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* "What happens next": a list with a circle in front of each step */
+.kg-timeline {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.kg-timeline li {
+    position: relative;
+    padding-left: 28px;
+    padding-bottom: 12px;
+    color: var(--kg-slate);
+}
+
+/* the circle: an empty grey ring (::before adds it in front of the text, no extra HTML needed) */
+.kg-timeline li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--kg-slate-300);
+    background-color: var(--kg-white);
+}
+
+/* a finished step: navy text and a filled green circle */
+.kg-timeline li.kg-timeline-done {
+    color: var(--kg-navy);
+}
+
+.kg-timeline li.kg-timeline-done::before {
+    background-color: var(--kg-success);
+    border-color: var(--kg-success);
+}
