@@ -1,7 +1,7 @@
 // the checkout (/checkout): step 1 Delivery, step 2 Review & place order
 // logged-in customers only: the order is made from the cart saved in the database
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'wouter';
+import { Link, useLocation, Redirect } from 'wouter';
 import { useCart } from '../stores/CartStore';
 import { useUser } from '../stores/UserStore';
 import api from '../api';
@@ -78,11 +78,7 @@ export default function CheckoutPage() {
 
     // early returns: after all the hooks above
     if (!user) {
-        return (
-            <div className="alert alert-info">
-                Please log in to check out. <Link href="/login">Log in or create an account</Link>
-            </div>
-        );
+        return <Redirect to="/login" replace />;
     }
 
     if (loading) {

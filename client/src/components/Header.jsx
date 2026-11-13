@@ -47,8 +47,8 @@ export default function Header() {
         } catch (e) {
             console.error(e); // even if the server is down, still log out in this browser below
         }
+        navigate('/');  // leave the page first
         clearLogin();   // removes the tokens and the user, sets the atom to null
-        navigate('/');  // back to the home page
     }
 
 

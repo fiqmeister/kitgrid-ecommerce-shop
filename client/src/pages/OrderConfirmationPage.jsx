@@ -2,7 +2,7 @@
 // it loads the saved order from the server (GET /api/orders/:id), not from the cart (the cart is already empty)
 // the server only answers for the customer's OWN orders: another customer's id gets 404
 import { useState, useEffect } from 'react';
-import { Link } from 'wouter';
+import { Link, Redirect } from 'wouter';
 import api from '../api';
 import { useUser } from '../stores/UserStore';
 import OrderItems from '../components/OrderItems';
@@ -50,11 +50,7 @@ export default function OrderConfirmationPage({ params }) {
 
     // early returns: after all the hooks above
     if (!user) {
-        return (
-            <div className="alert alert-info">
-                Please log in to see your order. <Link href="/login">Log in</Link>
-            </div>
-        );
+        return <Redirect to="/login" replace />;
     }
 
     if (loading) {
