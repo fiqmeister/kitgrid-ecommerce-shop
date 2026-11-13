@@ -1,0 +1,32 @@
+/* styles for OrderItems.jsx only. Colours come from the variables in index.css */
+
+/* one product block, with a line between products */
+.kg-order-product {
+    border-bottom: 1px solid var(--kg-slate-200);
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+/* no line under the last product */
+.kg-order-product:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.kg-order-name {
+    color: var(--kg-navy);
+    font-weight: 600;
+}
+
+.kg-order-table thead th {
+    color: var(--kg-slate);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* label on the left, amount on the right */
+.kg-order-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 0;
+}

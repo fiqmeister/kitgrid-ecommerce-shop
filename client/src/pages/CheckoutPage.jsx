@@ -1,13 +1,15 @@
 // the checkout (/checkout): step 1 Delivery, step 2 Review & place order
 // logged-in customers only: the order is made from the cart saved in the database
 import { useState, useEffect } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { useCart } from '../stores/CartStore';
 import { useUser } from '../stores/UserStore';
+import api from '../api';
 import CheckoutSummary from '../components/CheckoutSummary';
 import getDeliveryFee from '../deliveryFee';
 import './CheckoutPage.css';
 import DeliveryForm from '../components/DeliveryForm';
+import OrderItems from '../components/OrderItems';
 
 export default function CheckoutPage() {
     const [loading, setLoading] = useState(true);
@@ -25,6 +27,10 @@ export default function CheckoutPage() {
         addressLine1: '',
         addressLine2: '',
     });
+
+    const [placing, setPlacing] = useState(false);   // true while the order is being sent: stops a second click
+    const [placeError, setPlaceError] = useState(''); // a message from the server, e.g. "Only 3 qty left for..."
+    const [, setLocation] = useLocation();
 
     // load a fresh cart: the full Header (which normally loads it) is not shown on the checkout
     useEffect(() => {
@@ -49,6 +55,26 @@ export default function CheckoutPage() {
         setDelivery(values);
         setStep(2);
     };
+    // Place order: send the delivery details; the server makes the order from the saved cart
+    // (it checks the stock again, works out the prices and the delivery fee, and empties the cart)
+    const handlePlaceOrder = async () => {
+        setPlacing(true);
+        setPlaceError('');
+        try {
+            const response = await api.post('/orders', delivery);
+            // no fetchCart here: the confirmation page shows the full Header again, and it reloads the cart (badge 0)
+            setLocation('/orders/' + response.data.id + '/confirmation');
+        } catch (err) {
+            // 400: cart empty, a product no longer sold, not enough stock; 409: stock ran out while ordering
+            if (err.response) {
+                setPlaceError(err.response.data.error);
+            } else {
+                setPlaceError('Cannot reach the server. Please try again later.');
+            }
+            setPlacing(false); // turn the button back on only when it failed
+        }
+    };
+
 
     // early returns: after all the hooks above
     if (!user) {
@@ -121,25 +147,54 @@ export default function CheckoutPage() {
                             deliveryFee={deliveryFee} onContinue={handleContinue} />
                     )}
                     {step === 2 && (
-                        <div className="kg-card p-4">
-                            <h1 className="h4">Review your order</h1>
-                            {/* test only: shows the kept values. Step 3 turns this into the real delivery card */}
-                            <p className="mb-1">{delivery.recipientName}, +65 {delivery.recipientPhoneNum}</p>
-                            <p className="mb-1">
-                                {delivery.unitNumber && '#' + delivery.unitNumber + ', '}{delivery.addressLine1}
-                            </p>
-                            {delivery.addressLine2 && <p className="mb-1">{delivery.addressLine2}</p>}
-                            <p>Singapore {delivery.postalCode}</p>
-                            <button type="button" className="btn btn-kg-dark" onClick={() => setStep(1)}>
-                                Back to delivery (test)
-                            </button>
-                        </div>
+                        <>
+                            <div className="kg-card p-4 mb-4">
+                                <div className="d-flex justify-content-between align-items-baseline mb-2">
+                                    <h1 className="h5 mb-0">Delivery details</h1>
+                                    {/* back to the form: the values are kept in `delivery`, so nothing is lost */}
+                                    <button type="button" className="btn btn-link kg-checkout-link p-0"
+                                        onClick={() => setStep(1)}>
+                                        Edit
+                                    </button>
+                                </div>
+                                <p className="mb-1 fw-semibold">{delivery.recipientName}</p>
+                                <p className="mb-1">+65 {delivery.recipientPhoneNum}</p>
+                                <p className="mb-1">
+                                    {delivery.unitNumber && '#' + delivery.unitNumber + ', '}{delivery.addressLine1}
+                                </p>
+                                {delivery.addressLine2 && <p className="mb-1">{delivery.addressLine2}</p>}
+                                <p className="mb-0">Singapore {delivery.postalCode}</p>
+                            </div>
+
+                            <div className="kg-card p-4">
+                                <h2 className="h5 mb-3">Items ({cart.totalUnits} units)</h2>
+                                <OrderItems products={cart.products} />
+                            </div>
+                        </>
                     )}
+
                 </div>
 
                 {/* right: the summary; the short product list only on the Delivery step, like the wireframe */}
                 <div className="col-lg-4">
                     <CheckoutSummary cart={cart} deliveryFee={deliveryFee} showProducts={step === 1} />
+                    {step === 2 && (
+                        <div className="mt-3">
+                            {placeError && (
+                                <div className="alert alert-danger" role="alert">
+                                    {placeError} <Link href="/cart">Back to cart</Link>
+                                </div>
+                            )}
+                            <button type="button" className="btn btn-kg-primary btn-lg w-100"
+                                onClick={handlePlaceOrder} disabled={placing}>
+                                {placing ? 'Placing order…' : 'Place order'}
+                            </button>
+                            {/* until Stripe is added (20 Nov), orders are saved as "pending payment" */}
+                            <p className="kg-card-meta small mt-2 mb-0">
+                                Card payment is coming soon. Your order is saved as pending payment.
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </>

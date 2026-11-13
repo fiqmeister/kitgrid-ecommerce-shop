@@ -27,6 +27,10 @@ function App() {
           <Route path="/login" component={LoginPage} />
           <Route path="/cart" component={CartPage} />
           <Route path="/checkout" component={CheckoutPage} />
+          <Route path="/orders/:id/confirmation">
+            <h1>Thank you!</h1>
+            <p>Order placed. Confirmation page comes next</p>
+          </Route>
         </Router>
       </main>
     </>
