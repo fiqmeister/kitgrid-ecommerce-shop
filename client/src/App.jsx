@@ -9,6 +9,7 @@ import CheckoutHeader from './components/CheckoutHeader';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import OrdersPage from './pages/OrdersPage';
+import OrderDetailPage from './pages/OrderDetailPage';
 
 function App() {
   const [location] = useLocation(); // the current path, eg "/checkout"
@@ -30,7 +31,9 @@ function App() {
           <Route path="/cart" component={CartPage} />
           <Route path="/checkout" component={CheckoutPage} />
           <Route path="/orders" component={OrdersPage} />
+          <Route path="/orders/:id" component={OrderDetailPage} />
           <Route path="/orders/:id/confirmation" component={OrderConfirmationPage} />
+          
         </Router>
       </main>
     </>

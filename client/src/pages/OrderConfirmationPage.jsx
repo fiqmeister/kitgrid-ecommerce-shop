@@ -8,6 +8,7 @@ import { useUser } from '../stores/UserStore';
 import OrderItems from '../components/OrderItems';
 import OrderStatusChip from '../components/OrderStatusChip';
 import './OrderConfirmationPage.css';
+import OrderTotal from '../components/OrderTotal';
 
 export default function OrderConfirmationPage({ params }) {
     const [order, setOrder] = useState(null);
@@ -113,34 +114,7 @@ export default function OrderConfirmationPage({ params }) {
 
                 {/* ---------- right: the totals and what happens next ---------- */}
                 <div className="col-lg-4">
-                    {/* the saved totals from the order (not CheckoutSummary: that one works out the total from a cart) */}
-                    <div className="kg-card p-4 mb-4">
-                        <h2 className="h5 mb-3">Order total</h2>
-                        <div className="kg-checkout-row">
-                            <span>Items</span>
-                            <span>{order.totalUnits} units</span>
-                        </div>
-                        <div className="kg-checkout-row">
-                            <span>Subtotal</span>
-                            <span>S${order.subtotal.toFixed(2)}</span>
-                        </div>
-                        {order.discount > 0 && (
-                            <div className="kg-checkout-row kg-checkout-discount">
-                                <span>Bulk discounts</span>
-                                <span>−S${order.discount.toFixed(2)}</span>
-                            </div>
-                        )}
-                        <div className="kg-checkout-row">
-                            <span>Delivery</span>
-                            <span className={order.deliveryFee === 0 ? 'kg-checkout-free' : ''}>
-                                {order.deliveryFee === 0 ? 'FREE' : 'S$' + order.deliveryFee.toFixed(2)}
-                            </span>
-                        </div>
-                        <div className="kg-checkout-row kg-checkout-total">
-                            <span>Total</span>
-                            <strong>S${order.total.toFixed(2)}</strong>
-                        </div>
-                    </div>
+                    <OrderTotal order={order} />
 
                     <div className="kg-card p-4">
                         <h2 className="h5 mb-3">What happens next</h2>
