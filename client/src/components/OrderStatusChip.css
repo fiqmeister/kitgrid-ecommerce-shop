@@ -1,0 +1,13 @@
+/* styles for OrderStatusChip.jsx only */
+
+/* the status chip, e.g. "Pending payment": one neutral colour for every status for now */
+.kg-status-chip {
+    background-color: var(--kg-slate-100);
+    color: var(--kg-navy);
+    border: 1px solid var(--kg-slate-200);
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap; /* "Pending payment" never breaks onto two lines */
+}

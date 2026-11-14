@@ -6,17 +6,8 @@ import { Link, Redirect } from 'wouter';
 import api from '../api';
 import { useUser } from '../stores/UserStore';
 import OrderItems from '../components/OrderItems';
+import OrderStatusChip from '../components/OrderStatusChip';
 import './OrderConfirmationPage.css';
-
-// the database status → the words the customer sees
-const statusLabels = {
-    pending_payment: 'Pending payment',
-    paid: 'Paid',
-    processing: 'Processing',
-    shipped: 'Shipped',
-    delivered: 'Delivered',
-    cancelled: 'Cancelled',
-};
 
 export default function OrderConfirmationPage({ params }) {
     const [order, setOrder] = useState(null);
@@ -79,11 +70,14 @@ export default function OrderConfirmationPage({ params }) {
                     <h1 className="h3 mb-1">Thank you, {user.name}. Your order is placed.</h1>
                     <p className="kg-card-meta mb-0">
                         Order #{order.id} · Placed {placedAt}
-                        <span className="kg-status-chip ms-2">{statusLabels[order.status]}</span>
+                        <span className="ms-2"><OrderStatusChip status={order.status} /></span>
                     </p>
                 </div>
-                {/* "View my orders" is added here with the order history (14 Nov) */}
-                <Link href="/products" className="btn btn-kg-primary">Continue shopping</Link>
+                {/* two buttons side by side: see all orders, or keep shopping */}
+                <div className="d-flex flex-wrap gap-2">
+                    <Link href="/orders" className="btn btn-outline-secondary">View my orders</Link>
+                    <Link href="/products" className="btn btn-kg-primary">Continue shopping</Link>
+                </div>
             </div>
 
             <div className="row g-4">

@@ -15,16 +15,6 @@
     flex-shrink: 0;
 }
 
-/* the status chip, e.g. "Pending payment" (amber: waiting for something) */
-.kg-status-chip {
-    background-color: #FEF3C7;
-    color: #92400E;
-    border-radius: 999px;
-    padding: 2px 10px;
-    font-size: 13px;
-    font-weight: 600;
-}
-
 /* "What happens next": a list with a circle in front of each step */
 .kg-timeline {
     list-style: none;

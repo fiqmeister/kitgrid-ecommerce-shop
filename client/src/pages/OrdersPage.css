@@ -1,0 +1,14 @@
+/* styles for OrdersPage.jsx only */
+
+/* the search box: full width on phones, at most 400px on bigger screens */
+.kg-orders-search {
+    flex: 1 1 260px;
+    max-width: 400px;
+}
+
+/* the order total on each card, e.g. "S$171.30" */
+.kg-order-total {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--kg-navy);
+}

@@ -1,4 +1,4 @@
-// the page buttons under the product grid: "Showing 1–12 of 17" and ‹ 1 2 › (kitgrid_product_list_v2)
+// the page buttons: "Showing 1–12 of 17" and ‹ 1 2 › (used by /products and /orders)
 import { useSearch, useLocation } from 'wouter';
 import './Pagination.css';
 
@@ -11,7 +11,7 @@ export default function Pagination({ page, limit, total, totalPages }) {
   function goToPage(number) {
     const newParams = new URLSearchParams(search);
     newParams.set('page', number);
-    navigate('/products?' + newParams.toString());
+    navigate(location + '?' + newParams.toString()); // stay on this page (/products or /orders), change only when ?page=
     window.scrollTo(0, 0); // back to the top, so the customer sees the first card of the new page
   }
 
@@ -34,7 +34,7 @@ export default function Pagination({ page, limit, total, totalPages }) {
     <div className="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-4">
       <span className="kg-card-meta">Showing {first}–{last} of {total}</span>
 
-      <nav className="d-flex gap-2" aria-label="Product pages">
+      <nav className="d-flex gap-2" aria-label="Pages">
         <button type="button" className="kg-page-btn" aria-label="Previous page"
           disabled={page === 1} onClick={() => goToPage(page - 1)}>‹</button>
 

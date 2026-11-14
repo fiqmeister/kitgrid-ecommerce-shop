@@ -89,6 +89,7 @@ export default function Header() {
                         {user ? (
                             <>
                                 <span className="kg-header-user">Hi, {user.name}</span>
+                                <Link href="/orders" className="kg-header-link">My Orders</Link>
                                 <button type="button" className="kg-header-link kg-logout-button" onClick={logOut}>Log out</button>
                             </>
                         ) : (
