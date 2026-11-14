@@ -36,7 +36,7 @@ export default function CheckoutPage() {
     useEffect(() => {
         const loadCart = async () => {
             if (!user) {
-                setLoading(false); // guests get the "Please log in" message below, no request needed
+                setLoading(false); // guests sent to login page
                 return;
             }
             setLoading(true);

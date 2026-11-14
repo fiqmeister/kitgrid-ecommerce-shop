@@ -19,7 +19,7 @@ export default function OrderConfirmationPage({ params }) {
     useEffect(() => {
         const loadOrder = async () => {
             if (!user) {
-                setLoading(false); // guests get the "Please log in" message below
+                setLoading(false); // guests sent to login page
                 return;
             }
             setLoading(true);
@@ -118,7 +118,7 @@ export default function OrderConfirmationPage({ params }) {
 
                     <div className="kg-card p-4">
                         <h2 className="h5 mb-3">What happens next</h2>
-                        {/* the same for every new order for now; the order detail page (14 Nov) will follow the real status */}
+                        {/* shows current status only, the rest just additional info; the order detail page shows the real progress status */}
                         <ol className="kg-timeline">
                             <li className="kg-timeline-done">
                                 <strong>Order placed</strong>
