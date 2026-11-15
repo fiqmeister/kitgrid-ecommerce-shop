@@ -14,7 +14,7 @@ const summary_days = 7;   // default summary: the last 7 days, today included
 const unpaid_hours = 24;  // unpaid longer than this needs attention (it is holding stock)
 const list_limit = 10;    // the most orders to list per group
 const variant_limit = 20; // the most variants a lookup returns
-const product_limit = 10; // the most products the Kit Advisor search returns
+const product_limit = 5; // the most products the Kit Advisor search returns
 
 // T1, 3 things: low-stock variants, how many sold recently, and a suggested reorder amount
 async function getLowStock() {
@@ -251,12 +251,10 @@ async function searchProducts(query) {
                     productId: product.id,
                     name: product.name,
                     category: product.category,
-                    description: product.description,
                     unitPrice: Number(product.base_price), // DECIMAL comes back as text
                     isBulkEligible: product.is_bulk_eligible === 1,
                     variants: variants.map(variant => ({
                         variantId: variant.id,
-                        sku: variant.sku,
                         size: variant.size,
                         colour: variant.colour,
                         ageGroup: variant.age_group,

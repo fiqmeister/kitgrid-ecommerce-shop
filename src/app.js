@@ -10,7 +10,7 @@ const errorHandler = require('./middleware/errorHandler');
 const requireApiKey = require('./middleware/requireApiKey');
 const cookieParser = require('cookie-parser');
 const adminRoutes = require('./routes/adminRoutes');
-
+const advisorRoutes = require('./routes/advisorRoutes');
 
 const app = express();
 // EJS pages for the admin side
@@ -28,6 +28,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/advisor', advisorRoutes); // Kit Advisor: Express calls N8N, so the webhook key never reaches the browser
 app.use('/api/tools', requireApiKey, toolRoutes); // middleware use here means ALL tool route gets checked and protected
 // admin route
 app.use('/admin', adminRoutes);

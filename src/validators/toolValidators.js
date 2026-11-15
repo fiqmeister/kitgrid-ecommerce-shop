@@ -21,10 +21,10 @@ const variantSearchSchema = yup.object({
 const productSearchSchema = yup.object({
     search: yup.string().trim().max(100, 'search is too long'),
     category: yup.string().trim().max(50, 'category is too long'),
-    ageGroup: yup.string().oneOf(['mini_junior', 'youth', 'senior'], 'ageGroup must be mini_junior, youth or senior'),
+    ageGroup: yup.string().oneOf(['mini_junior', 'youth', 'senior', ''], 'ageGroup must be mini_junior, youth or senior'),
     size: yup.string().trim().max(20, 'size is too long'),
     colour: yup.string().trim().max(30, 'colour is too long'),
-    maxPrice: yup.number().typeError('maxPrice must be a number').min(0, 'maxPrice cannot be negative'),
+    maxPrice: yup.number().transform((value, originalValue) => (originalValue === '' ? undefined : value)).typeError('maxPrice must be a number').min(0, 'maxPrice cannot be negative'),
 });
 // T5: quote. A list of variants and quantities, each checked by the same rules as adding to the cart
 const quoteSchema = yup.object({
