@@ -10,6 +10,7 @@ import CheckoutPage from './pages/CheckoutPage';
 import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import OrdersPage from './pages/OrdersPage';
 import OrderDetailPage from './pages/OrderDetailPage';
+import KitAdvisor from './components/KitAdvisor';
 
 function App() {
   const [location] = useLocation(); // the current path, eg "/checkout"
@@ -33,9 +34,10 @@ function App() {
           <Route path="/orders" component={OrdersPage} />
           <Route path="/orders/:id" component={OrderDetailPage} />
           <Route path="/orders/:id/confirmation" component={OrderConfirmationPage} />
-          
         </Router>
       </main>
+      {/* the Kit Advisor button floats over every page except checkout (no distractions while paying) */}
+      {location !== '/checkout' && <KitAdvisor />}
     </>
   );
 }

@@ -1,0 +1,291 @@
+/* styles for KitAdvisor.jsx only. Colours come from the variables in index.css */
+
+/* the floating "Ask the Kit Advisor" button, bottom right on every page */
+.kg-advisor-button {
+    position: fixed;         /* stays in the same place on screen while the page scrolls */
+    right: 24px;
+    bottom: 24px;
+    z-index: 1050;           /* on top of the page */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 999px;    /* pill shape */
+    background-color: var(--kg-accent);
+    color: var(--kg-white);
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);
+}
+
+.kg-advisor-button:hover {
+    background-color: var(--kg-accent-dark);
+}
+
+/* the open panel, in the same corner as the button */
+.kg-advisor-panel {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 1050;
+    width: 400px;
+    max-width: calc(100vw - 32px);   /* phones: never wider than the screen */
+    height: 600px;
+    max-height: calc(100vh - 48px);  /* short screens: never taller than the screen */
+    display: flex;
+    flex-direction: column;          /* header, tabs, chat, note: top to bottom */
+    background-color: var(--kg-white);
+    border: 1px solid var(--kg-slate-200);
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(15, 23, 42, 0.25);
+    overflow: hidden;                /* keeps the navy header inside the round corners */
+}
+
+/* phones: a little closer to the edge */
+@media (max-width: 575px) {
+    .kg-advisor-button,
+    .kg-advisor-panel {
+        right: 16px;
+        bottom: 16px;
+    }
+}
+
+/* navy header */
+.kg-advisor-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background-color: var(--kg-navy);
+    color: var(--kg-white);
+}
+
+/* the round blue circle around the icon */
+.kg-advisor-header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background-color: var(--kg-accent);
+}
+
+.kg-advisor-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.kg-advisor-subtitle {
+    margin: 0;
+    font-size: 12px;
+    color: var(--kg-slate-300);
+}
+
+/* the × button, pushed to the right */
+.kg-advisor-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--kg-white);
+    font-size: 28px;
+    line-height: 1;
+}
+
+/* the grey box holding the two tabs */
+.kg-advisor-tabs {
+    display: flex;
+    gap: 4px;
+    margin: 16px 18px 0;
+    padding: 4px;
+    background-color: var(--kg-slate-200);
+    border-radius: 10px;
+}
+
+.kg-advisor-tab {
+    flex: 1;                 /* both tabs the same width */
+    padding: 5px;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    color: var(--kg-slate-700);
+    font-weight: 600;
+}
+
+/* the chosen tab: a white "raised" box with blue text */
+.kg-advisor-tab.active {
+    background-color: var(--kg-white);
+    color: var(--kg-accent);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+}
+
+/* the chat area: takes the space left over and scrolls on its own */
+.kg-advisor-body {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 18px;
+}
+
+/* a grey speech bubble from the advisor */
+.kg-advisor-bubble {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background-color: var(--kg-slate-100);
+    color: var(--kg-slate-700);
+}
+
+/* the small note at the bottom */
+.kg-advisor-note {
+    margin: 0;
+    padding: 0px 20px 12px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--kg-slate);
+}
+/* the chat area fills from the bottom up, like a messaging app:
+   with column-reverse the browser starts the scroll at the BOTTOM and keeps it there
+   when a new message is added, so the newest message is always in view (no JavaScript needed) */
+.kg-advisor-chat {
+    flex-direction: column-reverse;
+}
+
+/* the list of bubbles, top to bottom as normal */
+.kg-advisor-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: auto; /* a short chat stays at the TOP of the panel, not stuck to the bottom */
+}
+
+/* the customer's own message: blue, on the right */
+.kg-advisor-bubble-customer {
+    align-self: flex-end;
+    background-color: var(--kg-accent);
+    color: var(--kg-white);
+}
+
+/* "The Kit Advisor is not available right now..." */
+.kg-advisor-bubble-error {
+    background-color: var(--kg-white);
+    border: 1px solid var(--kg-error);
+    color: var(--kg-error);
+}
+
+/* the message box and the round send button, side by side */
+.kg-advisor-form {
+    display: flex;
+    gap: 10px;
+    padding: 12px 20px 8px;
+    border-top: 1px solid var(--kg-slate-200);
+}
+
+.kg-advisor-input {
+    border-radius: 999px;
+    background-color: var(--kg-slate-100);
+    border-color: var(--kg-slate-300);
+}
+
+.kg-advisor-send {
+    flex: 0 0 40px;          /* always a 40px circle, never squeezed */
+    height: 40px;
+    border: none;
+    border-radius: 999px;
+    background-color: var(--kg-accent);
+    color: var(--kg-white);
+    font-size: 18px;
+}
+
+.kg-advisor-send:disabled {
+    background-color: var(--kg-slate-300);
+}
+/* one message: its bubble and, sometimes, the suggestion card under it
+   (a column too, so the customer's bubble can still sit on the right) */
+.kg-advisor-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ---------- the suggestion card (AdvisorSuggestion.jsx) ---------- */
+.kg-advisor-card {
+    padding: 16px;
+    border: 1px solid var(--kg-slate-200);
+    border-radius: 12px;
+    background-color: var(--kg-white);
+}
+
+.kg-advisor-card-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--kg-navy);
+}
+
+/* "In stock": a small green pill, like the cart's discount chip */
+.kg-advisor-stock {
+    padding: 2px 10px;
+    border-radius: 999px;
+    background-color: #DCFCE7; /* very light green */
+    color: var(--kg-success);
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.kg-advisor-product {
+    padding: 8px 0;
+    color: var(--kg-navy);
+}
+
+/* "Navy Youth S × 5 · Navy Youth M × 5" */
+.kg-advisor-product-meta {
+    font-size: 12px;
+    color: var(--kg-slate);
+}
+
+/* the totals under a thin line */
+.kg-advisor-totals {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--kg-slate-200);
+}
+
+/* one row: label on the left, amount on the right */
+.kg-advisor-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.kg-advisor-discount {
+    color: var(--kg-success);
+}
+
+.kg-advisor-total {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--kg-navy);
+}
+
+.kg-advisor-added {
+    color: var(--kg-success);
+    font-weight: 600;
+}
+
+.kg-advisor-link {
+    color: var(--kg-accent);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.kg-advisor-card-error {
+    color: var(--kg-error);
+    font-size: 13px;
+}
