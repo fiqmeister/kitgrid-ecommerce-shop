@@ -66,7 +66,7 @@ export default function AdvisorSuggestion({ suggestion }) {
                     <span>{suggestion.deliveryFee === 0 ? 'FREE' : 'S$' + suggestion.deliveryFee.toFixed(2)}</span>
                 </div>
                 <div className="kg-advisor-row kg-advisor-total">
-                    <span>Total ({suggestion.totalUnits} units)</span>
+                    <span>Total ({suggestion.totalUnits} {suggestion.totalUnits === 1 ? 'unit' : 'units'})</span>
                     <span>S${suggestion.total.toFixed(2)}</span>
                 </div>
             </div>

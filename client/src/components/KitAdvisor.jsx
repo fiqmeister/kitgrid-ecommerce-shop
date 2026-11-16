@@ -59,7 +59,7 @@ export default function KitAdvisor() {
 
         try {
             const response = await api.post('/advisor', { message: message, mode: mode });
-            // the reply, plus the checked suggestion (or null): the card that shows it comes in step 3c
+            // the reply, plus the checked suggestion (or null)
             setMessages([...withQuestion, {
                 from: 'advisor',
                 text: response.data.reply,

@@ -115,7 +115,7 @@ async function findVariants(filters, limit) {
 // T4: active products for the Kit Advisor, filtered by name, category name and highest unit price
 // only the filters that were sent are added, same idea as findVariants
 async function findProducts(filters) {
-    let sql = `SELECT products.id, products.name, products.description, products.base_price,
+    let sql = `SELECT products.id, products.name, products.base_price,
         products.is_bulk_eligible, categories.name AS category
         FROM products
         JOIN categories ON categories.id = products.category_id
@@ -145,14 +145,14 @@ async function findInStockVariants(productIds, filters) {
     if (productIds.length === 0) {
         return []; // no products matched, nothing to look up
     }
-    let sql = `SELECT id, product_id, sku, size, colour, age_group, stock
+    let sql = `SELECT id, product_id, size, colour, age_group, stock
         FROM product_variants
         WHERE product_id IN (?)
         AND stock > 0`;
     const params = [productIds];
 
     if (filters.ageGroup) {
-        sql += ' AND age_group = ?';
+        sql += ' AND (age_group = ? OR age_group IS NULL)'; // no age group, fits every age
         params.push(filters.ageGroup);
     }
     if (filters.size) {

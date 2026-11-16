@@ -28,9 +28,9 @@
     right: 24px;
     bottom: 24px;
     z-index: 1050;
-    width: 400px;
+    width: 500px;
     max-width: calc(100vw - 32px);   /* phones: never wider than the screen */
-    height: 600px;
+    height: 700px;
     max-height: calc(100vh - 48px);  /* short screens: never taller than the screen */
     display: flex;
     flex-direction: column;          /* header, tabs, chat, note: top to bottom */

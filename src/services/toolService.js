@@ -331,8 +331,6 @@ async function getQuote(items) {
     };
 }
 
-
-
 module.exports = { getLowStock, getOrderSummary, getOrdersToShip, searchVariants, searchProducts,
     getQuote
  };

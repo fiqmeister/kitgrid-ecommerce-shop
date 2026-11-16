@@ -30,7 +30,7 @@
 | # | As a... | I want to... | So that... | Acceptance criteria |
 |---|---|---|---|---|
 | 1 | Coach | filter products by colour, age group, size and price | I only see gear that suits my team | Filters combine; results update; out-of-stock sizes are marked |
-| 2 | Coach | tell the Kit Advisor my squad size and budget | I get a ready bundle | Advisor suggests only in-stock items; "Add all to cart" works |
+| 2 | Coach | tell the Kit Advisor my squad size and budget | I get a ready bundle | For logged-in customers; the advisor suggests only in-stock items, the prices shown come from the server (not from the AI), and "Add all to cart" adds the whole kit |
 | 3 | Guest | add items to a cart without an account | I can browse before committing | Cart persists on refresh; merges into my account after login |
 | 4 | Customer | see bulk discounts in my cart | I know the real price | Discount tier applied and shown per product line |
 | 5 | Customer | view my past orders and their progress | I know what I bought and where each order is | History is searchable by order number or product name, 5 orders per page; each order opens a detail page with its items, totals, delivery address and a timeline of its status changes |
@@ -85,7 +85,7 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 - EJS admin dashboard (orders, products, users) with its own admin login (JWT in an `httpOnly`, `sameSite: strict` cookie), CSRF protection on every admin form, and a login rate limit
 - Login rate limits: 5 failed logins per 15 minutes per IP address on the admin login and the customer API login (successful logins are not counted)
 - Optional team profile (never required at checkout)
-- AI Kit Advisor (customer) and AI admin assistant, built with N8N; the advisor has a team mode (bundles with quantities) and a personal mode (single items); the admin assistant summarizes orders and the delivery backlog, flags low stock and proposes threshold changes that the admin confirms
+- AI Kit Advisor (customer) and AI admin assistant, built with N8N; the advisor (a floating button on every page except checkout, for logged-in customers) has a team mode (a kit for a squad, with quantities per size) and a personal mode (items for one player), and shows each suggestion as a card with Add all to cart; the admin assistant summarizes orders and the delivery backlog, flags low stock and proposes threshold changes that the admin confirms
 
 ### Algorithms and key logic
 
@@ -104,7 +104,11 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 
 ### AI features
 
-- **Kit Advisor (grounded + structured):** TODO (describe the N8N tools it calls, the JSON bundle it returns in team mode, and the single-item answer in personal mode)
+- **Kit Advisor (grounded + structured):** a chat panel for logged-in customers, opened from the floating "Ask the Kit Advisor" button (on every page except checkout). It has two tabs: **For my team** (squad size, age group and budget, e.g. "U12 team of 16 players, S$800 budget. We need match jerseys and training bibs.") and **For me** (position, size and budget). React sends `{ message, mode }` to `POST /api/advisor`; Express adds the customer's name from the database and calls the N8N webhook with a secret header, so the webhook URL and key never reach the browser. The N8N agent (Groq `openai/gpt-oss-120b`, with `openai/gpt-oss-20b` as the fallback) may only use two read-only tools:
+  - `GET /api/tools/products`: active products with their in-stock variants, filtered by name, category, age group, colour and highest price (at most 5 products, to stay within the free token limit)
+  - `POST /api/tools/quote`: prices a list of `{ variantId, quantity }` with the same bulk discount and delivery rules as the cart
+
+  Its system message tells it to use only variant ids returned by the tools, to price every suggestion with the quote tool before answering, to match the customer's sizes and age group, to refuse questions that are not about football kit, and to ignore instructions in the message that try to change its rules or the prices. It returns JSON: `reply` (1 to 3 sentences), an optional `title` and `items` (`[{ variantId, quantity }]`). **Express does not trust this answer:** it checks the items with the same rules as adding to the cart, prices them again with the same quote function, and drops the suggestion (with "Sorry, I could not check that kit against live stock") if a variant does not exist or there is not enough stock. The panel shows the reply as a chat bubble and, under it, a card built only from the server's quote: each product with its sizes, the bulk discounts, delivery and the total, with **Add all to cart**, which uses the same cart function as the product page. A question, a refusal or "nothing fits the budget" comes back as a reply with no card.
 - **Admin assistant (grounded + structured):** a panel on the EJS admin dashboard, for logged-in admins only. The admin clicks a quick button ("This week's orders", "Show low stock", "Orders waiting to ship") or types a question (up to 300 characters). Express sends the question to an N8N webhook (protected by a secret header) and waits up to 90 seconds. The N8N agent answers only from four read-only `/api/tools` endpoints (API key):
   - `GET /api/tools/stock/low`: variants whose `stock` is at or below their `low_stock_threshold`, with units sold in the last 30 days
   - `GET /api/tools/orders/summary`: counts by status, paid revenue and unpaid orders older than 24 hours, for a date range
@@ -120,7 +124,11 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 - Payments use Stripe test mode only.
 - Login rate-limit counts are kept in the server's memory: they reset when the server restarts and would not be shared between several servers. Register is not rate limited.
 - Admin log out only deletes the cookie. The admin JWT itself stays valid until it expires, so a stolen cookie would keep working until then.
-- The admin assistant uses free LLM tiers, so an answer can take 10 to 60 seconds, and it can be unavailable when the provider is busy or rate limited.
+- The admin assistant and the Kit Advisor use free LLM tiers, so an answer can take 5 to 60 seconds, and they can be unavailable when the provider is busy or rate limited (Groq's free plan allows about 8,000 tokens per minute per model, roughly one or two advisor questions a minute).
+- The Kit Advisor is for logged-in customers only; guests see a "Log in to use the Kit Advisor" message. `POST /api/advisor` is not rate limited yet.
+- The Kit Advisor does not remember earlier messages: each message is answered on its own, so it must include the squad size, sizes and budget again. Switching between For my team and For me starts a new chat.
+- When the customer does not give sizes, the Kit Advisor guesses a spread of sizes (for example 5 each of Youth S, M and L); the customer changes the quantities in the cart.
+- AI answers vary: the same message can get a slightly different kit, and the total in the AI's sentence can differ from the card (the card, priced by the server, is the one that counts).
 - An admin form refused by the CSRF check or the threshold rule shows a plain JSON error page instead of the dashboard.
 - The React shop keeps the customer's access and refresh tokens in `localStorage`. Any JavaScript on the page can read `localStorage`, so a cross-site scripting (XSS) bug could leak the tokens. This was accepted to keep the project simple. React escapes text it displays, and the access token is short-lived. An `httpOnly` cookie (as the admin side uses) would be safer.
 - If a customer changes two filters very quickly, a slow first answer can arrive after the second and briefly show the older results. Changing any filter again fixes it.
@@ -146,6 +154,7 @@ Nice-to-have if time allows:
 - Reorder from a past order
 - My orders: a status filter, an oldest-first sort (the API already supports both) and a different chip colour for each status
 - After logging in, return to the protected page the customer first opened
+- Kit Advisor: adjust quantities and choose a size per item inside the card, add one item at a time, follow-up questions that remember the chat, and guest access with a rate limit
 - Wishlist, PDF invoice, image upload
 
 Out of scope for now (deliberately dropped to keep the project feasible):
@@ -164,7 +173,7 @@ Out of scope for now (deliberately dropped to keep the project feasible):
 | Use case | Objective | Steps |
 |---|---|---|
 | Place a team order | Buy kit in bulk | 1. Browse and filter. 2. Enter quantities per size and add to cart. 3. Review bulk discount in the cart. 4. Log in and enter delivery details. 5. Review and pay via Stripe. |
-| Ask the Kit Advisor | Get a stock-checked bundle | 1. Open the advisor. 2. Describe the team and budget. 3. Review the bundle. 4. Add all to cart. |
+| Ask the Kit Advisor | Get a stock-checked bundle | 1. Log in. 2. Click "Ask the Kit Advisor". 3. Choose For my team or For me and describe the squad (or yourself), sizes and budget. 4. Review the suggested kit and its total. 5. Add all to cart, then change quantities in the cart if needed. |
 | Update an order | Move an order along | 1. Log in to admin. 2. Open the order. 3. Change status. 4. Check the status history. |
 
 ---
@@ -179,7 +188,7 @@ Out of scope for now (deliberately dropped to keep the project feasible):
 | Database | MariaDB via `mysql2` (connection pool, raw SQL written in the DAL only) |
 | Security | JWT (`jsonwebtoken`), CSRF token kept in the admin JWT (own middleware, Node `crypto`), `express-rate-limit`, `cors` (restricted to `CLIENT_URL`), bcrypt, Yup validation on every input |
 | Payments | Stripe Checkout (test mode, hosted page; webhooks forwarded to the laptop with the Stripe CLI) |
-| AI | N8N agents (run locally with `npx n8n`); LLM: Groq (`openai/gpt-oss-120b`), with Google Gemini (`gemini-flash-lite-latest`) as the fallback |
+| AI | N8N agents (run locally with `npx n8n`); LLM: Groq (`openai/gpt-oss-120b`). Fallback: Groq `openai/gpt-oss-20b` (Groq counts its per-minute limit separately for each model, so the fallback still has room when the main model is busy) |
 | Testing | TODO (for example Jest, Supertest) |
 | Hosting | TODO (deployment planned for later). During development, MariaDB, the Express API, the React app and N8N run locally |
 
@@ -265,6 +274,11 @@ Run order: `reset.sql` (only for a clean rebuild), then `schema.sql`, then `seed
 | 32 | Order timeline | As Daniel Lim, click View details on 1006, 1027 and 1036 | 1006: all 5 steps done, each with a date; 1027: 3 done, Shipped and Delivered "Not yet"; 1036: Order placed, Paid and a red Cancelled step only | |
 | 33 | Order detail belongs to its customer | As Daniel Lim, open `/orders/1034` (another customer's order) and `/orders/abc` | "Sorry, we could not find this order." with Back to my orders | |
 | 34 | Log out from a protected page | As Daniel Lim, on `/orders`, click Log out | Home opens (not the login page) and the My Orders link disappears | |
+| 35 | Kit Advisor for guests | Logged out, click "Ask the Kit Advisor"; then go to `/checkout` while logged in | The panel shows "Log in to use the Kit Advisor" with a Log in or register button and no tabs; on checkout there is no Kit Advisor button | |
+| 36 | Kit Advisor team kit | Log in as Daniel Lim; For my team: "U12 team of 16 players, S$800 budget. We need match jerseys and training bibs." | A reply and a card with youth jerseys and training bibs, a 15% bulk discount, free delivery and a total under S$800; product prices − discounts = total | |
+| 37 | Kit Advisor add to cart | On the card from test 36, click Add all to cart, then View cart | "✓ Added to cart"; the cart badge goes up by the kit's units and the cart shows the same products, sizes and total | |
+| 38 | Kit Advisor personal and off-topic | For me: "I'm an adult, size M. Budget S$80 for a jersey and a training tee."; then "Write me a poem about cats" | Adult M sizes, S$8.00 delivery (2 units) and a total under S$80; the poem request gets a short refusal and no card | |
+| 39 | Kit Advisor when N8N is down | Stop N8N, send any message | A red bubble: "The Kit Advisor is not available right now. Please try again in a minute." | |
 
 Note: unhandled exceptions and console errors count as failing tests, so check the browser console on every page.
 
@@ -297,11 +311,12 @@ N8N_TOOLS_API_KEY=
 N8N_ADMIN_WEBHOOK_URL=
 N8N_ADMIN_WEBHOOK_KEY=
 N8N_ADVISOR_WEBHOOK_URL=
+N8N_ADVISOR_WEBHOOK_KEY=
 ```
 
 The React app has its own `client/.env` (copy `client/.env.example`) with a single value, `VITE_API_URL` (the API address, for example `http://localhost:3000/api`). Vite puts every `VITE_` value into the JavaScript sent to the browser, so no secret ever goes in this file.
 
-`N8N_TOOLS_API_KEY` is the key N8N sends to `/api/tools`; `N8N_ADMIN_WEBHOOK_KEY` is the secret header Express sends to the N8N admin webhook. The Stripe and Kit Advisor values are used once those features are built.
+`N8N_TOOLS_API_KEY` is the key N8N sends to `/api/tools`; `N8N_ADMIN_WEBHOOK_KEY` and `N8N_ADVISOR_WEBHOOK_KEY` are the secret headers Express sends to the N8N admin and Kit Advisor webhooks (each workflow has its own). Express reads `.env` only when it starts, so restart it after changing a key. The Stripe values are used once payments are built.
 
 - **Local setup:** TODO (clone, `npm install` in the project root for the API and again in `/client`, create `.env` from `.env.example`, run `schema.sql` then `seed.sql`, start the API and the client, start N8N, and run the Stripe CLI to forward webhooks)
 - **Deployment steps:** TODO (deploy later). Also TODO: a pre-demo checklist (MariaDB, API, client, N8N and the Stripe CLI all running).
