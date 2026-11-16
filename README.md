@@ -188,7 +188,7 @@ Out of scope for now (deliberately dropped to keep the project feasible):
 | Database | MariaDB via `mysql2` (connection pool, raw SQL written in the DAL only) |
 | Security | JWT (`jsonwebtoken`), CSRF token kept in the admin JWT (own middleware, Node `crypto`), `express-rate-limit`, `cors` (restricted to `CLIENT_URL`), bcrypt, Yup validation on every input |
 | Payments | Stripe Checkout (test mode, hosted page; webhooks forwarded to the laptop with the Stripe CLI) |
-| AI | N8N agents (run locally with `npx n8n`); LLM: Groq (`openai/gpt-oss-120b`). Fallback: Groq `openai/gpt-oss-20b` (Groq counts its per-minute limit separately for each model, so the fallback still has room when the main model is busy) |
+| AI | N8N agents (run locally with `npx n8n`). Kit Advisor: Groq `openai/gpt-oss-120b`, fallback Groq `openai/gpt-oss-20b` (fast, and Groq counts its per-minute limit separately for each model). Admin assistant: Google Gemini `gemini-3.5-flash`, fallback `gemini-flash-latest` (better-written answers; speed matters less for the admin). Each fallback uses the same provider as its main model, because Gemini 3 cannot continue a run whose earlier tool calls were made by another provider |
 | Testing | TODO (for example Jest, Supertest) |
 | Hosting | TODO (deployment planned for later). During development, MariaDB, the Express API, the React app and N8N run locally |
 
