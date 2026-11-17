@@ -9,11 +9,16 @@ import OrderItems from '../components/OrderItems';
 import OrderStatusChip from '../components/OrderStatusChip';
 import './OrderConfirmationPage.css';
 import OrderTotal from '../components/OrderTotal';
+import PageState from '../components/PageState';
+
 
 export default function OrderConfirmationPage({ params }) {
     const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [notFound, setNotFound] = useState(false); // true for a 404/400: no such order (or another customer's), so Try again wouldn't help
+    const [reloadCount, setReloadCount] = useState(0); // Try again adds 1 to this number; useEffect is watching it, so it loads the order again
+
     const { user } = useUser();
 
     useEffect(() => {
@@ -24,13 +29,14 @@ export default function OrderConfirmationPage({ params }) {
             }
             setLoading(true);
             setError('');
+            setNotFound(false);
             try {
                 const response = await api.get('/orders/' + params.id);
                 setOrder(response.data);
             } catch (err) {
                 // 404: no such order, or another customer's; 400: the id is not a number (e.g. /orders/abc/...)
                 if (err.response && (err.response.status === 404 || err.response.status === 400)) {
-                    setError('Sorry, we could not find this order.');
+                    setNotFound(true);
                 } else {
                     setError("Couldn't load your order. Please check your connection and try again.");
                 }
@@ -38,7 +44,7 @@ export default function OrderConfirmationPage({ params }) {
             setLoading(false);
         };
         loadOrder();
-    }, [params.id, user]);
+    }, [params.id, user, reloadCount]);
 
     // early returns: after all the hooks above
     if (!user) {
@@ -46,16 +52,32 @@ export default function OrderConfirmationPage({ params }) {
     }
 
     if (loading) {
-        return <p className="kg-card-meta">Loading your order…</p>;
+        return (
+            <p className="kg-card-meta">
+                <span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                Loading your order…
+            </p>
+        );
+    }
+
+    if (notFound) {
+        return (
+            <PageState icon="bi-search" title="We couldn't find this order" text="Check the order number, or find it in your orders.">
+                <Link href="/orders" className="btn btn-kg-primary">Back to my orders</Link>
+            </PageState>
+        );
     }
 
     if (error) {
         return (
-            <div className="alert alert-danger">
-                {error} <Link href="/products">Continue shopping</Link>
-            </div>
+            <PageState icon="bi-exclamation-lg" title="We couldn't load your order" text="Check your connection and try again." isError={true}>
+                <button type="button" className="btn btn-kg-primary" onClick={() => setReloadCount(reloadCount + 1)}>
+                    Try again
+                </button>
+            </PageState>
         );
     }
+
 
     // createdAt arrives as text in the JSON, so turn it back into a date, then format it like the admin pages
     const placedAt = new Date(order.createdAt).toLocaleString('en-SG', {

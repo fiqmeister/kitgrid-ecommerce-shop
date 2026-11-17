@@ -1,7 +1,7 @@
 // the product detail page: /products/5
 // step 1: loads one product and shows the top info and the "Product details" card
 // the colour picker, size table, bulk tiers and totals come in the next steps
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import api from '../api';
 import categories from '../categories';
@@ -11,6 +11,8 @@ import Breadcrumb from '../components/Breadcrumb';
 import roundMoney from '../roundMoney';
 import { useCart } from '../stores/CartStore';
 import { useUser } from '../stores/UserStore';
+import PageState from '../components/PageState';
+
 
 // params comes from the Route: <Route path="/products/:id" component={ProductDetail} />
 // for /products/5, params is { id: "5" } (always text)
@@ -18,6 +20,9 @@ export default function ProductDetail({ params }) {
     const [product, setProduct] = useState(null); // one product from GET /api/products/:id
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [notFound, setNotFound] = useState(false); // true for a 404/400: no such product, so Try again wouldn't help
+    const [reloadCount, setReloadCount] = useState(0); // Try again adds 1 to this number; useEffect is watching it, so it loads the product again
+
     const [selectedColour, setSelectedColour] = useState(''); // e.g. "Navy": which sizes the table shows
     const [quantities, setQuantities] = useState({}); // { variantId: quantity }, e.g. { 1: 4, 3: 6 }
     // for cart section
@@ -44,16 +49,17 @@ export default function ProductDetail({ params }) {
             } catch (err) {
                 // 404 = no such product (or hidden by the admin), 400 = the id is not a number (/products/abc)
                 if (err.response && (err.response.status === 404 || err.response.status === 400)) {
-                    setError('Sorry, we could not find this product.');
+                    setNotFound(true);
                 } else {
                     setError("Couldn't load this product. Please check your connection and try again.");
                 }
             }
             setLoading(false);
         };
+        setNotFound(false);
         fetchProduct();
-    }, [params.id]); // runs again if the customer goes from one product straight to another
-        // runs every time the customer types in a quantity box
+    }, [params.id, reloadCount]); // again when the customer goes to another product, or clicks Try again
+    // runs every time the customer types in a quantity box
     // variant: the size row, e.g. { id: 1, size: 'S', stock: 12, ... }   text: what is in the box, e.g. "4" or ""
     function changeQuantity(variant, text) {
         let quantity = Math.floor(Number(text)); // "" → 0, "2.5" → 2
@@ -72,16 +78,30 @@ export default function ProductDetail({ params }) {
     // IMPORTANT: every useState/useEffect must stay ABOVE these early returns
     // (React needs the same hooks, in the same order, on every render)
     if (loading) {
-        return <p className="kg-card-meta">Loading product…</p>;
+        return (
+            <p className="kg-card-meta">
+                <span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                Loading product…
+            </p>
+        );
+    }
+    if (notFound) {
+        return (
+            <PageState icon="bi-search" title="We couldn't find this product" text="It may no longer be sold, or the link is wrong.">
+                <Link href="/products" className="btn btn-kg-primary">Back to all products</Link>
+            </PageState>
+        );
     }
     if (error) {
         return (
-            <div className="text-center py-5">
-                <h1 className="fs-3">{error}</h1>
-                <Link href="/products" className="btn btn-kg-primary mt-2">Back to all products</Link>
-            </div>
+            <PageState icon="bi-exclamation-lg" title="We couldn't load this product" text="Check your connection and try again." isError={true}>
+                <button type="button" className="btn btn-kg-primary" onClick={() => setReloadCount(reloadCount + 1)}>
+                    Try again
+                </button>
+            </PageState>
         );
     }
+
 
     // the category's id, for the breadcrumb link (the API sends the name, e.g. "Matchday Kits")
     const category = categories.find(item => item.name === product.category);

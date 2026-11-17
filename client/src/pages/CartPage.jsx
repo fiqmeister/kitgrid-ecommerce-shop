@@ -6,6 +6,7 @@ import { useCart } from '../stores/CartStore';
 import { useUser } from '../stores/UserStore';
 import Breadcrumb from '../components/Breadcrumb';
 import CartProductCard from '../components/CartProductCard';
+import PageState from '../components/PageState';
 
 export default function CartPage() {
     const [loading, setLoading] = useState(true);
@@ -13,6 +14,7 @@ export default function CartPage() {
     const [notSold, setNotSold] = useState(false); // true when a guest's cart holds a product that is no longer sold
     const [updating, setUpdating] = useState(false); // true while a quantity change or Remove is saving
     const [updateError, setUpdateError] = useState('');
+    const [reloadCount, setReloadCount] = useState(0); // Try again adds 1 to this number; useEffect is watching it, so it loads the cart again
     const { cart, fetchCart, clearGuestCart, modifyQuantity, removeProduct } = useCart();
     const { user } = useUser();
 
@@ -36,7 +38,7 @@ export default function CartPage() {
             setLoading(false);
         };
         loadCart();
-    }, [user]);
+    }, [user, reloadCount]); // again when someone logs in or out, or when Try again is clicked
 
     // the "Empty my cart" button (only shown with the "no longer sold" message)
     function handleEmptyCart() {
@@ -74,38 +76,67 @@ export default function CartPage() {
 
     const breadcrumbItems = [{ label: 'Home', href: '/' }, { label: 'Cart' }];
 
+    // the top of the page, shown above every state so the page doesn't jump when the cart arrives
+    const pageTop = (
+        <>
+            <Breadcrumb items={breadcrumbItems} />
+            <h1 className="mb-3">Your cart</h1>
+        </>
+    );
+
     // early returns: after all the hooks above
     if (loading) {
-        return <p className="kg-card-meta">Loading your cart…</p>;
+        return (
+            <>
+                {pageTop}
+                <p className="kg-card-meta">
+                    <span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                    Loading your cart…
+                </p>
+            </>
+        );
     }
 
+    // a guest's cart holds a product the admin has hidden since, so the server can't price it
     if (notSold) {
         return (
-            <div className="alert alert-warning">
-                Something in your cart is no longer sold, so we couldn't work out the prices.
-                <button type="button" className="btn btn-kg-dark btn-sm ms-2" onClick={handleEmptyCart}>
-                    Empty my cart
-                </button>
-            </div>
+            <>
+                {pageTop}
+                <PageState icon="bi-exclamation-lg" title="Something in your cart is no longer sold"
+                    text="So we couldn't work out the prices. Empty your cart, then add the items again." isError={true}>
+                    <button type="button" className="btn btn-kg-dark" onClick={handleEmptyCart}>
+                        Empty my cart
+                    </button>
+                </PageState>
+            </>
         );
     }
 
     if (error) {
-        return <div className="alert alert-danger">{error}</div>;
+        return (
+            <>
+                {pageTop}
+                <PageState icon="bi-exclamation-lg" title="We couldn't load your cart" text="Check your connection and try again." isError={true}>
+                    <button type="button" className="btn btn-kg-primary" onClick={() => setReloadCount(reloadCount + 1)}>
+                        Try again
+                    </button>
+                </PageState>
+            </>
+        );
     }
 
     if (cart.products.length === 0) {
         return (
             <>
-                <Breadcrumb items={breadcrumbItems} />
-                <div className="kg-card p-5 text-center">
-                    <h1 className="h3">Your cart is empty</h1>
-                    <p className="kg-card-meta">Pick a product, type a quantity for each size and add them all at once.</p>
-                    <Link href="/products" className="btn btn-kg-primary">Browse products</Link>
-                </div>
+                {pageTop}
+                <PageState icon="bi-cart3" title="Your cart is empty" text="Add kit and bulk discounts will show up here.">
+                    {/* categoryId=1 is Matchday Kits (categories.js) */}
+                    <Link href="/products?categoryId=1" className="btn btn-kg-primary">Shop Matchday Kits</Link>
+                </PageState>
             </>
         );
     }
+
 
     // is any size asking for more than the stock? then checkout is blocked until it's lowered
     let hasStockProblem = false;
@@ -116,7 +147,7 @@ export default function CartPage() {
             }
         }
     }
-    
+
     return (
         <>
             <Breadcrumb items={breadcrumbItems} />
@@ -134,14 +165,14 @@ export default function CartPage() {
                     Some sizes ask for more than we have in stock. Please lower the quantities marked in red before you check out.
                 </div>
             )}
-            { updateError && <div className="alert alert-danger">{updateError}</div> }
+            {updateError && <div className="alert alert-danger">{updateError}</div>}
 
             <div className="row g-4">
                 {/* left: one card per product */}
                 <div className="col-lg-8">
                     {cart.products.map(product => (
                         <CartProductCard key={product.productId} product={product} disabled={updating}
-                        onQuantityChange={handleQuantityChange} onRemove={handleRemove}/>
+                            onQuantityChange={handleQuantityChange} onRemove={handleRemove} />
                     ))}
                 </div>
 

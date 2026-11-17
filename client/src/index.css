@@ -124,3 +124,41 @@ h1, h2, h3 {
     background-color: var(--kg-error);
     border-color: var(--kg-error);
 }
+/* ---------- page states: loading, empty, error (states wireframe) ----------
+   a centred white card: round icon, title, one short line, then a button */
+.kg-state {
+    background-color: var(--kg-white);
+    border: 1px solid var(--kg-slate-200);
+    border-radius: 12px;
+    padding: 48px 24px;
+    text-align: center;
+}
+
+/* the round icon on top: grey for empty, red for errors */
+.kg-state-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: inline-flex;          /* centres the icon inside the circle */
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+    background-color: var(--kg-slate-100);
+    color: var(--kg-slate);
+}
+
+.kg-state-icon-error {
+    background-color: #FEE2E2;     /* light red, same as the wireframe */
+    color: var(--kg-error);
+}
+
+.kg-state-title {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.kg-state-text {
+    color: var(--kg-slate);
+    margin-bottom: 20px;
+}

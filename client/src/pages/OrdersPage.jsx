@@ -6,6 +6,7 @@ import api from '../api';
 import { useUser } from '../stores/UserStore';
 import OrderStatusChip from '../components/OrderStatusChip';
 import Pagination from '../components/Pagination';
+import PageState from '../components/PageState';
 import './OrdersPage.css';
 
 export default function OrdersPage() {
@@ -21,6 +22,8 @@ export default function OrdersPage() {
     const [result, setResult] = useState(null);   // { items, page, limit, total, totalPages } from the API
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [reloadCount, setReloadCount] = useState(0); // Try again adds 1 to this number; useEffect is watching it, so it loads the orders again
+
 
     // load the orders for whatever is in the address bar
     useEffect(() => {
@@ -41,7 +44,7 @@ export default function OrdersPage() {
             setLoading(false);
         };
         fetchOrders();
-    }, [search, user]); // runs again when the search or the page changes
+    }, [search, user, reloadCount]); // again when the search or page changes, or when Try again is clicked
 
     // keep the box in step with the URL (e.g. after "Show all orders" or the browser Back button)
     useEffect(() => {
@@ -69,27 +72,35 @@ export default function OrdersPage() {
     // 4 states: loading, error, nothing found, the list
     let content;
     if (loading) {
-        content = <p className="kg-card-meta">Loading your orders…</p>;
+        content = (
+            <p className="kg-card-meta">
+                <span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                Loading your orders…
+            </p>
+        );
     } else if (error) {
-        content = <div className="alert alert-danger">{error}</div>;
+        content = (
+            <PageState icon="bi-exclamation-lg" title="We couldn't load your orders" text="Check your connection and try again." isError={true}>
+                <button type="button" className="btn btn-kg-primary" onClick={() => setReloadCount(reloadCount + 1)}>
+                    Try again
+                </button>
+            </PageState>
+        );
     } else if (result.items.length === 0 && searchWords) {
         // a search found nothing
         content = (
-            <div className="text-center py-5">
-                <h2 className="h4">No orders match "{searchWords}"</h2>
-                <p className="kg-card-meta">Try an order number (e.g. 1006) or a product name.</p>
+            <PageState icon="bi-search" title={'No orders match "' + searchWords + '"'} text="Try an order number (e.g. 1006) or a product name.">
                 <Link href="/orders" className="btn btn-kg-primary">Show all orders</Link>
-            </div>
+            </PageState>
         );
     } else if (result.items.length === 0) {
         // no search, and still nothing: this customer has never ordered
         content = (
-            <div className="text-center py-5">
-                <h2 className="h4">You haven't placed any orders yet</h2>
-                <p className="kg-card-meta">Your orders will appear here after checkout.</p>
+            <PageState icon="bi-bag" title="You haven't placed any orders yet" text="Your orders will appear here after checkout.">
                 <Link href="/products" className="btn btn-kg-primary">Start shopping</Link>
-            </div>
+            </PageState>
         );
+
     } else {
         content = (
             <>

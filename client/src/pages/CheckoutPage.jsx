@@ -10,11 +10,13 @@ import getDeliveryFee from '../deliveryFee';
 import './CheckoutPage.css';
 import DeliveryForm from '../components/DeliveryForm';
 import OrderItems from '../components/OrderItems';
+import PageState from '../components/PageState';
 
 export default function CheckoutPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [step, setStep] = useState(1); // 1 = Delivery, 2 = Review & place order
+    const [reloadCount, setReloadCount] = useState(0); // Try again adds 1 to this number; useEffect is watching it, so it loads the cart again
     const { cart, fetchCart } = useCart();
     const { user } = useUser();
     // the delivery details: kept HERE, not in the form, so they survive going to step 2 and back
@@ -49,7 +51,7 @@ export default function CheckoutPage() {
             setLoading(false);
         };
         loadCart();
-    }, [user]);
+    }, [user, reloadCount]); // again when someone logs in or out, or when Try again is clicked
     // Continue on the delivery form: keep the values, then show step 2
     const handleContinue = (values) => {
         setDelivery(values);
@@ -81,21 +83,43 @@ export default function CheckoutPage() {
         return <Redirect to="/login" replace />;
     }
 
+    // the top of every state below (the checkout has its own small header, so no breadcrumb)
+    const pageTop = <h1 className="mb-3">Checkout</h1>;
+
     if (loading) {
-        return <p className="kg-card-meta">Loading your cart…</p>;
+        return (
+            <>
+                {pageTop}
+                <p className="kg-card-meta">
+                    <span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                    Loading your cart…
+                </p>
+            </>
+        );
     }
 
     if (error) {
-        return <div className="alert alert-danger">{error}</div>;
+        return (
+            <>
+                {pageTop}
+                <PageState icon="bi-exclamation-lg" title="We couldn't load your cart" text="Check your connection and try again." isError={true}>
+                    <button type="button" className="btn btn-kg-primary" onClick={() => setReloadCount(reloadCount + 1)}>
+                        Try again
+                    </button>
+                </PageState>
+            </>
+        );
     }
 
     if (cart.products.length === 0) {
         return (
-            <div className="kg-card p-5 text-center">
-                <h1 className="h3">Your cart is empty</h1>
-                <p className="kg-card-meta">Add some kit before you check out.</p>
-                <Link href="/products" className="btn btn-kg-primary">Browse products</Link>
-            </div>
+            <>
+                {pageTop}
+                <PageState icon="bi-cart3" title="Your cart is empty" text="Add some kit before you check out.">
+                    {/* categoryId=1 is Matchday Kits (categories.js) */}
+                    <Link href="/products?categoryId=1" className="btn btn-kg-primary">Shop Matchday Kits</Link>
+                </PageState>
+            </>
         );
     }
 
@@ -110,9 +134,13 @@ export default function CheckoutPage() {
     }
     if (hasStockProblem) {
         return (
-            <div className="alert alert-warning">
-                Some sizes in your cart ask for more than we have in stock. <Link href="/cart">Back to cart</Link>
-            </div>
+            <>
+                {pageTop}
+                <PageState icon="bi-exclamation-lg" title="Some sizes are low on stock"
+                    text="Some sizes in your cart ask for more than we have. Lower them in the cart, then check out." isError={true}>
+                    <Link href="/cart" className="btn btn-kg-primary">Back to cart</Link>
+                </PageState>
+            </>
         );
     }
 
