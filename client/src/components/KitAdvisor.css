@@ -41,6 +41,16 @@
     overflow: hidden;                /* keeps the navy header inside the round corners */
 }
 
+/* phones (below 768px): a round icon-only button, closer to the corner (mobile wireframes) */
+@media (max-width: 767px) {
+    .kg-advisor-button {
+        right: 14px;
+        bottom: 14px;
+        padding: 14px;
+        font-size: 20px;
+    }
+}
+
 /* phones: a little closer to the edge */
 @media (max-width: 575px) {
     .kg-advisor-button,

@@ -85,20 +85,37 @@ export default function Header() {
                             value={searchText} onChange={(e) => setSearchText(e.target.value)} />
                     </form>
                     {/* ms-auto pushes these to the right edge */}
-                    <div className="d-flex align-items-center gap-4 ms-auto ms-lg-0">
+                    <div className="d-flex align-items-center gap-3 gap-md-4 ms-auto ms-lg-0">
                         {user ? (
                             <>
-                                <span className="kg-header-user">Hi, {user.name}</span>
-                                <Link href="/orders" className="kg-header-link">My Orders</Link>
-                                <button type="button" className="kg-header-link kg-logout-button" onClick={logOut}>Log out</button>
+                                <Link href="/orders" className="kg-header-link" aria-label="My Orders">
+                                    <span className="bi bi-bag kg-header-icon" aria-hidden="true"></span>
+                                </Link>
+                                <div className="dropdown">
+                                    <button type="button" className="kg-header-link kg-header-button"
+                                        data-bs-toggle="dropdown" aria-expanded="false" aria-label="Account Menu">
+                                        <span className="bi bi-person kg-header-icon" aria-hidden="true"></span>
+                                    </button>
+                                    <ul className="dropdown-menu dropdown-menu-end">
+                                        <li><span className="dropdown-item-text kg-header-user">{user.name}</span></li>
+                                        <li><hr className="dropdown-divider" /></li>
+                                        <li>
+                                            <button type="button" className="dropdown-item d-flex justify-content-between" onClick={logOut}>
+                                                Log Out<span className="bi bi-box-arrow-right" aria-hidden="true"></span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
                             </>
                         ) : (
-                            <Link href="/login" className="kg-header-link">Log in / Register</Link>
+                            <Link href="/login" className="kg-header-link" aria-label="Log in / Register">
+                                <span className="bi bi-person kg-header-icon" aria-hidden="true"></span>
+                            </Link>
                         )}
 
                         {/* the badge shows how many products are in the cart (like the wireframe), hidden when empty */}
-                        <Link href="/cart" className="kg-header-link" aria-label={'Cart, ' + cart.products.length + ' products'}>
-                            Cart
+                        <Link href="/cart" className="kg-header-link kg-header-cart" aria-label={'Cart, ' + cart.products.length + ' products'}>
+                            <span className="bi bi-cart3 kg-header-icon" aria-hidden="true"></span>
                             {cart.products.length > 0 && <span className="kg-cart-badge">{cart.products.length}</span>}
                         </Link>
 

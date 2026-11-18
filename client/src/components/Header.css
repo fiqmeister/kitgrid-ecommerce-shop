@@ -39,11 +39,12 @@
     border-radius: 8px;
 }
 
-/* "Log in / Register" and "Cart" */
+/* Account, My Orders, Cart icons */
 .kg-header-link {
     color: var(--kg-navy);
     font-weight: 600;
     text-decoration: none;
+    gap: 6px;
 }
 
 .kg-header-link:hover {
@@ -57,7 +58,7 @@
 }
 
 /* the Log out button looks like the other header links, not like a grey button */
-.kg-logout-button {
+.kg-header-button {
     background: none;
     border: none;
     padding: 0;
@@ -84,19 +85,31 @@
     font-weight: 700;
     text-decoration: none;
 }
-/* the small blue number next to "Cart" */
+/* the small blue number on the cart icon's top-right corner (like the wireframe) */
+.kg-header-cart {
+    position: relative;     /* the badge is placed against the cart link... */
+}
+
 .kg-cart-badge {
+    position: absolute;     /* ...so it can sit on the icon's corner without pushing anything */
+    top: -8px;
+    right: -10px;
     background-color: var(--kg-accent);
     color: var(--kg-white);
     font-size: 11px;
     font-weight: 700;
-    border-radius: 999px; /* a pill shape, round at any width */
-    padding: 1px 7px;
-    margin-left: 4px;
+    border-radius: 999px;   /* a pill shape, round at any width */
+    padding: 1px 6px;
 }
+
 /* "Secure checkout" in the checkout header */
 .kg-checkout-secure {
     color: var(--kg-slate);
     font-size: 14px;
     font-weight: 600;
+}
+/* the header icons (person, bag, log out, cart) */
+.kg-header-icon {
+    font-size: 22px;
+    line-height: 1;
 }

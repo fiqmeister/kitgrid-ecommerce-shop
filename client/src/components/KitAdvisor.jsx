@@ -78,11 +78,12 @@ export default function KitAdvisor() {
         setIsSending(false);
     };
 
-    // closed: only the floating button
+    // closed: the floating button with icon only
     if (!isOpen) {
         return (
-            <button type="button" className="kg-advisor-button" onClick={() => setIsOpen(true)}>
-                <span className="bi bi-chat-square-text" aria-hidden="true"></span> Ask the Kit Advisor
+            <button type="button" className="kg-advisor-button" onClick={() => setIsOpen(true)} aria-label="Ask the Kit Advisor">
+                <span className="bi bi-chat-square-text" aria-hidden="true"></span>
+                <span className="d-none d-md-inline">Ask the Kit Advisor</span>
             </button>
         );
     }
