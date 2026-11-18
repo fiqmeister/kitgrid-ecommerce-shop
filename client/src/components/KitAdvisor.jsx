@@ -1,6 +1,6 @@
 // floating button that opens a chat panel
 // the AI work happens in N8N; this component only talks to our own API (POST /api/advisor)
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { useUser } from '../stores/UserStore';
 import api from '../api';
@@ -35,6 +35,17 @@ export default function KitAdvisor() {
     const [isSending, setIsSending] = useState(false); // true while waiting for the AI (5 to 15 seconds)
     // first name only, for the greeting: "Daniel Lim" → ["Daniel", "Lim"] → "Daniel"
     const firstName = user ? user.name.split(' ')[0] : '';
+    // the id of whoever is logged in, or null for a guest
+    const userId = user ? user.id : null;
+
+    // a different person (log out, log in as someone else): start a fresh, closed advisor,
+    useEffect(() => {
+        setMessages([]);
+        setText('');
+        setMode('team');
+        setIsOpen(false);
+    }, [userId]);
+
 
     // changing tab starts a fresh chat (each message is answered on its own anyway)
     const changeMode = (newMode) => {

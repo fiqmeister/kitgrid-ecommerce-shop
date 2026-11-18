@@ -7,8 +7,9 @@ const { registerSchema, loginSchema, refreshSchema } = require('../validators/au
 const authenticate = require('../middleware/authenticate');
 const authorize = require('../middleware/authorize');
 const { apiLoginLimiter } = require('../middleware/loginLimiters');
+const { registerLimiter } = require('../middleware/apiLimiters');
 
-router.post('/register', validate(registerSchema), authController.register);
+router.post('/register', registerLimiter, validate(registerSchema), authController.register);
 router.post('/login', apiLoginLimiter, validate(loginSchema), authController.login)
 
 router.post('/refresh', validate(refreshSchema), authController.refresh);
