@@ -215,9 +215,9 @@ export default function CartPage() {
                     {!user && (
                         <p className="kg-card-meta text-center mt-2 mb-0">You'll log in or register first. Your cart is kept.</p>
                     )}
-
+                    <div className="h6 text-center mt-3 mb-0">OR</div>
                     <div className="text-center mt-3">
-                        <Link href="/products">← Continue shopping</Link>
+                        <Link href="/products" className="btn btn-kg-dark w-100 py-2">← Continue shopping</Link>
                     </div>
                 </div>
             </div>

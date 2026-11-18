@@ -3,18 +3,18 @@
    to change a colour later, change it only in this list */
 :root {
     --kg-navy: #0F172A;         /* headings, dark buttons, footer */
-    --kg-slate: #64748B;        /* secondary text */
+    --kg-slate: #475569;        /* secondary text */
     --kg-slate-700: #334155;    /* body text */
     --kg-slate-300: #CBD5E1;    /* input borders */
     --kg-slate-200: #E2E8F0;    /* card borders, dividers */
     --kg-slate-100: #F1F5F9;    /* fills, table headers */
     --kg-page: #F8FAFC;         /* page background */
     --kg-white: #FFFFFF;        /* cards, inputs */
-    --kg-accent: #0284C7;       /* the one action colour: main buttons, links */
-    --kg-accent-dark: #0369A1;  /* button hover, text on accent tint */
+    --kg-accent: #0369A1;       /* the one action colour: main buttons, links */
+    --kg-accent-dark: #075985;  /* button hover, text on accent tint */
     --kg-accent-light: #38BDF8; /* highlights on navy */
     --kg-accent-tint: #E0F2FE;  /* chips, selected */
-    --kg-success: #16A34A;      /* in stock, discounts, paid */
+    --kg-success: #157A3A;      /* in stock, discounts, paid */
     --kg-error: #DC2626;        /* errors */
     --kg-success-light: #4ADE80; /* discount line on the navy summary box */
 
@@ -35,6 +35,16 @@ body {
 h1, h2, h3 {
     color: var(--kg-navy);
     font-weight: 700;
+}
+
+a {
+    color: var(--kg-accent);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--kg-accent-dark);
+    text-decoration: underline;
 }
 
 /* the "kitgrid彡" logo text, same font as the admin logo */
