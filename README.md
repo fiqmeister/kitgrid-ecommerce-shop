@@ -83,7 +83,7 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 - My orders for logged-in customers (a header link): one card per order with its status, date, units, products and total, newest first, 5 per page, and a search by order number (`1006` or `#1006`) or product name that is kept in the URL. Each order opens a detail page with a progress timeline built from the status history (the date and time of each step, "Not yet" for later steps, a red Cancelled step for a cancelled order), the items, the totals and the delivery address. The checkout, the confirmation page, My orders and the order detail are protected pages: a guest who opens one is sent to the login page
 - Flat delivery fee of S$8.00, free on orders of 15+ items; Singapore delivery addresses only
 - EJS admin dashboard (orders, products, users) with its own admin login (JWT in an `httpOnly`, `sameSite: strict` cookie), CSRF protection on every admin form, and a login rate limit
-- Login rate limits: 5 failed logins per 15 minutes per IP address on the admin login and the customer API login (successful logins are not counted)
+- Rate limits: 5 failed logins per 15 minutes per IP address on the admin login and the customer API login (successful logins are not counted); 10 register tries per hour per IP address; 5 Kit Advisor messages per minute per customer (counted by user id, so customers on the same Wi-Fi do not share a limit)
 - Optional team profile (never required at checkout)
 - AI Kit Advisor (customer) and AI admin assistant, built with N8N; the advisor (a floating button on every page except checkout, for logged-in customers) has a team mode (a kit for a squad, with quantities per size) and a personal mode (items for one player), and shows each suggestion as a card with Add all to cart; the admin assistant summarizes orders and the delivery backlog, flags low stock and proposes threshold changes that the admin confirms
 
@@ -122,10 +122,11 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 - Guest checkout is not supported: guests can fill a cart, but must log in or register to check out.
 - Singapore delivery addresses only, with one flat delivery fee.
 - Payments use Stripe test mode only.
-- Login rate-limit counts are kept in the server's memory: they reset when the server restarts and would not be shared between several servers. Register is not rate limited.
+- Rate-limit counts are kept in the server's memory: they reset when the server restarts and would not be shared between several servers.
+- There is no request logging (for example with `morgan`): server errors are printed to the terminal only, and nothing is saved to a log file.
 - Admin log out only deletes the cookie. The admin JWT itself stays valid until it expires, so a stolen cookie would keep working until then.
 - The admin assistant and the Kit Advisor use free LLM tiers, so an answer can take 5 to 60 seconds, and they can be unavailable when the provider is busy or rate limited (Groq's free plan allows about 8,000 tokens per minute per model, roughly one or two advisor questions a minute).
-- The Kit Advisor is for logged-in customers only; guests see a "Log in to use the Kit Advisor" message. `POST /api/advisor` is not rate limited yet.
+- The Kit Advisor is for logged-in customers only; guests see a "Log in to use the Kit Advisor" message.
 - The Kit Advisor does not remember earlier messages: each message is answered on its own, so it must include the squad size, sizes and budget again. Switching between For my team and For me starts a new chat.
 - When the customer does not give sizes, the Kit Advisor guesses a spread of sizes (for example 5 each of Youth S, M and L); the customer changes the quantities in the cart.
 - AI answers vary: the same message can get a slightly different kit, and the total in the AI's sentence can differ from the card (the card, priced by the server, is the one that counts).
@@ -279,6 +280,9 @@ Run order: `reset.sql` (only for a clean rebuild), then `schema.sql`, then `seed
 | 37 | Kit Advisor add to cart | On the card from test 36, click Add all to cart, then View cart | "✓ Added to cart"; the cart badge goes up by the kit's units and the cart shows the same products, sizes and total | |
 | 38 | Kit Advisor personal and off-topic | For me: "I'm an adult, size M. Budget S$80 for a jersey and a training tee."; then "Write me a poem about cats" | Adult M sizes, S$8.00 delivery (2 units) and a total under S$80; the poem request gets a short refusal and no card | |
 | 39 | Kit Advisor when N8N is down | Stop N8N, send any message | A red bubble: "The Kit Advisor is not available right now. Please try again in a minute." | |
+| 40 | Register rate limit | Submit the register form 11 times within an hour with an email that is already registered | Tries 1–10: "Email is already registered". Try 11: "Too many sign-up attempts. Please wait an hour and try again." (status 429) | |
+| 41 | Kit Advisor rate limit is per customer | Logged in, send 6 advisor messages within a minute; then log in as another customer and send one | Messages 1–5 are answered; the 6th gets a red bubble "You are sending messages too quickly. Please wait a minute and try again."; the other customer is answered | |
+| 42 | Kit Advisor chat is cleared for the next person | As customer A, chat with the advisor; log out, log in as customer B and open the advisor | An empty chat greeting B by first name, on the For my team tab; none of A's messages | |
 
 Note: unhandled exceptions and console errors count as failing tests, so check the browser console on every page.
 
