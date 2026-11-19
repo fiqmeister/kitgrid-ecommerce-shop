@@ -84,6 +84,7 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 - Flat delivery fee of S$8.00, free on orders of 15+ items; Singapore delivery addresses only
 - EJS admin dashboard (orders, products, users) with its own admin login (JWT in an `httpOnly`, `sameSite: strict` cookie), CSRF protection on every admin form, and a login rate limit
 - Rate limits: 5 failed logins per 15 minutes per IP address on the admin login and the customer API login (successful logins are not counted); 10 register tries per hour per IP address; 5 Kit Advisor messages per minute per customer (counted by user id, so customers on the same Wi-Fi do not share a limit)
+- Logging: every request is written to `logs/access.log` (`morgan`, standard "combined" format), and every server error (500) to `logs/error.log` with the time, the request and the error stack. Log times are in UTC. The `logs` folder is not committed
 - Optional team profile (never required at checkout)
 - AI Kit Advisor (customer) and AI admin assistant, built with N8N; the advisor (a floating button on every page except checkout, for logged-in customers) has a team mode (a kit for a squad, with quantities per size) and a personal mode (items for one player), and shows each suggestion as a card with Add all to cart; the admin assistant summarizes orders and the delivery backlog, flags low stock and proposes threshold changes that the admin confirms
 
@@ -123,7 +124,6 @@ Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNE
 - Singapore delivery addresses only, with one flat delivery fee.
 - Payments use Stripe test mode only.
 - Rate-limit counts are kept in the server's memory: they reset when the server restarts and would not be shared between several servers.
-- There is no request logging (for example with `morgan`): server errors are printed to the terminal only, and nothing is saved to a log file.
 - Admin log out only deletes the cookie. The admin JWT itself stays valid until it expires, so a stolen cookie would keep working until then.
 - The admin assistant and the Kit Advisor use free LLM tiers, so an answer can take 5 to 60 seconds, and they can be unavailable when the provider is busy or rate limited (Groq's free plan allows about 8,000 tokens per minute per model, roughly one or two advisor questions a minute).
 - The Kit Advisor is for logged-in customers only; guests see a "Log in to use the Kit Advisor" message.
