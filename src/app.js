@@ -11,8 +11,13 @@ const requireApiKey = require('./middleware/requireApiKey');
 const cookieParser = require('cookie-parser');
 const adminRoutes = require('./routes/adminRoutes');
 const advisorRoutes = require('./routes/advisorRoutes');
+const fs = require('fs');
+const morgan = require('morgan');
 
 const app = express();
+fs.mkdirSync('logs', { recursive: true });
+const accessLog = fs.createWriteStream('logs/access.log', { flags: 'a' }); // append 
+app.use(morgan('combined', { stream: accessLog })); // IP, date and time, method, URL, status, browser
 // EJS pages for the admin side
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
