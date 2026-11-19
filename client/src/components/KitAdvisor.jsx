@@ -1,11 +1,12 @@
 // floating button that opens a chat panel
 // the AI work happens in N8N; this component only talks to our own API (POST /api/advisor)
 import { useState, useEffect } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { useUser } from '../stores/UserStore';
 import api from '../api';
 import './KitAdvisor.css';
 import AdvisorSuggestion from './AdvisorSuggestion';
+import { useAdvisor } from '../stores/AdvisorStore';
 
 // first message in each tab
 const greetings = {
@@ -28,7 +29,8 @@ const bubbleClasses = {
 
 export default function KitAdvisor() {
     const { user } = useUser();
-    const [isOpen, setIsOpen] = useState(false); // panel shown or hidden
+    const { isOpen, setIsOpen } = useAdvisor(); // panel shown or hidden
+    const [location] = useLocation(); //current path
     const [mode, setMode] = useState('team'); // 'team' or 'personal' tab
     const [messages, setMessages] = useState([]); // the chat: [{ from: 'customer' | 'advisor' | 'error', text, suggestion }]
     const [text, setText] = useState(''); // what is typed in the message box right now
@@ -91,6 +93,10 @@ export default function KitAdvisor() {
 
     // closed: the floating button with icon only
     if (!isOpen) {
+        // home page: no floating button
+        if (location === '/') {
+            return null; // draw nothing (the panel can still be opened by the page's buttons)
+        }
         return (
             <button type="button" className="kg-advisor-button" onClick={() => setIsOpen(true)} aria-label="Ask the Kit Advisor">
                 <span className="bi bi-chat-square-text" aria-hidden="true"></span>
@@ -98,6 +104,7 @@ export default function KitAdvisor() {
             </button>
         );
     }
+
 
     // open: the panel takes the button's place
     return (

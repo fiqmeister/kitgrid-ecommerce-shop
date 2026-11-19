@@ -1,0 +1,135 @@
+/* home page only */
+
+/* hero: navy box with centred white text */
+.kg-hero {
+    background-color: var(--kg-navy);
+    color: var(--kg-white);
+    border-radius: 12px;
+    padding: 56px 24px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.kg-hero-title {
+    color: var(--kg-white);
+    font-size: 40px;
+    font-weight: 700;
+    text-transform: uppercase; /* the wireframe shows capitals; the text itself stays normal for screen readers */
+    margin-bottom: 16px;
+}
+
+.kg-hero-text {
+    color: var(--kg-slate-300);
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+/* light blue line: light enough to read on navy (contrast above 4.5 to 1) */
+.kg-hero-highlight {
+    color: #38BDF8;
+    font-size: 18px;
+    margin-bottom: 32px;
+}
+
+/* the dark "Shop all kits" button with a thin border */
+.kg-hero-outline {
+    background-color: #1E293B;
+    border: 1px solid var(--kg-slate-700);
+    color: var(--kg-white);
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.kg-hero-outline:hover {
+    background-color: var(--kg-slate-700);
+    color: var(--kg-white);
+}
+
+/* benefits strip: a row on wide screens, wraps on small ones */
+.kg-benefits {
+    list-style: none;
+    margin: 0 0 32px;
+    padding: 16px 24px;
+    background-color: var(--kg-white);
+    border-radius: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 12px 24px;
+}
+
+.kg-benefits li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: var(--kg-navy);
+}
+
+/* round light-blue circle behind each icon */
+.kg-benefit-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #E0F2FE;
+    color: var(--kg-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kg-home-heading {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--kg-navy);
+    margin-bottom: 16px;
+}
+
+/* squad kit box: blue border, light blue title bar */
+.kg-squad-box {
+    background-color: var(--kg-white);
+    border: 1px solid var(--kg-accent);
+    border-radius: 12px;
+    overflow: hidden; /* keeps the title bar inside the rounded corners */
+    margin-bottom: 24px;
+}
+
+.kg-squad-title {
+    background-color: #F0F9FF;
+    color: var(--kg-accent);
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    margin: 0;
+}
+
+.kg-squad-body {
+    padding: 20px;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.kg-squad-actions {
+    min-width: 220px;
+}
+
+/* phones */
+@media (max-width: 767.98px) {
+    .kg-hero {
+        padding: 40px 16px;
+    }
+
+    .kg-hero-title {
+        font-size: 30px;
+    }
+
+    .kg-benefits {
+        flex-direction: column; /* one benefit per line, as in the mobile wireframe */
+    }
+
+    .kg-squad-actions {
+        margin-top: 16px;
+    }
+}
