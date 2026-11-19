@@ -11,6 +11,7 @@ import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import OrdersPage from './pages/OrdersPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 import KitAdvisor from './components/KitAdvisor';
+import HomePage from './pages/HomePage';
 
 function App() {
   const [location] = useLocation(); // the current path, eg "/checkout"
@@ -21,11 +22,7 @@ function App() {
 
       <main className="container py-4">
         <Router>
-          {/* placeholders for now: each one becomes a real page component in the next steps */}
-          <Route path="/">
-            <h1>Home</h1>
-            <p>Coming soon.</p>
-          </Route>
+          <Route path="/" component={HomePage} />
           <Route path="/products" component={ProductList} />
           <Route path="/products/:id" component={ProductDetail} />
           <Route path="/login" component={LoginPage} />
