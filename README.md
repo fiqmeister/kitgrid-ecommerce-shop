@@ -2,196 +2,135 @@
 
 > Online store for football coaches and team managers: matchday kits, training wear, training equipment and coach and staff apparel, with bulk pricing and an AI Kit Advisor. Open to individual players too.
 
-**Deployed URL:** TODO (deployment is planned for later; during development everything runs locally)
-**Admin dashboard:** `http://localhost:3000/admin` on the local server (the port comes from `PORT` in `.env`)
-**Test admin login:** TODO (create a demo account; never commit real credentials)
+**Environment:** Local development (`http://localhost:5173` client / `http://localhost:3000` API & Admin).  
+**Admin dashboard:** `http://localhost:3000/admin` (port set via `PORT` in `.env`)  
+**Seeded test accounts** *(created by `src/db/seed.sql`)*:
+* **Admin:** `admin@kitgrid.example` / `Admin123!`
+* **Customer:** `ravi.nair@example.com` / `<your-seeded-password>`
+
+## Contents
+1. [Business Context & Goals](#1-business-context--goals)
+2. [UX/UI Design](#2-uxui-design)
+3. [Features, Algorithms & AI](#3-features-algorithms--ai)
+4. [Use Cases](#4-use-cases)
+5. [Tech Stack & Architecture](#5-tech-stack--architecture)
+6. [Testing](#6-testing)
+7. [Deployment & Local Setup](#7-deployment--local-setup)
+8. [Credits](#8-credits)
 
 ---
 
-## 1. Project Name & Summary
+## 1. Business Context & Goals
 
-**KitGrid** is a private-label football teamwear and equipment shop: every product is sold under the KitGrid brand, with no third-party brand names or partner claims. It helps coaches and team managers of grassroots and amateur squads buy in bulk. Team buyers order many items at once (for example 18 jerseys across three sizes, 12 training bibs), reorder every season, and care about durability and quantity discounts. Individual players can shop the same store: the team profile is optional and checkout never requires it.
+**The problem:** Most sportswear shops are built for one shopper buying one shirt in one size. A coach/manager buying for a squad, such as 18 jerseys across three sizes and 12 training bibs, has to add every size separately, only sees bulk pricing at the end (or must email a supplier for a quote), and often finds out late that a size is out of stock. In Singapore, this buyer is usually the team manager of a amateur/semi-pro/pro team working with a fixed or tight budget.
 
-**Product categories:** Matchday Kits, Training Wear, Training Equipment, Coach & Staff Apparel.
+**How KitGrid solves it:** KitGrid puts all sizes on one interactive grid, calculates bulk discounts upfront across combined sizes, and validates live stock before checkout.
 
-**Business context:** Most sportswear shops are built for one shopper buying one shirt in one size. A coach kitting out a squad has to add every size separately, cannot see the bulk price until checkout (or has to email a teamwear supplier for a quote), and only finds out at the end that a size is out of stock. In Singapore this buyer is often a volunteer coach or team manager of a school team, academy or amateur league side, working to a fixed budget. KitGrid makes the team order the main path (all sizes on one grid, bulk prices shown upfront, stock checked before checkout), while individual players can still buy a single item like in any other shop.
-
-**Goals**
-- Let a coach go from a brief ("U12 team of 16, S$800 budget") to a stock-checked bundle in one chat.
-- Give admins one place to manage orders, products, stock and users.
-- Demonstrate a secure, layered full-stack architecture (API, DAL, service layer, JWT, CSRF, rate limiting).
+**Project goals:**
+- Let a team manager asks from a brief (*"U12 team of 16, S$800 budget"*) to a stock-checked bundle in one chat.
+- Give admins one dashboard to manage orders, products, stock, and users.
+- Build a secure, layered full-stack app (API, service layer, DAL, JWT, CSRF protection, and rate limiting).
 
 ---
 
-## 2. UX/UI
+## 2. UX/UI Design
 
 ### User stories
 
 | # | As a... | I want to... | So that... | Acceptance criteria |
 |---|---|---|---|---|
-| 1 | Coach | filter products by colour, age group, size and price | I only see gear that suits my team | Filters combine; results update; out-of-stock sizes are marked |
-| 2 | Coach | tell the Kit Advisor my squad size and budget | I get a ready bundle | For logged-in customers; the advisor suggests only in-stock items, the prices shown come from the server (not from the AI), and "Add all to cart" adds the whole kit |
-| 3 | Guest | add items to a cart without an account | I can browse before committing | Cart persists on refresh; merges into my account after login |
-| 4 | Customer | see bulk discounts in my cart | I know the real price | Discount tier applied and shown per product line |
-| 5 | Customer | view my past orders and their progress | I know what I bought and where each order is | History is searchable by order number or product name, 5 orders per page; each order opens a detail page with its items, totals, delivery address and a timeline of its status changes |
-| 6 | Admin | change an order's status | customers see progress | Change is saved with who/when in the status history |
-| 7 | Admin | see low-stock items | I can restock in time | List shows variants under the threshold |
-| 8 | Individual player | buy a single item without a team profile | I can shop like any customer | Checkout completes with no team profile; bulk discounts apply only at their quantity thresholds |
-| 9 | Coach | enter quantities for every size on one product page and add them in one click | I can order a full squad kit quickly | Grid lists all sizes with stock; blank sizes are ignored; one click adds every entered quantity; out-of-stock sizes are disabled |
-| 10 | Coach | filter by age group (U6-U9, U10-U16, Senior) | I see gear that fits my players | Age filter combines with other filters; each size row shows its age group |
-| 11 | Coach | filter for items with a minimum quantity in stock (for example 15+) | I don't pick gear I can't get for my whole squad | Products whose total in-stock quantity across all sizes is below the number entered are excluded |
-| 12 | Shopper | select several values in one filter (for example Red and Black) | I can compare options together | Checked values apply together within a filter; results update without a full page reload |
-| 13 | Coach | see bulk-price tiers on product cards | I know the discount before opening a product | Bulk-eligible cards show a "Bulk from S$X" hint |
-| 14 | Customer | type quantities directly in the cart | I can change large volumes quickly | Quantity boxes accept typed numbers and save when I leave the box or press Enter; values above the stock are lowered to the stock and negative values to 0; 0 removes a size; totals and discounts update |
-| 15 | Customer | see form errors only after I finish a field | I'm not interrupted while typing | Errors appear when I leave a field or submit, not on each keystroke |
-| 16 | Customer | review my order grouped by product and size before paying | I can check it against my squad list | Final review groups lines by product with sizes and quantities; totals match the cart |
-| 17 | Customer | check out without header and footer distractions | I stay focused on finishing | Checkout pages hide the main navigation, footer and Kit Advisor and keep a link back to the cart |
-| 18 | Coach | see the discount tier for my total units of a product, and what the next tier needs | I know how many more to add | Tier is based on the product's units across all sizes; the cart shows a prompt such as "Add 3 more for 15% off" |
-| 19 | Admin | ask an assistant for an order and delivery summary and the low-stock list, and change a low-stock threshold in plain language | I see what needs action without reading tables | Summary figures match the database; paid orders not yet shipped are listed with how long they have waited; a threshold change is only saved after I confirm it |
-
-TODO: refine the acceptance criteria as you build, and add stories from your own testing.
+| 1 | Manager | filter products by colour, age group, size and price | I only see gear that suits my team | Filters combine; results update; out-of-stock sizes are marked |
+| 2 | Manager | enter quantities for every size on one product page and add them in one click | I can order a full squad kit quickly | All sizes in one grid with stock; blank sizes are ignored; out-of-stock sizes are disabled |
+| 3 | Manager | see the bulk discount for my total units of a product, and what the next tier needs | I know the real price and how many more to add | Units across all sizes count; the cart shows "Add 3 more for 15% off" |
+| 4 | Manager | tell the Kit Advisor my squad size and budget | I get a ready bundle | Only in-stock items are suggested; prices come from the server, not the AI; "Add all to cart" adds the whole kit |
+| 5 | Guest | add items to a cart without an account | I can browse before committing | Cart persists on refresh; merges into my account after login |
+| 6 | Individual player | buy a single item | I can shop like any customer | Checkout works for one item; bulk discounts only apply at their quantities |
+| 7 | Customer | view my past orders and their progress | I know what I bought and where each order is | Search by order number or product name; each order shows its items, totals, address and a status timeline |
+| 8 | Admin | change an order's status | customers see progress | The change is saved with who and when in the status history |
+| 9 | Admin | see low-stock items | I can restock in time | The list shows variants at or below their threshold |
+| 10 | Admin | ask an assistant for an order summary and the low-stock list, and change a threshold in plain language | I see what needs action without reading tables | Figures match the database; a threshold change is only saved after I confirm it |
 
 ### Wireframes / mockups
 
-Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNEqBSj6JBGxTi/kitgrid?node-id=0-1&t=alvIKCQRt4xwdID4-1). All customer frames are drawn: Home, Product list, Product detail, Cart, Checkout step 1 (Delivery), Checkout step 2 (Review & pay), Login/Register, Order confirmation, Order history and detail, Team profile, Kit Advisor panel (team and personal mode), States (loading, empty, error), Mobile (Home, Product detail, Cart) and the Design system sheet. All admin frames are drawn: Admin sign in, Orders list, Order detail (with status history and Mark as paid), Dashboard with the admin assistant panel, Products list, Product form (with football details and variants) and Users list.
+Designed in Figma: [KitGrid wireframes](https://www.figma.com/design/cq6XiwBgeNEqBSj6JBGxTi/kitgrid?node-id=0-1&t=alvIKCQRt4xwdID4-1). 
+- **Customer frames:** Home, Product list, Product detail, Cart, Checkout (Delivery, Review & pay), Login/Register, Order confirmation, Order history and detail, Team profile, Kit Advisor, States (loading, empty, error), Mobile (Home, Product detail, Cart), and Design system.  
+- **Admin frames:** Sign in, Orders, Order detail, Dashboard with the assistant, Products, Product form, and Users.
 
 ### Five Planes of UI/UX
 
-| Plane | Our decisions |
+| Plane | Decisions |
 |---|---|
-| **Strategy** | Users: coaches and team managers. Goal: fast, bulk-friendly team purchasing. |
-| **Scope** | Must-have features listed under Features; nice-to-haves in Pending Features. Prices are in SGD. Private label only (KitGrid brand, no real third-party brands). Login is required at checkout; guests can fill a cart that merges on login. Four categories only. |
-| **Structure** | Navigation flow: Home, Category list, Product, Cart, Checkout (Delivery, Review & pay, Stripe), Confirmation, Orders. TODO: add a flow diagram. |
-| **Skeleton** | Multi-select filters on the left (price, colour, age group, size, minimum in stock). Product cards show a bulk-price hint. The product page has a bulk-tier strip, a colour selector, and a matrix quantity grid (one row per size with stock, enter every size, add in one click). The cart groups lines by product and size with typed quantities. Checkout is a 2-step, distraction-free flow (no main navigation, footer or Kit Advisor) and ends with a review grouped by product and size. The Kit Advisor button is on every page except checkout. Forms show errors after a field is left, not while typing. |
-| **Surface** | Palette: dark navy `#0F172A`, slate `#64748B`, white `#FFFFFF`, with accent blue `#0284C7` for actions and highlights; green for stock and discounts, red for errors. Typeface: DM Sans (headings and body). Rounded cards (12 px), 8 px controls. Imagery: placeholder boxes in wireframes; product photos TODO. |
+| **Strategy** | Users: coaches and team managers. Goal: fast team buying in bulk. |
+| **Scope** | The features below; additionals under Pending features. Prices in SGD. Four categories. Guests can fill a cart, but must log in to check out. |
+| **Structure** | Home → Category list → Product → Cart → Checkout (Delivery, Review & pay) → Confirmation → My orders. |
+| **Skeleton** | Filters on the left of the product list. A size grid on the product page. The cart groups sizes by product. A 2-step checkout with no main menu or Kit Advisor. The Kit Advisor button floats on the other pages. |
+| **Surface** | Navy `#0F172A`, slate `#475569`, white, and accent blue `#0369A1` for actions; green for stock and discounts, red for errors. DM Sans font, 12 px rounded cards. The blue, slate and green are one shade darker than in the design-system wireframe. Grey boxes instead of product photos. |
 
 ---
 
-## 3. Features
+## 3. Features, Algorithms & AI
 
-### Major features
+### Customer & Admin Features
+- **Authentication & roles:** Customer and admin roles with JWT (access + refresh tokens; refresh tokens are revoked on logout) and inline Yup validation matching server schemas.
+- **Home & catalog:** Hero landing page with four categories (*Matchday Kits, Training Wear, Training Equipment, Coach & Staff Apparel*) and football-specific variant attributes (size, colour, age group, SKU, stock).
+- **URL-synced multi-criteria search:** Filter by category, price, colour, age group, size, and minimum stock, persisted in query parameters.
+- **Multi-size product grid:** Enter quantities across all sizes and colours on one product page, view live bulk discount tiers and totals, and add all in one click.
+- **Bulk discount tiers:** Per-product discounts based on combined units across all sizes/colours (`10+` units = `10%`, `15+` = `15%`, `25+` = `20%`).
+- **Guest & customer cart:** Persistent guest cart (`localStorage`) that merges into the user's account after login.
+- **2-step checkout & delivery:** Delivery and Review steps for Singapore addresses with a flat `S$8.00` delivery fee (free from `15` items) and an order confirmation page.
+- **Order history:** Searchable past orders (`5` per page) with an order detail page and full status timeline.
+- **UI resilience:** Loading, empty, and error states with retry actions on every page.
+- **EJS admin dashboard:** Server-rendered admin panel for orders, products, stock, and users with cookie authentication and CSRF protection on every form.
+- **Rate limiting & logging:** Rate limits on login, registration, and Kit Advisor routes; request logs written to `logs/access.log` (`morgan`) and server errors to `logs/error.log`.
 
-- Customer and admin roles with JWT (access + refresh tokens, blacklist)
-- Customer log in and register on one page, with inline validation (the same Yup rules as the server) and Show/Hide password. A new account is logged in straight away. The header shows the customer's name, and Log out revokes the refresh token on the server
-- Product catalog with football-specific columns (nullable per category), variants (size, colour, age group, SKU, stock)
-- Multi-criteria product search (category, price, colour, age group, size, minimum in stock)
-- Cart for guests and logged-in customers: a guest's cart is kept in the browser and priced by the server; after log in or register it is merged into the account and the customer goes back to the cart. The cart page groups sizes by product (each size row shows its colour and age group), shows the bulk discount and the next tier ("Add 4 more for 20% off this item"), lets the customer type a new quantity (0 removes a size) or remove a whole product, warns when a size asks for more than the stock (checkout is blocked until it is lowered), and the header shows a badge with the number of products. Delivery is not shown in the cart: it is chosen and shown at checkout, so the cart total is never confused with the amount paid
-- Matrix quantity grid on product pages: pick a colour, then type a quantity for every size in one table (capped at the stock; out-of-stock sizes are disabled). The bulk tier reached is highlighted and the units, subtotal, discount and total update as you type. "Add all selected to cart" adds every size with a quantity, in every colour, in one click
-- Bulk discount tiers per product: 10+ units = 10%, 15+ = 15%, 25+ = 20% (units counted across all sizes of that product)
-- 2-step checkout for logged-in customers, with its own small header (logo, "Secure checkout", "Back to cart") and no search, categories or cart badge. Step 1 Delivery: name (filled from the account), Singapore mobile with a fixed +65, postal code, unit number with a fixed #, block and street, optional building name, checked in the browser with the same rules as the server; the email is shown from the account. Step 2 Review: the delivery details with an Edit link (nothing typed is lost) and the items grouped by product and size. The order summary shows the subtotal, bulk discounts, delivery (with "Add 6 more items for free delivery.") and the total. Place order creates the order with transactional stock deduction and opens a confirmation page (order number, date, status, items, delivery and totals, loaded from the saved order). Stripe Checkout in test mode is planned: until then orders are saved as pending payment
-- Order lifecycle (pending payment, paid, processing, shipped, delivered, cancelled) with status history (audit trail) and order history search
-- My orders for logged-in customers (a header link): one card per order with its status, date, units, products and total, newest first, 5 per page, and a search by order number (`1006` or `#1006`) or product name that is kept in the URL. Each order opens a detail page with a progress timeline built from the status history (the date and time of each step, "Not yet" for later steps, a red Cancelled step for a cancelled order), the items, the totals and the delivery address. The checkout, the confirmation page, My orders and the order detail are protected pages: a guest who opens one is sent to the login page
-- Flat delivery fee of S$8.00, free on orders of 15+ items; Singapore delivery addresses only
-- EJS admin dashboard (orders, products, users) with its own admin login (JWT in an `httpOnly`, `sameSite: strict` cookie), CSRF protection on every admin form, and a login rate limit
-- Rate limits: 5 failed logins per 15 minutes per IP address on the admin login and the customer API login (successful logins are not counted); 10 register tries per hour per IP address; 5 Kit Advisor messages per minute per customer (counted by user id, so customers on the same Wi-Fi do not share a limit)
-- Logging: every request is written to `logs/access.log` (`morgan`, standard "combined" format), and every server error (500) to `logs/error.log` with the time, the request and the error stack. Log times are in UTC. The `logs` folder is not committed
-- Optional team profile (never required at checkout)
-- AI Kit Advisor (customer) and AI admin assistant, built with N8N; the advisor (a floating button on every page except checkout, for logged-in customers) has a team mode (a kit for a squad, with quantities per size) and a personal mode (items for one player), and shows each suggestion as a card with Add all to cart; the admin assistant summarizes orders and the delivery backlog, flags low stock and proposes threshold changes that the admin confirms
+### Algorithms & Security Logic
+- **Bulk discount & price snapshots:** Tiers are calculated server-side from total units of a product in the cart and applied to that product only. Unit prices, discount percentages, and variant details are copied into `order_items` at checkout so future price edits never alter historical orders.
+- **Atomic stock deduction:** Checkout runs inside a single database transaction executing `UPDATE ... SET stock = stock - ? WHERE id = ? AND stock >= ?` for each line item. If any variant has insufficient stock, the entire transaction rolls back. Cancelling an order restores stock atomically the same way.
+- **Server-priced guest cart:** `localStorage` stores only `{ variantId, quantity }` pairs. The server prices guest carts using the same pricing function as saved carts and caps merged quantities at live stock upon login.
+- **Parameterized search & allowlisted sorting:** Queries start with `WHERE products.is_active = 1` and append `AND ...` conditions using `?` placeholders. `ORDER BY` clauses map strictly to a fixed allowlist, never raw user input.
+- **Admin CSRF protection:** At admin login, a random token is embedded inside the signed admin JWT and sent back in a hidden `_csrf` field on every admin form; middleware rejects mismatches with `403`.
 
-### Algorithms and key logic
+### AI Features (n8n Agents)
+- **Kit Advisor (logged-in customers):** A two-tab chat panel (**For my team** and **For me**) proxied through Express so webhook URLs and keys never reach the browser. The n8n agent can only call two read-only tools: product search (in-stock items only) and cart quote. It returns structured JSON (`{ reply, items }`). **Zero-trust server validation:** Express re-checks every suggested variant against live stock and recalculates prices server-side before rendering the bundle card.
+- **Admin Assistant (admins):** Supports quick prompts (*"This week's orders"*, *"Show low stock"*, *"Orders waiting to ship"*) and natural-language queries backed by read-only tools (low stock, order summaries, orders to ship by postal district, variant lookup). Low-stock threshold updates are only **proposed** by the AI—nothing changes until the admin clicks **Confirm** and Express validates the range (`0` to `1000`). In testing, an AI proposal of `2000` was rejected by the server (`400`).
 
-- **Bulk discount:** the tier is chosen from the total units of one product in the cart (all sizes and colours added together), then the percentage applies to that whole product line. Units of different products are never added together. The server calculates it; the price and discount are copied into `order_items` as a snapshot, so later price changes never alter past orders.
-- **Delivery fee:** flat S$8.00, S$0.00 when the order has 15 or more items.
-- **Stock deduction:** checkout runs in one database transaction. It creates the order, then for each item runs `UPDATE product_variants SET stock = stock - ? WHERE id = ? AND stock >= ?`. If any item updates 0 rows (not enough stock), the whole transaction is rolled back, so no order is created and no stock changes. Otherwise it saves the `order_items` price snapshot, the first `order_status_history` row (`pending_payment`) and empties the cart, then commits. Cancelling an order puts the items back into stock in the same way (one transaction with the status change).
-- **Guest cart:** a guest's cart is a list of `{ variantId, quantity }` in `localStorage` (no names or prices). Each time it changes, the React app sends it to `POST /api/cart/quote`, which prices it with the same code as a saved cart (`priceCart`) but saves nothing, so a guest always sees the current prices and discounts. Both kinds of cart come back in the same shape, so the cart page and the header badge do not need to know whether the customer is logged in. In the cart, a quantity box only saves when the customer leaves it or presses Enter (not on every key press) and sends `PUT /api/cart/items/:variantId`; the server treats 0 as "remove this size".
-- **Checkout (React):** the delivery details are kept in the checkout page's state, not in the form, because the form is removed from the screen on the Review step and would forget what was typed; Edit shows the form again filled with the kept values. Continue sends nothing to the server. Place order sends only the delivery details to `POST /api/orders`: the server reads the saved cart, checks the stock again, works out the discounts and the delivery fee itself, and creates the order in one transaction, so the browser never decides a price. The button is disabled while the order is sent, because a POST sent twice would create two orders. If the stock changed while the customer was on the checkout, the server's message (for example "Only 2 qty left for Matchday Jersey (S)") is shown with a link back to the cart. The delivery fee on the checkout is worked out by a small copy of the server rule in the React app (`deliveryFee.js`), only for display.
-- **Protected pages (React):** the page reads the logged-in user from the Jotai store. With no user it shows wouter's `<Redirect to="/login" replace />`, which moves to the login page at once. `replace` swaps the address in the browser history instead of adding one, so Back does not return to the page that would redirect again. Log out moves to Home first and then forgets the login, so it never lands on the login page. The redirect only spares a guest an empty page: the server still checks the token on every order request.
-- **Order timeline:** the detail page has a fixed list of the normal steps (Order placed, Paid, Processing, Shipped, Delivered). For each step it looks for that status in the order's history (`order_status_history`, sent by `GET /api/orders/:id`): if it is there, the step is done and shows when it happened; if not, it shows "Not yet". For a cancelled order only the steps it reached are kept, then a red Cancelled step is added, because a cancelled order will never ship. The confirmation page keeps a fixed "What happens next" list on purpose: a brand-new order has only one history entry, so it explains the next steps instead. Another customer's order number returns 404 (not 403), so a customer cannot tell which order numbers exist.
-- **Cart merge:** after login or register, the React app sends the guest cart to `POST /api/cart/merge`. It does this before saving the login in the app, so when the header reloads the account's cart the merged items are already in the database. If the merge fails, the login still works and the guest cart stays in the browser. For each item the server adds the guest quantity to the quantity already saved for that account, capped at the variant's stock. An item is only saved when its quantity goes up, so out-of-stock items are skipped and saved quantities are never reduced. The final stock check happens at checkout.
-- **Search:** the product list query starts with `WHERE products.is_active = 1`, and each filter that was sent adds one `AND ...` condition with a `?` placeholder (search text, category, price range, pitch surface, skill level, age group, colours, sizes, minimum in stock, tag). Filters on variants or tags use `products.id IN (SELECT product_id ...)`. Minimum in stock counts the total stock of all sizes of a product (`GROUP BY product_id HAVING SUM(stock) >= ?`). Sorting only uses fixed texts from a list (newest, price low to high, price high to low), never text typed by the user. Paging uses `LIMIT ? OFFSET ?` (12 products per page), and a second query counts the total for the page buttons. The colours, age groups and total stock on the product cards come from one extra query for all products on the page (`WHERE product_id IN (?)`), not one query per product. The "Bulk from" price on a card is the base price with the highest bulk tier applied.
-- **Shop filters live in the URL:** in the React shop, every filter, the sort, the search words and the page number are kept in the address bar (for example `/products?categoryId=1&size=M,L&sort=price_asc`). Changing a filter copies the current URL with `URLSearchParams`, changes one value, removes `page` (so the customer starts again at page 1) and moves to the new URL. The product list fetches again whenever the URL changes. So a filtered list can be bookmarked or shared, the browser Back button undoes the last filter, and a refresh keeps the filters. A header category link or a new search starts from an empty URL. Removing a chip in "Active filters" removes only that one value.
-- **Live total on the product page:** the quantities typed are kept in one object keyed by variant id (one colour + one size), so switching colour keeps what was typed. The page adds up the units of every size and colour, picks the highest tier reached, then works out subtotal = price × units, discount = subtotal × percent, total = subtotal − discount, rounding to cents at each step. These are the same steps and the same rounding as the server's cart (`priceCart` in `src/services/cartService.js`), so the total on the product page matches the cart. The tier boxes show "10% off" rather than a per-unit price, because a rounded per-unit price times the units can differ from the real total by a few cents (S$9.50 × 85% = S$8.08 a unit, but 15 units cost S$121.12, not S$121.20).
-- **Admin CSRF token:** at admin login, a random value (`crypto.randomBytes(32)`) is stored inside the signed admin JWT. Every admin form sends it back in a hidden `_csrf` field, and a middleware compares the two before any other check; a missing or wrong value is refused with 403.
-
-### AI features
-
-- **Kit Advisor (grounded + structured):** a chat panel for logged-in customers, opened from the floating "Ask the Kit Advisor" button (on every page except checkout). It has two tabs: **For my team** (squad size, age group and budget, e.g. "U12 team of 16 players, S$800 budget. We need match jerseys and training bibs.") and **For me** (position, size and budget). React sends `{ message, mode }` to `POST /api/advisor`; Express adds the customer's name from the database and calls the N8N webhook with a secret header, so the webhook URL and key never reach the browser. The N8N agent (Groq `openai/gpt-oss-120b`, with `openai/gpt-oss-20b` as the fallback) may only use two read-only tools:
-  - `GET /api/tools/products`: active products with their in-stock variants, filtered by name, category, age group, colour and highest price (at most 5 products, to stay within the free token limit)
-  - `POST /api/tools/quote`: prices a list of `{ variantId, quantity }` with the same bulk discount and delivery rules as the cart
-
-  Its system message tells it to use only variant ids returned by the tools, to price every suggestion with the quote tool before answering, to match the customer's sizes and age group, to refuse questions that are not about football kit, and to ignore instructions in the message that try to change its rules or the prices. It returns JSON: `reply` (1 to 3 sentences), an optional `title` and `items` (`[{ variantId, quantity }]`). **Express does not trust this answer:** it checks the items with the same rules as adding to the cart, prices them again with the same quote function, and drops the suggestion (with "Sorry, I could not check that kit against live stock") if a variant does not exist or there is not enough stock. The panel shows the reply as a chat bubble and, under it, a card built only from the server's quote: each product with its sizes, the bulk discounts, delivery and the total, with **Add all to cart**, which uses the same cart function as the product page. A question, a refusal or "nothing fits the budget" comes back as a reply with no card.
-- **Admin assistant (grounded + structured):** a panel on the EJS admin dashboard, for logged-in admins only. The admin clicks a quick button ("This week's orders", "Show low stock", "Orders waiting to ship") or types a question (up to 300 characters). Express sends the question to an N8N webhook (protected by a secret header) and waits up to 90 seconds. The N8N agent answers only from four read-only `/api/tools` endpoints (API key):
-  - `GET /api/tools/stock/low`: variants whose `stock` is at or below their `low_stock_threshold`, with units sold in the last 30 days
-  - `GET /api/tools/orders/summary`: counts by status, paid revenue and unpaid orders older than 24 hours, for a date range
-  - `GET /api/tools/orders/to-ship`: paid or processing orders not yet shipped, with items and addresses grouped by postal district (a pick list for delivery)
-  - `GET /api/tools/variants`: finds a variant by name, colour, size or SKU (used for threshold changes)
-
-  The agent returns JSON (`reply`, `cards`, `attention`, `lowStock`, `proposals`) that the page shows as a short reply, summary cards, a "Needs attention" list and a low-stock table. To change a threshold, the admin asks in plain language; the agent returns a proposal (variant, current and new value), the page shows it with a Confirm button, and only Confirm posts to an admin route (admin cookie and CSRF token) that checks the value is a whole number from 0 to 1000 and saves it. The agent has no write access, and the server re-checks every value: in testing the AI once proposed 2000 and the server refused it. If N8N is down, slow or returns an empty answer, the page shows "The assistant is not available right now" instead of an error. Model: Groq (`openai/gpt-oss-120b`), with Google Gemini as the fallback model in N8N.
-
-### Known limitations / bugs
-
-- Guest checkout is not supported: guests can fill a cart, but must log in or register to check out.
-- Singapore delivery addresses only, with one flat delivery fee.
-- Payments use Stripe test mode only.
-- Rate-limit counts are kept in the server's memory: they reset when the server restarts and would not be shared between several servers.
-- Admin log out only deletes the cookie. The admin JWT itself stays valid until it expires, so a stolen cookie would keep working until then.
-- The admin assistant and the Kit Advisor use free LLM tiers, so an answer can take 5 to 60 seconds, and they can be unavailable when the provider is busy or rate limited (Groq's free plan allows about 8,000 tokens per minute per model, roughly one or two advisor questions a minute).
-- The Kit Advisor is for logged-in customers only; guests see a "Log in to use the Kit Advisor" message.
-- The Kit Advisor does not remember earlier messages: each message is answered on its own, so it must include the squad size, sizes and budget again. Switching between For my team and For me starts a new chat.
-- When the customer does not give sizes, the Kit Advisor guesses a spread of sizes (for example 5 each of Youth S, M and L); the customer changes the quantities in the cart.
-- AI answers vary: the same message can get a slightly different kit, and the total in the AI's sentence can differ from the card (the card, priced by the server, is the one that counts).
-- An admin form refused by the CSRF check or the threshold rule shows a plain JSON error page instead of the dashboard.
-- The React shop keeps the customer's access and refresh tokens in `localStorage`. Any JavaScript on the page can read `localStorage`, so a cross-site scripting (XSS) bug could leak the tokens. This was accepted to keep the project simple. React escapes text it displays, and the access token is short-lived. An `httpOnly` cookie (as the admin side uses) would be safer.
-- If a customer changes two filters very quickly, a slow first answer can arrive after the second and briefly show the older results. Changing any filter again fixes it.
-- Product cards, product pages and the cart show a grey placeholder box instead of product photos.
-- On a product page, sizes are listed in the order they were added to the database, not smallest to biggest (for example S, M, L, then the kids' sizes).
-- A guest can add the same size twice and go over the stock; the cart page then marks the size in red and blocks checkout until the quantity is lowered (a logged-in customer's cart is capped at the stock when adding).
-- The cart merge accepts at most 50 different sizes. A larger guest cart is not merged: the customer is still logged in and the guest cart stays in the browser.
-- If a guest's cart holds a product that the admin has since hidden, the cart cannot be priced; the cart page explains this and offers "Empty my cart".
-- `POST /api/cart/quote` is public (guests have no token) and is not rate limited yet.
-- On phones the cart uses typed quantity boxes; the − / + buttons from the mobile wireframe are not built yet.
-- Card payment is not built yet: Place order saves the order as pending payment, and the confirmation page says "placed" with a "Pending payment" status.
-- After logging in from a protected page (for example `/orders` typed in the address bar), the customer lands on the product list (or the cart when they had a guest cart), not back on the page they first opened.
-- If an admin skips a status (for example Paid straight to Shipped), the skipped step on the order timeline shows "Not yet" while the later steps are done.
-- On the Review step, refreshing the page goes back to the Delivery step and only the name is filled in again; delivery details are not saved for next time.
-- The "What happens next" list on the confirmation page is the same for every new order; it does not yet follow the order's status history.
-- TODO (add more honestly as you find them)
-
-### Pending features
-
-Nice-to-have if time allows:
-- Custom printing (player names and numbers)
-- Structured generation: supplier notes to product form
-- Reorder from a past order
-- My orders: a status filter, an oldest-first sort (the API already supports both) and a different chip colour for each status
-- After logging in, return to the protected page the customer first opened
-- Kit Advisor: adjust quantities and choose a size per item inside the card, add one item at a time, follow-up questions that remember the chat, and guest access with a rate limit
-- Wishlist, PDF invoice, image upload
-
-Out of scope for now (deliberately dropped to keep the project feasible):
-- Preset kit bundles with fixed prices (the home page banner explains that different items can be bought together as a "kit", with discounts applied per item)
-- Kit budget estimator
-- Pay by invoice with a PO number, express delivery, separate delivery and billing addresses, estimated delivery dates
-- Guest checkout, grid and list view toggle, save for later, kit availability end date
-- Future work: export quote or share-cart link, address auto-suggest, per-category spec fields, mobile accordion layout
+### Known Limitations & Pending Features
+- **In progress:** Stripe Checkout integration (test mode only; orders currently save as `pending_payment` for manual admin confirmation).
+- **Planned features:** Team profile page, custom printing (player names and numbers), reorder from past orders, wishlist, PDF invoices, and product photo uploads.
+- **Technical caveats:**
+  - Guests must log in or register to check out.
+  - Customer JWTs are stored in localStorage (an httpOnly cookie, as used by the admin panel, would harden against XSS).
+  - Rate-limit counters are stored in server memory and reset on restart; POST /api/cart/quote is not rate limited.
+  - Admin logout deletes the cookie, though the admin JWT remains valid until natural expiry.
+  - (Kit Advisor) AI endpoints run on free tier (responses take 5–60 seconds and may be temporarily unavailable during provider load), do not retain multi-turn conversation history, and clear on user switch.
+  - Product cards and pages display grey placeholders instead of photos, and size grids list sizes in database insertion order rather than XS → XL.
 
 ---
 
 ## 4. Use Cases
 
-*(Optional alternative to the user stories and features above; keep or delete.)*
-
 | Use case | Objective | Steps |
 |---|---|---|
-| Place a team order | Buy kit in bulk | 1. Browse and filter. 2. Enter quantities per size and add to cart. 3. Review bulk discount in the cart. 4. Log in and enter delivery details. 5. Review and pay via Stripe. |
-| Ask the Kit Advisor | Get a stock-checked bundle | 1. Log in. 2. Click "Ask the Kit Advisor". 3. Choose For my team or For me and describe the squad (or yourself), sizes and budget. 4. Review the suggested kit and its total. 5. Add all to cart, then change quantities in the cart if needed. |
-| Update an order | Move an order along | 1. Log in to admin. 2. Open the order. 3. Change status. 4. Check the status history. |
+| Place a team order | Buy kit in bulk | 1. Browse and filter. 2. Enter quantities per size and add to cart. 3. Check the bulk discount in the cart. 4. Log in and enter delivery details. 5. Review and place the order. |
+| Ask the Kit Advisor | Get a stock-checked bundle | 1. Log in. 2. Click "Ask the Kit Advisor". 3. Describe the squad, sizes and budget. 4. Check the suggested kit and total. 5. Add all to cart. |
+| Update an order | Move an order along | 1. Log in to admin. 2. Open the order. 3. Change the status. 4. Check the status history. |
 
 ---
 
-## 5. Technologies Used
+## 5. Tech Stack & Architecture
 
 | Area | Technology |
 |---|---|
-| Frontend | React 19 with Vite (in `/client`), wouter (pages and links), axios (API calls; interceptors add the access token and refresh it once on a 401), Bootstrap 5.3 (grid and form styles) with KitGrid colours as CSS variables, Jotai (the logged-in customer shared by the header and the forms, through a user store hook that also saves it in `localStorage`), Formik with Yup (forms with inline validation), JavaScript |
+| Frontend | React 19 with Vite (in `/client`), wouter, axios, Jotai, Formik with Yup, Bootstrap 5.3, Bootstrap Icons |
 | Backend | Node.js, Express |
 | Admin UI | EJS (server-rendered) |
-| Database | MariaDB via `mysql2` (connection pool, raw SQL written in the DAL only) |
-| Security | JWT (`jsonwebtoken`), CSRF token kept in the admin JWT (own middleware, Node `crypto`), `express-rate-limit`, `cors` (restricted to `CLIENT_URL`), bcrypt, Yup validation on every input |
-| Payments | Stripe Checkout (test mode, hosted page; webhooks forwarded to the laptop with the Stripe CLI) |
-| AI | N8N agents (run locally with `npx n8n`). Kit Advisor: Groq `openai/gpt-oss-120b`, fallback Groq `openai/gpt-oss-20b` (fast, and Groq counts its per-minute limit separately for each model). Admin assistant: Google Gemini `gemini-3.5-flash`, fallback `gemini-flash-latest` (better-written answers; speed matters less for the admin). Each fallback uses the same provider as its main model, because Gemini 3 cannot continue a run whose earlier tool calls were made by another provider |
-| Testing | TODO (for example Jest, Supertest) |
-| Hosting | TODO (deployment planned for later). During development, MariaDB, the Express API, the React app and N8N run locally |
+| Database | MariaDB with `mysql2` (raw SQL in the DAL only) |
+| Security | JWT (`jsonwebtoken`), bcrypt, own CSRF middleware, `express-rate-limit`, `cors`, Yup validation |
+| Logging | `morgan` (request log) and a log file for server errors |
+| Payments | Stripe Checkout (test mode, in progress) |
+| AI | N8N agents (run locally). Kit Advisor: Groq `openai/gpt-oss-120b` (fallback `openai/gpt-oss-20b`). Admin assistant: Google Gemini `gemini-3.5-flash` (fallback `gemini-flash-latest`) |
+| Testing | Manual end-to-end testing |
+| Hosting | Localhost (MariaDB, Node.js, Vite, local n8n) |
 
 **Repo:** https://github.com/fiqmeister/kitgrid-ecommerce-shop
 
@@ -206,131 +145,151 @@ N8N agent  --API key-->  Express /api/tools (read-only)
 
 ### Data model (summary)
 
-users (1:1 optional team_profiles), categories (id, name), products (1:M product_variants with size, colour, age group, SKU, stock and `low_stock_threshold`), tags (M:N through product_tags), cart_items, orders (1:M order_items, 1:M order_status_history), bulk_discount_rules (minimum quantity, discount percent), refresh_tokens (token hash, expiry, `is_revoked`).
+users (1:1 optional team_profiles), categories, products (1:M product_variants with size, colour, age group, SKU, stock and `low_stock_threshold`), tags (M:N through product_tags), cart_items, orders (1:M order_items, 1:M order_status_history), bulk_discount_rules, refresh_tokens.
 
-- **Football-specific columns on `products`:** `pitch_surface` (FG, AG, indoor, all), `skill_level` (youth, amateur, pro), `material`, `weight_grams`, `durability_rating` (1 to 5). All are nullable because they only apply to some categories. `is_bulk_eligible` decides whether bulk tiers apply.
-- **Price snapshot on `order_items`:** `unit_price` (copied from `products.base_price`), `discount_percent` (copied from `bulk_discount_rules`) and `line_total`, plus `product_name`, `size`, `colour` and a `variant_id` reference. Prices are `DECIMAL(10,2)` and percentages `DECIMAL(5,2)`.
-- **Delivery address on `orders`:** `recipient_name`, `phone`, `address_line1`, `address_line2` (optional), `postal_code`, with `stripe_session_id` for the payment. Order statuses (also used in `order_status_history`): `pending_payment`, `paid`, `processing`, `shipped`, `delivered`, `cancelled`.
-- **Low stock:** `product_variants.low_stock_threshold` (whole number, default 10). A variant is low stock when `stock` is at or below it.
-- **Passwords:** only a bcrypt hash is stored (`users.password_hash`).
+- **Football-specific columns on `products`:** `pitch_surface`, `skill_level`, `material`, `weight_grams`, `durability_rating` (nullable where not applicable to a category).
+- **Price snapshot on `order_items`:** unit price, discount percent, line total, product name, size and colour are copied when the order is placed.
+- **Order statuses:** `pending_payment`, `paid`, `processing`, `shipped`, `delivered`, `cancelled`. Every change is saved in `order_status_history`.
 
 ### Database setup
 
 ```
 src/db/
-├── database.js     mysql2 connection pool, reads the DB_ settings from .env
-├── reset.sql       drops every table (use it only to rebuild from scratch)
-├── schema.sql      creates the database (utf8mb4) and every table
-├── seed.sql        starting data: categories, bulk discount rules, an admin and a test customer, a team profile, sample products with variants, tags
-├── demo.sql        demo data: extra customers and orders #1001 to #1037 in every status, so the admin pages and the assistant have something to show
-└── migrations/     numbered .sql files for later structure changes (01_..., 02_...)
+├── database.js     mysql2 connection pool (reads the DB_ settings from .env)
+├── reset.sql       drops every table (only for a rebuild)
+├── schema.sql      creates every table
+├── seed.sql        categories, discount rules, an admin, a test customer, products and variants
+└── demo.sql        extra customers and orders #1001 to #1037 for the admin pages
 ```
 
-Run order: `reset.sql` (only for a clean rebuild), then `schema.sql`, then `seed.sql`, then `demo.sql` (optional), then any files in `migrations/` in number order. All SQL lives in the DAL and uses `?` placeholders.
+Run order: `reset.sql` (only for a rebuild), `schema.sql`, `seed.sql`, `demo.sql` (optional).
 
 ---
 
 ## 6. Testing
 
-### Automated tests
-
-- How to run: TODO (for example `npm test`)
-- Coverage report: TODO (add a screenshot or link)
-
 ### Manual test cases
 
-| # | Test | Steps | Expected result | Pass? |
-|---|---|---|---|---|
-| 1 | Register and log in | On `/login`, fill in "Create an account" with a new email and the password `password1`. Then log out and log in again with the same details on the left card | Register 201, then login 200. The header shows "Hi, (name)" straight away. Logging in again works. Wrong password: "Invalid email or password" and no refresh request | |
-| 2 | Guest cart merges after login | Log in, add Matchday Jersey Navy S 3, log out. As a guest, add Navy S 4, Navy L 5 and Training Bib Yellow 2, then log in | Lands on `/cart`: Navy S 7 (3 + 4), Navy L 5, Bib 2; the badge shows 2; `guestCart` in `localStorage` is `[]` | |
-| 3 | Order reduces stock | Note the stock of Matchday Jersey Navy S and Navy L in the admin. Logged in, put Navy S 4 and Navy L 5 in the cart, check out and click Place order | The confirmation page opens; the admin shows the new order as pending payment with S$350.00, and Navy S and Navy L have 4 and 5 fewer in stock; the cart badge is gone | |
-| 4 | Customer cannot open `/admin` | TODO | TODO | |
-| 5 | Order without a team profile | With an account that has no team profile, check out any cart | Checkout never asks for a team profile; the order is created | |
-| 6 | Bulk tier uses total units across sizes | Add 4 + 8 + 6 of one jersey in three sizes | 18 units get 15% off | |
-| 7 | Free delivery at 15+ items | Check out with 15 items, then with 14 | S$0.00, then S$8.00 | |
-| 8 | Low-stock flag and threshold change | Set a variant's stock at or below its threshold, then ask the admin assistant to change the threshold | The variant appears in the low-stock list; the new threshold is saved only after Confirm | |
-| 9 | AI proposal outside the allowed range | Ask the assistant to set a threshold to 2000, then press Confirm | 400 "Threshold cannot be above 1000"; nothing is saved | |
-| 10 | Forged admin form is refused | In DevTools, change the hidden `_csrf` value of a Deactivate form to `abc`, then submit | 403 "This form has expired. Reload the page and try again."; the product stays active | |
-| 11 | Login rate limit | Enter a wrong admin password 5 times, then try a 6th time with the correct password | The 6th try shows "Too many failed logins. Please wait 15 minutes and try again." (status 429) | |
-| 12 | Shop filters combine and stay in the URL | On `/products`, open Matchday Kits, tick size M, sort by price low to high, then press F5 | 3 products, cheapest first; after F5 the same filters, chips and sort are still shown | |
-| 13 | Search starts a new list | Open Matchday Kits, then search `tee` in the header | The category is dropped; the title reads Results for "tee" with a `"tee" ×` chip; removing the chip empties the search box | |
-| 14 | Expired access token is refreshed once | In DevTools, replace `accessToken` in `localStorage` with an invalid value (keep a valid `refreshToken`), then make a request that needs login | Network tab: 401, then `POST /api/auth/refresh` 200, then the same request 200 | |
-| 15 | Log out revokes the refresh token | Log in, copy the `refreshToken` from `localStorage`, click Log out, then send that token to `POST /api/auth/refresh` | Log out: 204, the header shows "Log in / Register", and `localStorage` is empty. The refresh call: 401 "Invalid refresh token" | |
-| 16 | Inline validation before sending | On `/login`, click Create account with empty boxes, then type the password `abcdefgh` | "Name is required", "Email is required", "Password is required", then "Password must include a number". No request is sent | |
-| 17 | Product page tier counts all sizes and colours | On the Matchday Jersey page, type Navy S 4 and Navy L 5, then switch to Red and type Red S 6 | 15 units; the "15–24 units / 15% off" box is highlighted; S$570.00 − S$85.50 = S$484.50 | |
-| 18 | Product page total uses the cart's rounding | On the Training Bib page (S$9.50), type 15 | S$142.50 − S$21.38 = S$121.12 (the same total the cart shows for 15 bibs) | |
-| 19 | Quantity is capped at stock | On the Matchday Jersey page, choose Red and type 10 for size M (3 in stock) | The box changes to 3; Red Youth XS (out of stock) is greyed out and cannot be typed in | |
-| 20 | Unknown product | Open `/products/999` and `/products/abc` | "Sorry, we could not find this product." with a Back to all products button | |
-| 21 | Add all selected to cart (guest) | Logged out, on the Matchday Jersey page type Navy S 4 and Navy L 5, switch to Red and type Red S 6, click Add all selected to cart, then open the cart | "Added to your cart."; the badge shows 1; the cart shows 3 size rows, "15% bulk discount applied", −S$85.50, product total S$484.50 and "Add 10 more for 20% off this item."; no shipping line | |
-| 22 | Quantity box saves once and follows the rules | In the cart (from test 21), change Navy S to 10 and press Enter; then type 99 in Navy S (12 in stock); then type 0 in Red S | One request per change (Network tab); after the first change 21 units → product total S$678.30; 99 becomes 12; Red S disappears | |
-| 23 | Over stock blocks checkout | As a guest, add Jersey Red M 3 twice (3 in stock), then open the cart | Red M shows 6 with "Only 3 in stock", a warning at the top and a disabled Proceed to checkout; clicking in the box and leaving it lowers it to 3 and enables the button | |
-| 24 | Remove a product | In the cart, click Remove on a product, then on the last one | The card disappears and the badge goes down; after the last one, "Your cart is empty" with Browse products | |
-| 25 | Checkout header and summary | Logged in, cart Navy S 4 + Navy L 5, click Proceed to checkout; then add Red S 6 and open the checkout again | Small header with no search, categories or badge; Subtotal S$342.00, Delivery S$8.00, "Add 6 more items for free delivery.", Total S$350.00; then Subtotal S$570.00, Bulk discounts −S$85.50, Delivery FREE, Total S$484.50 | |
-| 26 | Delivery form checks | Click Continue to review with the form empty; then type `9123 4567` as the mobile, `12345` as the postal code and `12/34` as the unit number | "Phone number is required", "Postal code is required", "Address is required" (none for the optional fields); then "Enter a valid Singapore phone number (8 digits)", "Postal code must be 6 digits", "Unit number must look like 12-34". No request is sent | |
-| 27 | Edit keeps the details | Fill in valid details, Continue, then click Edit on the Review step | Every field still holds what was typed | |
-| 28 | Stock changes during checkout | Keep the Review step open, lower Navy S stock to 2 in the admin, then click Place order | "Only 2 qty left for Matchday Jersey (S)" with a link back to the cart; no order is created and the stock is unchanged | |
-| 29 | Confirmation page belongs to its customer | After an order, refresh the confirmation page; then open `/orders/1034/confirmation` (another customer's order) | The same page loads again from the server; the other order shows "Sorry, we could not find this order." | |
-| 30 | Protected pages | Logged out, type `/checkout`, then `/orders`, then `/orders/1006`; press Back after the first one | Each one opens `/login`; Back goes to the page before, not back to the login page | |
-| 31 | My orders | Log in as Daniel Lim (demo data) and click My Orders; search `1006`, then `bib`, then `zzz`; then open `/orders?limit=2` and click page 2 | 4 orders, newest first (1027, 1017, 1036, 1006); `1006` and `bib` each show only order 1006; `zzz` shows "No orders match" with Show all orders; with `limit=2`, "Showing 1–2 of 4", and page 2 shows 1036 and 1006 | |
-| 32 | Order timeline | As Daniel Lim, click View details on 1006, 1027 and 1036 | 1006: all 5 steps done, each with a date; 1027: 3 done, Shipped and Delivered "Not yet"; 1036: Order placed, Paid and a red Cancelled step only | |
-| 33 | Order detail belongs to its customer | As Daniel Lim, open `/orders/1034` (another customer's order) and `/orders/abc` | "Sorry, we could not find this order." with Back to my orders | |
-| 34 | Log out from a protected page | As Daniel Lim, on `/orders`, click Log out | Home opens (not the login page) and the My Orders link disappears | |
-| 35 | Kit Advisor for guests | Logged out, click "Ask the Kit Advisor"; then go to `/checkout` while logged in | The panel shows "Log in to use the Kit Advisor" with a Log in or register button and no tabs; on checkout there is no Kit Advisor button | |
-| 36 | Kit Advisor team kit | Log in as Daniel Lim; For my team: "U12 team of 16 players, S$800 budget. We need match jerseys and training bibs." | A reply and a card with youth jerseys and training bibs, a 15% bulk discount, free delivery and a total under S$800; product prices − discounts = total | |
-| 37 | Kit Advisor add to cart | On the card from test 36, click Add all to cart, then View cart | "✓ Added to cart"; the cart badge goes up by the kit's units and the cart shows the same products, sizes and total | |
-| 38 | Kit Advisor personal and off-topic | For me: "I'm an adult, size M. Budget S$80 for a jersey and a training tee."; then "Write me a poem about cats" | Adult M sizes, S$8.00 delivery (2 units) and a total under S$80; the poem request gets a short refusal and no card | |
-| 39 | Kit Advisor when N8N is down | Stop N8N, send any message | A red bubble: "The Kit Advisor is not available right now. Please try again in a minute." | |
-| 40 | Register rate limit | Submit the register form 11 times within an hour with an email that is already registered | Tries 1–10: "Email is already registered". Try 11: "Too many sign-up attempts. Please wait an hour and try again." (status 429) | |
-| 41 | Kit Advisor rate limit is per customer | Logged in, send 6 advisor messages within a minute; then log in as another customer and send one | Messages 1–5 are answered; the 6th gets a red bubble "You are sending messages too quickly. Please wait a minute and try again."; the other customer is answered | |
-| 42 | Kit Advisor chat is cleared for the next person | As customer A, chat with the advisor; log out, log in as customer B and open the advisor | An empty chat greeting B by first name, on the For my team tab; none of A's messages | |
+| # | Test | Steps | Expected result |
+|---|---|---|---|
+| 1 | Register and log in | On `/login`, create an account with a new email and the password `password1`. Log out, then log in again | Both work. Wrong password: "Invalid email or password" |
+| 2 | Guest cart merges after login | Log in, add Matchday Jersey Navy S 3, log out. As a guest, add Navy S 4, Navy L 5 and Training Bib Yellow 2, then log in | The cart shows Navy S 7 (3 + 4), Navy L 5, Bib 2 |
+| 3 | Order reduces stock | Note the stock of Navy S and Navy L in the admin. Order Navy S 4 and Navy L 5 | The confirmation page opens; the admin shows the order as pending payment with S$350.00, and the stock is 4 and 5 lower |
+| 4 | Customer cannot open `/admin` | TODO | TODO |
+| 5 | Bulk tier uses total units across sizes | Add 4 + 8 + 6 of one jersey in three sizes | 18 units get 15% off |
+| 6 | Free delivery at 15+ items | Check out with 15 items, then with 14 | S$0.00, then S$8.00 |
+| 7 | Product page total | On the Matchday Jersey page, type Navy S 4 and Navy L 5, switch to Red and type Red S 6 | 15 units, 15% off: S$570.00 − S$85.50 = S$484.50 |
+| 8 | Shop filters stay in the URL | On `/products`, open Matchday Kits, tick size M, sort by price low to high, then press F5 | 3 products, cheapest first; after F5 the same filters are still shown |
+| 9 | Over stock blocks checkout | As a guest, add Jersey Red M 3 twice (3 in stock), then open the cart | "Only 3 in stock" and Proceed to checkout is disabled until the quantity is lowered |
+| 10 | Stock changes during checkout | Keep the Review step open, lower Navy S stock to 2 in the admin, then click Place order | "Only 2 qty left for Matchday Jersey (S)"; no order is created |
+| 11 | Log out revokes the refresh token | Copy the `refreshToken` from `localStorage`, log out, then send it to `POST /api/auth/refresh` | 401 "Invalid refresh token" |
+| 12 | My orders | Log in as Daniel Lim (demo data), open My Orders, search `1006`, then `zzz` | `1006` shows one order; `zzz` shows "No orders match" |
+| 13 | Another customer's order | As Daniel Lim, open `/orders/1034` | "We couldn't find this order" (404, not 403) |
+| 14 | Forged admin form is refused | In DevTools, change the hidden `_csrf` value of a Deactivate form to `abc`, then submit | 403 "This form has expired. Reload the page and try again." |
+| 15 | Login rate limit | Enter a wrong admin password 5 times, then the correct one | "Too many failed logins. Please wait 15 minutes and try again." (429) |
+| 16 | AI proposal outside the allowed range | Ask the admin assistant to set a threshold to 2000, then press Confirm | 400 "Threshold cannot be above 1000"; nothing is saved |
+| 17 | Kit Advisor team kit | Log in; For my team: "U12 team of 16 players, S$800 budget. We need match jerseys and training bibs." | A reply and a kit card with a bulk discount and a total under S$800 |
+| 18 | Kit Advisor add to cart | On the card from test 17, click Add all to cart | The cart shows the same products, sizes and total |
+| 19 | Kit Advisor when N8N is down | Stop N8N, send any message | "The Kit Advisor is not available right now. Please try again in a minute." |
+| 20 | Kit Advisor rate limit | Send 6 advisor messages within a minute | The 6th gets "You are sending messages too quickly. Please wait a minute and try again." |
+| 21 | Chat is cleared for the next person | As customer A, chat; log out, log in as customer B and open the advisor | An empty chat greeting B; none of A's messages |
+| 22 | Home page | Open `/`, click each category's Shop button, then Ask the Kit Advisor | Each opens its category; the Kit Advisor panel opens |
 
-Note: unhandled exceptions and console errors count as failing tests, so check the browser console on every page.
+Unhandled exceptions and console errors count as failing tests, so the browser console was checked on every page.
 
 ---
 
-## 7. Deployment
+## 7. Deployment & Local Setup
 
-- **Hosting platform:** TODO (deployment is planned for later; the submission checklist asks for a deployed URL)
-- **Database hosting:** TODO (local MariaDB during development)
-- **N8N hosting:** TODO (local N8N during development). N8N must be running for the Kit Advisor and the admin assistant, or each shows its "unavailable" state.
-- **Environment variables:** list the names only, never the values
+#### Prerequisites
+* **Node.js** 
+* **MariaDB** 
+* **n8n** (optional — required only for the AI Kit Advisor and Admin Assistant)
+* **Stripe CLI** (optional — required only for testing Stripe webhooks locally)
 
-```
-PORT=
-DB_HOST=
-DB_PORT=
-DB_USER=
-DB_PASSWORD=
-DB_NAME=
-CLIENT_URL=
-JWT_ACCESS_SECRET=
-JWT_REFRESH_SECRET=
-ACCESS_TOKEN_EXPIRES_IN=
-REFRESH_TOKEN_EXPIRES_IN=
-ADMIN_JWT_SECRET=
-ADMIN_TOKEN_EXPIRES_IN=
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-N8N_TOOLS_API_KEY=
-N8N_ADMIN_WEBHOOK_URL=
-N8N_ADMIN_WEBHOOK_KEY=
-N8N_ADVISOR_WEBHOOK_URL=
-N8N_ADVISOR_WEBHOOK_KEY=
+#### 1. Clone & Install Dependencies
+```bash
+git clone https://github.com/fiqmeister/kitgrid-ecommerce-shop.git
+cd kitgrid-ecommerce-shop
+
+# Install backend dependencies
+npm install
+
+# Install frontend dependencies
+cd client
+npm install
+cd ..
 ```
 
-The React app has its own `client/.env` (copy `client/.env.example`) with a single value, `VITE_API_URL` (the API address, for example `http://localhost:3000/api`). Vite puts every `VITE_` value into the JavaScript sent to the browser, so no secret ever goes in this file.
+#### 2. Configure Environment Variables
+1. Copy `.env.example` to `.env` in the root folder and fill in your values:
+   ```bash
+   cp .env.example .env
+   ```
+   Example local configuration:
+   ```env
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASSWORD=your_db_password
+   DB_NAME=kitgrid
+   DB_PORT=3306
 
-`N8N_TOOLS_API_KEY` is the key N8N sends to `/api/tools`; `N8N_ADMIN_WEBHOOK_KEY` and `N8N_ADVISOR_WEBHOOK_KEY` are the secret headers Express sends to the N8N admin and Kit Advisor webhooks (each workflow has its own). Express reads `.env` only when it starts, so restart it after changing a key. The Stripe values are used once payments are built.
+   PORT=3000
+   CLIENT_URL=http://localhost:5173
 
-- **Local setup:** TODO (clone, `npm install` in the project root for the API and again in `/client`, create `.env` from `.env.example`, run `schema.sql` then `seed.sql`, start the API and the client, start N8N, and run the Stripe CLI to forward webhooks)
-- **Deployment steps:** TODO (deploy later). Also TODO: a pre-demo checklist (MariaDB, API, client, N8N and the Stripe CLI all running).
+   JWT_ACCESS_SECRET=your_access_secret
+   JWT_REFRESH_SECRET=your_refresh_secret
+   ACCESS_TOKEN_EXPIRES_IN=15m
+   REFRESH_TOKEN_EXPIRES_IN=7d
+   ADMIN_JWT_SECRET=your_admin_secret
+   ADMIN_TOKEN_EXPIRES_IN=4h
+
+   STRIPE_SECRET_KEY=sk_test_...
+   STRIPE_WEBHOOK_SECRET=whsec_...
+
+   N8N_TOOLS_API_KEY=your_tools_api_key
+   N8N_ADMIN_WEBHOOK_URL=http://localhost:5678/webhook/...
+   N8N_ADMIN_WEBHOOK_KEY=your_admin_webhook_key
+   N8N_ADVISOR_WEBHOOK_URL=http://localhost:5678/webhook/...
+   N8N_ADVISOR_WEBHOOK_KEY=your_advisor_webhook_key
+   ```
+2. Create `client/.env` and point it to the Express server:
+   ```env
+   VITE_API_URL=http://localhost:3000/api
+   ```
+
+#### 3. Set Up the Database
+Create an empty database matching `DB_NAME` in your `.env` (for example, `kitgrid`), then run the SQL scripts in order:
+```bash
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS kitgrid;"
+mysql -u root -p kitgrid < src/db/schema.sql
+mysql -u root -p kitgrid < src/db/seed.sql
+mysql -u root -p kitgrid < src/db/demo.sql   # Optional: adds extra customers and orders #1001–#1037
+```
+
+#### 4. Start the Application
+Run the backend and frontend in separate terminals:
+
+* **Backend API & EJS Admin Dashboard (`http://localhost:3000`):**
+  ```bash
+  npm run dev      # Development mode with nodemon (src/server.js)
+  # or: npm start  # Production mode
+  ```
+* **Frontend React App (`http://localhost:5173`):**
+  ```bash
+  cd client
+  npm run dev
+  ```
+* **n8n AI Agents (optional):**
+  Start your local n8n instance and ensure the Kit Advisor and Admin Assistant workflows are active and configured with the webhook URLs/keys in `.env`. If n8n is offline, the rest of the store continues working normally.
 
 ---
 
 ## 8. Credits
 
-- Baymard Institute (https://baymard.com): e-commerce UX research articles on product lists and filters, product pages, cart and checkout. Ideas are paraphrased; no text or images are reused.
-- TODO: tutorials followed (title and link)
-- TODO: libraries and packages
-- TODO: images and assets (source and licence)
-- TODO: design inspiration (for example kit-shop and sports retail sites you studied)
+- **UX Research & UI Inspiration:** [Baymard Institute](https://baymard.com) (e-commerce UX research on product lists, product pages, cart, and checkout; ideas paraphrased with no text or images reused) and [Dribbble](https://dribbble.com) (UI layout and visual inspiration).
+- **UI & Design System:** [Figma](https://figma.com), [Bootstrap 5.3](https://getbootstrap.com), [Bootstrap Icons](https://getbootstrap.com), and [Google Fonts (DM Sans)](https://google.com).
+- **Backend Libraries:** Express, `mysql2`, `jsonwebtoken`, `bcrypt`, `yup`, `cookie-parser`, `cors`, `dotenv`, `ejs`, `express-rate-limit`, `morgan`, `nodemon`, and Stripe SDK.
+- **Frontend Libraries:** React 19, Vite, `wouter`, `axios`, `jotai`, `formik`, `yup`.
+- **AI & Workflows:** [n8n](https://n8n.io), Groq (`openai/gpt-oss-120b`), and Google Gemini (`gemini-3.5-flash`).
+
