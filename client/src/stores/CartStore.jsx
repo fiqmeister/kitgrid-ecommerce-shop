@@ -38,7 +38,7 @@ export const useCart = () => {
             setCart(emptyCart);
             return;
         }
-        const response = await api.post('/cart/quote', { items: items });
+        const response = await api.post('/cart/quote', { items });
         setCart(response.data);
     };
 
@@ -56,7 +56,7 @@ export const useCart = () => {
     const addToCart = async (items) => {
         if (user) {
             // merge adds each quantity on top of what is already saved (capped at the stock), in one request
-            const response = await api.post('/cart/merge', { items: items });
+            const response = await api.post('/cart/merge', { items });
             setCart(response.data);
         } else {
             // copy the list, then for each item: add to the quantity if it's already there, or add a new row
@@ -86,7 +86,7 @@ export const useCart = () => {
     const modifyQuantity = async (variantId, quantity) => {
         if (user) {
             // PUT sets the new quantity; the server checks the stock, and 0 removes the size
-            const response = await api.put('/cart/items/' + variantId, { quantity: quantity });
+            const response = await api.put('/cart/items/' + variantId, { quantity });
             setCart(response.data);
         } else {
             let newGuestCart;
@@ -96,7 +96,7 @@ export const useCart = () => {
             } else {
                 // a NEW object for the changed item, the same objects for the others
                 newGuestCart = guestCart.map(item =>
-                    item.variantId === variantId ? { variantId: variantId, quantity: quantity } : item
+                    item.variantId === variantId ? { variantId, quantity } : item
                 );
             }
             await priceGuestCart(newGuestCart);

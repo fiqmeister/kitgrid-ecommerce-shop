@@ -164,7 +164,7 @@ export default function CheckoutPage() {
             </div>
 
             <div className="row g-4">
-                {/* left: the step's content (step 2 of this feature puts the delivery form here) */}
+                {/* left: the step's content */}
                 <div className="col-lg-8">
                     {step === 1 && (
                         <DeliveryForm initialValues={delivery} email={user.email}
@@ -213,7 +213,7 @@ export default function CheckoutPage() {
                                 onClick={handlePlaceOrder} disabled={placing}>
                                 {placing ? 'Placing order…' : 'Place order'}
                             </button>
-                            {/* until Stripe is added (20 Nov), orders are saved as "pending payment" */}
+                            {/* until Stripe is added, orders are saved as "pending payment" */}
                             <p className="kg-card-meta small mt-2 mb-0">
                                 Card payment is coming soon. Your order is saved as pending payment.
                             </p>

@@ -1,6 +1,4 @@
 // the product detail page: /products/5
-// step 1: loads one product and shows the top info and the "Product details" card
-// the colour picker, size table, bulk tiers and totals come in the next steps
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import api from '../api';
@@ -154,7 +152,7 @@ export default function ProductDetail({ params }) {
         for (const variant of product.variants) {
             const quantity = quantities[variant.id] || 0;
             if (quantity > 0) {
-                items.push({ variantId: variant.id, quantity: quantity }); // empty sizes are left out
+                items.push({ variantId: variant.id, quantity }); // empty sizes are left out
             }
         }
 

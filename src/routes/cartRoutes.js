@@ -13,5 +13,4 @@ router.post('/merge', authenticate, validate(mergeCartSchema), cartController.me
 // the guest cart's prices: NO authenticate (guests have no token); nothing is saved
 router.post('/quote', validate(mergeCartSchema), cartController.quotingCart);
 
-
 module.exports = router;

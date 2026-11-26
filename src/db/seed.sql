@@ -15,7 +15,7 @@ INSERT INTO bulk_discount_rules (min_quantity, discount_percent) VALUES
 -- 2. users, then the team profile that points to a user
 INSERT INTO users (id, name, email, password_hash, role) VALUES
     (1, 'KitGrid Admin', 'admin@kitgrid.example', '$2b$10$iqKUA/I61y0FgvUkfng5kuznqWmqoYxC5dN52psy3nMk93pVGjlzC', 'admin'),
-    (2, 'Ravi Nair', 'ravi.nair@example.com', '$2b$10$l20CwS6GFsz.cd8s0EAEMugOafJe1NKGSyJ85xdgwW.XKdBjUuzom', 'customer');
+    (2, 'Cust Test', 'cust.test@example.com', '$2b$10$DvUWjPZmEJeBz4u3m6RXAOsEy6cNmPyqGsZmuIAmNK5jg6QBf7FsW', 'customer');
 
 INSERT INTO team_profiles (team_name, age_group, squad_size, colours, user_id) VALUES
     ('Bedok Youth FC', 'youth', 18, 'Navy and white', 2);

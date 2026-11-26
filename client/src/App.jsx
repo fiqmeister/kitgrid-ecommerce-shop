@@ -1,6 +1,6 @@
 // the frame of the shop
 import { Router, Route, useLocation } from 'wouter';
-import Header from './components/Header'; // import Header
+import Header from './components/Header';
 import ProductList from './pages/ProductList';
 import LoginPage from './pages/LoginPage';
 import ProductDetail from './pages/ProductDetail';

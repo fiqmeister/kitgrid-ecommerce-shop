@@ -6,7 +6,7 @@
 **Admin dashboard:** `http://localhost:3000/admin` (port set via `PORT` in `.env`)  
 **Seeded test accounts** *(created by `src/db/seed.sql`)*:
 * **Admin:** `admin@kitgrid.example` / `Admin123!`
-* **Customer:** `ravi.nair@example.com` / `<your-seeded-password>`
+* **Customer:** `cust.test@example.com` / `Cust12345`
 
 ## Contents
 1. [Business Context & Goals](#1-business-context--goals)
@@ -175,25 +175,24 @@ Run order: `reset.sql` (only for a rebuild), `schema.sql`, `seed.sql`, `demo.sql
 | 1 | Register and log in | On `/login`, create an account with a new email and the password `password1`. Log out, then log in again | Both work. Wrong password: "Invalid email or password" |
 | 2 | Guest cart merges after login | Log in, add Matchday Jersey Navy S 3, log out. As a guest, add Navy S 4, Navy L 5 and Training Bib Yellow 2, then log in | The cart shows Navy S 7 (3 + 4), Navy L 5, Bib 2 |
 | 3 | Order reduces stock | Note the stock of Navy S and Navy L in the admin. Order Navy S 4 and Navy L 5 | The confirmation page opens; the admin shows the order as pending payment with S$350.00, and the stock is 4 and 5 lower |
-| 4 | Customer cannot open `/admin` | TODO | TODO |
-| 5 | Bulk tier uses total units across sizes | Add 4 + 8 + 6 of one jersey in three sizes | 18 units get 15% off |
-| 6 | Free delivery at 15+ items | Check out with 15 items, then with 14 | S$0.00, then S$8.00 |
-| 7 | Product page total | On the Matchday Jersey page, type Navy S 4 and Navy L 5, switch to Red and type Red S 6 | 15 units, 15% off: S$570.00 − S$85.50 = S$484.50 |
-| 8 | Shop filters stay in the URL | On `/products`, open Matchday Kits, tick size M, sort by price low to high, then press F5 | 3 products, cheapest first; after F5 the same filters are still shown |
-| 9 | Over stock blocks checkout | As a guest, add Jersey Red M 3 twice (3 in stock), then open the cart | "Only 3 in stock" and Proceed to checkout is disabled until the quantity is lowered |
-| 10 | Stock changes during checkout | Keep the Review step open, lower Navy S stock to 2 in the admin, then click Place order | "Only 2 qty left for Matchday Jersey (S)"; no order is created |
-| 11 | Log out revokes the refresh token | Copy the `refreshToken` from `localStorage`, log out, then send it to `POST /api/auth/refresh` | 401 "Invalid refresh token" |
-| 12 | My orders | Log in as Daniel Lim (demo data), open My Orders, search `1006`, then `zzz` | `1006` shows one order; `zzz` shows "No orders match" |
-| 13 | Another customer's order | As Daniel Lim, open `/orders/1034` | "We couldn't find this order" (404, not 403) |
-| 14 | Forged admin form is refused | In DevTools, change the hidden `_csrf` value of a Deactivate form to `abc`, then submit | 403 "This form has expired. Reload the page and try again." |
-| 15 | Login rate limit | Enter a wrong admin password 5 times, then the correct one | "Too many failed logins. Please wait 15 minutes and try again." (429) |
-| 16 | AI proposal outside the allowed range | Ask the admin assistant to set a threshold to 2000, then press Confirm | 400 "Threshold cannot be above 1000"; nothing is saved |
-| 17 | Kit Advisor team kit | Log in; For my team: "U12 team of 16 players, S$800 budget. We need match jerseys and training bibs." | A reply and a kit card with a bulk discount and a total under S$800 |
-| 18 | Kit Advisor add to cart | On the card from test 17, click Add all to cart | The cart shows the same products, sizes and total |
-| 19 | Kit Advisor when N8N is down | Stop N8N, send any message | "The Kit Advisor is not available right now. Please try again in a minute." |
-| 20 | Kit Advisor rate limit | Send 6 advisor messages within a minute | The 6th gets "You are sending messages too quickly. Please wait a minute and try again." |
-| 21 | Chat is cleared for the next person | As customer A, chat; log out, log in as customer B and open the advisor | An empty chat greeting B; none of A's messages |
-| 22 | Home page | Open `/`, click each category's Shop button, then Ask the Kit Advisor | Each opens its category; the Kit Advisor panel opens |
+| 4 | Bulk tier uses total units across sizes | Add 4 + 8 + 6 of one jersey in three sizes | 18 units get 15% off |
+| 5 | Free delivery at 15+ items | Check out with 15 items, then with 14 | S$0.00, then S$8.00 |
+| 6 | Product page total | On the Matchday Jersey page, type Navy S 4 and Navy L 5, switch to Red and type Red S 6 | 15 units, 15% off: S$570.00 − S$85.50 = S$484.50 |
+| 7 | Shop filters stay in the URL | On `/products`, open Matchday Kits, tick size M, sort by price low to high, then press F5 | 3 products, cheapest first; after F5 the same filters are still shown |
+| 8 | Over stock blocks checkout | As a guest, add Jersey Red M 3 twice (3 in stock), then open the cart | "Only 3 in stock" and Proceed to checkout is disabled until the quantity is lowered |
+| 9 | Stock changes during checkout | Keep the Review step open, lower Navy S stock to 2 in the admin, then click Place order | "Only 2 qty left for Matchday Jersey (S)"; no order is created |
+| 10 | Log out revokes the refresh token | Copy the `refreshToken` from `localStorage`, log out, then send it to `POST /api/auth/refresh` | 401 "Invalid refresh token" |
+| 11 | My orders | Log in as Daniel Lim (demo data), open My Orders, search `1006`, then `zzz` | `1006` shows one order; `zzz` shows "No orders match" |
+| 12 | Another customer's order | As Daniel Lim, open `/orders/1034` | "We couldn't find this order" (404, not 403) |
+| 13 | Forged admin form is refused | In DevTools, change the hidden `_csrf` value of a Deactivate form to `abc`, then submit | 403 "This form has expired. Reload the page and try again." |
+| 14 | Login rate limit | Enter a wrong admin password 5 times, then the correct one | "Too many failed logins. Please wait 15 minutes and try again." (429) |
+| 15 | AI proposal outside the allowed range | Ask the admin assistant to set a threshold to 2000, then press Confirm | 400 "Threshold cannot be above 1000"; nothing is saved |
+| 16 | Kit Advisor team kit | Log in; For my team: "U12 team of 16 players, S$800 budget. We need match jerseys and training bibs." | A reply and a kit card with a bulk discount and a total under S$800 |
+| 17 | Kit Advisor add to cart | On the card from test 16, click Add all to cart | The cart shows the same products, sizes and total |
+| 18 | Kit Advisor when N8N is down | Stop N8N, send any message | "The Kit Advisor is not available right now. Please try again in a minute." |
+| 19 | Kit Advisor rate limit | Send 6 advisor messages within a minute | The 6th gets "You are sending messages too quickly. Please wait a minute and try again." |
+| 20 | Chat is cleared for the next person | As customer A, chat; log out, log in as customer B and open the advisor | An empty chat greeting B; none of A's messages |
+| 21 | Home page | Open `/`, click each category's Shop button, then Ask the Kit Advisor | Each opens its category; the Kit Advisor panel opens |
 
 Unhandled exceptions and console errors count as failing tests, so the browser console was checked on every page.
 
@@ -259,12 +258,35 @@ cd ..
    ```
 
 #### 3. Set Up the Database
-Create an empty database matching `DB_NAME` in your `.env` (for example, `kitgrid`), then run the SQL scripts in order:
+
+Run all commands below from the **project root directory**.
+
+> **Note for Linux (Ubuntu/Debian) users:** If your MariaDB/MySQL `root` user uses `unix_socket` authentication, replace `mysql -u root -p` with `sudo mariadb` (or `sudo mysql`).
+
+##### First-Time Setup (Required)
+Creates the `kitgrid` database, sets up all tables, and loads the base products, variants, and test accounts (press **Enter** if your `root` user has no password):
+
 ```bash
-mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS kitgrid;"
-mysql -u root -p kitgrid < src/db/schema.sql
-mysql -u root -p kitgrid < src/db/seed.sql
-mysql -u root -p kitgrid < src/db/demo.sql   # Optional: adds extra customers and orders #1001–#1037
+mysql -u root -p -e "SOURCE src/db/schema.sql; SOURCE src/db/seed.sql;"
+```
+
+**Default Seed Accounts:**
+* **Admin:** `admin@kitgrid.example`
+* **Customer:** `cust.test@example.com`
+
+##### Load Demo Data (Optional)
+Adds 8 sample customers, 5 team profiles, and 37 orders (`#1001`–`#1037`) across all statuses with relative timestamps. Load this **once** on top of a fresh seed:
+
+```bash
+mysql -u root -p -e "SOURCE src/db/demo.sql;"
+```
+*(All demo customer accounts use the password `Password123`.)*
+
+##### Reset the Database
+To wipe all tables and return to a clean initial seed (for example, before running manual test cases or removing demo data):
+
+```bash
+mysql -u root -p -e "SOURCE src/db/reset.sql; SOURCE src/db/schema.sql; SOURCE src/db/seed.sql;"
 ```
 
 #### 4. Start the Application

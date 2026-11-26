@@ -1,4 +1,4 @@
-// admin orders: works out the orders list page (Part A). Detail and status changes are added in Part B
+// admin orders: works out the orders list page, the order detail page and status changes
 
 const adminOrderDal = require('../dal/adminOrderDal');
 const orderDal = require('../dal/orderDal'); // reuse findOrderItems: the same item rows as the customer's page
@@ -40,7 +40,7 @@ async function listOrders(query) {
 
     const filters = {
         search: query.search,
-        orderNumber: orderNumber,
+        orderNumber,
         status: query.status,
         from: query.from,
         to: query.to,
@@ -63,9 +63,9 @@ async function listOrders(query) {
     }));
 
     return {
-        orders: orders,
+        orders,
         page: query.page,
-        total: total,
+        total,
         totalPages: Math.ceil(total / page_size),
         firstShown: total === 0 ? 0 : offset + 1, // "Showing 9 to 16 of 37"
         lastShown: offset + orders.length,
@@ -121,13 +121,13 @@ async function getOrder(orderId) {
             addressLine2: order.address_line2,
             postalCode: order.postal_code,
         },
-        items: items,
-        totalUnits: totalUnits,
+        items,
+        totalUnits,
         subtotal: Number(order.subtotal),
         discount: Number(order.discount_total),
         deliveryFee: Number(order.delivery_fee),
         total: Number(order.total),
-        history: history,
+        history,
         nextStatuses: nextStatuses[order.status], // for the "Change to" dropdown
         canMarkPaid: order.status === 'pending_payment',
     };

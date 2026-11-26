@@ -71,7 +71,7 @@ export default function KitAdvisor() {
         setIsSending(true);
 
         try {
-            const response = await api.post('/advisor', { message: message, mode: mode });
+            const response = await api.post('/advisor', { message, mode });
             // the reply, plus the checked suggestion (or null)
             setMessages([...withQuestion, {
                 from: 'advisor',

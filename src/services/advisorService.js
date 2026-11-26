@@ -19,7 +19,7 @@ async function askAdvisor(userId, message, mode) {
     const answer = await callN8n(
         process.env.N8N_ADVISOR_WEBHOOK_URL,
         process.env.N8N_ADVISOR_WEBHOOK_KEY,
-        { message: message, mode: mode, customerName: customerName },
+        { message, mode, customerName },
         'Kit Advisor',
         unavailable_message
     );

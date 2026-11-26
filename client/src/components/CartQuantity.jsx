@@ -1,4 +1,4 @@
-// the quantity box for one size in the cart (like the trainer's CartQuantity)
+// the quantity box for one size in the cart
 // it keeps its own text while the customer types, and only saves when they leave the box or press Enter,
 // so typing "12" doesn't send a request for "1" and then another for "12"
 import { useState, useEffect } from 'react';

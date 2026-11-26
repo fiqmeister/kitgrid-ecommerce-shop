@@ -1,5 +1,5 @@
 /* ---------- colours ----------
-   written once here, then used everywhere as var(--kg-navy) etc.
+   to be used everywhere as var(--kg-navy) etc.
    to change a colour later, change it only in this list */
 :root {
     --kg-navy: #0F172A;         /* headings, dark buttons, footer */
@@ -26,10 +26,10 @@ html {
 }
 
 body {
-    font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; /* same as admin.css */
+    font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
     background-color: var(--kg-page);
     color: var(--kg-slate-700);
-    font-size: 14px; /* "Body 14 / 400" in the design system */
+    font-size: 14px;
 }
 
 h1, h2, h3 {
@@ -44,7 +44,7 @@ a {
 
 a:hover {
     color: var(--kg-accent-dark);
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 /* the "kitgrid彡" logo text, same font as the admin logo */
@@ -54,7 +54,10 @@ a:hover {
     color: var(--kg-navy);
     font-size: 38px;
     line-height: 1;
-    text-decoration: none;
+}
+
+.kg-logo:hover {
+    color: var(--kg-navy);
 }
 
 /* the main blue button: add to cart, checkout, pay */
@@ -103,7 +106,7 @@ a:hover {
     color: var(--kg-slate);
 }
 
-/* the circle: an empty grey ring (::before adds it in front of the text, no extra HTML needed) */
+/* the circle: empty grey ring (::before adds it in front of the text, no extra HTML needed) */
 .kg-timeline li::before {
     content: '';
     position: absolute;
@@ -112,7 +115,7 @@ a:hover {
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    border: 2px solid var(--kg-slate-300);
+    border: 4px solid var(--kg-slate-300);
     background-color: var(--kg-white);
 }
 
@@ -149,7 +152,7 @@ a:hover {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    display: inline-flex;          /* centres the icon inside the circle */
+    display: inline-flex; /* centres the icon inside the circle */
     align-items: center;
     justify-content: center;
     font-size: 24px;

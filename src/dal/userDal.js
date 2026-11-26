@@ -17,9 +17,7 @@ async function create({ name, email, passwordHash }) {
 // return user with selected columns, leaving out the password col
 async function findById(id) {
     const [rows] = await pool.query(
-        `SELECT id, name, email, role, created_at FROM users WHERE id = ?`,
-        [id]
-    );
+        `SELECT id, name, email, role, created_at FROM users WHERE id = ?`, [id]);
     return rows[0];
 }
 // export all functions

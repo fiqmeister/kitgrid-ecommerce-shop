@@ -29,7 +29,7 @@ function buildOrderFilterSql(filters) {
         }
     }
 
-    return { sql: sql, params: params };
+    return { sql, params };
 }
 
 // one function to run the whole checkout process as 1 transaction

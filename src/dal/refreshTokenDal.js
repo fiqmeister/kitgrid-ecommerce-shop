@@ -9,7 +9,9 @@ async function createRT({ userId, tokenHash, expiresAt }) {
 // Check if the given token hash is valid
 async function findValidToken(tokenHash) {
     const [rows] = await pool.query(
-        `SELECT id, user_id FROM refresh_tokens WHERE token_hash = ? AND is_revoked = 0 AND expires_at > NOW()`,
+        `SELECT id, user_id FROM refresh_tokens WHERE token_hash = ? 
+        AND is_revoked = 0 
+        AND expires_at > NOW()`,
         [tokenHash]
     );
     return rows[0];

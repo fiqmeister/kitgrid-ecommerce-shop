@@ -1,4 +1,4 @@
-// admin products: SQL for the products list (Part A). The add / edit form is added in Part B
+// admin products: SQL for the products list and the add / edit form
 // unlike productDal, these queries include INACTIVE products: the admin sees everything
 
 const pool = require('../db/database');
@@ -29,7 +29,7 @@ function buildAdminProductFilterSql(filters) {
         havingSql = ' HAVING MIN(product_variants.stock - product_variants.low_stock_threshold) <= 0';
     }
 
-    return { whereSql: whereSql, havingSql: havingSql, params: params };
+    return { whereSql, havingSql, params };
 }
 
 // the shared part of the list query: one row per product, with its variants added up
@@ -67,7 +67,7 @@ async function countProducts(filters) {
     return rows.length;
 }
 
-// every category, for the Category dropdown (and the product form in Part B)
+// every category, for the Category dropdown (and the product form)
 async function findCategories() {
     const [rows] = await pool.query('SELECT id, name FROM categories ORDER BY name');
     return rows;
@@ -81,7 +81,7 @@ async function setActive(productId, isActive) {
     );
     return result.affectedRows > 0;
 }
-// ---------- Part B: the Add / Edit product form ----------
+// ---------- the Add / Edit product form ----------
 
 // one product's own columns, for filling in the Edit form (active or not)
 async function findProductById(productId) {
@@ -212,7 +212,7 @@ async function saveProduct(productId, product, variants, tagIds) {
         connection.release();
     }
 }
-// ---------- nov05: low-stock threshold change (the admin assistant's Confirm button) ----------
+// ---------- low-stock threshold change (the admin assistant's Confirm button) ----------
 
 // one variant with its product name, for the "Threshold saved" message (undefined if not found)
 async function findVariantSummary(variantId) {

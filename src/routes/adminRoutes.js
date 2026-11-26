@@ -12,8 +12,6 @@ const { adminUserListSchema } = require('../validators/adminUserValidators');
 const { adminProductListSchema, thresholdSchema } = require('../validators/adminProductValidators');
 const { productIdSchema } = require('../validators/productValidators');
 
-
-
 // login page and form (open to everyone, otherwise no one could log in)
 router.get('/login', adminController.showLogin);
 // adminLoginLimiter: after 5 failed tries in 15 minutes, this IP is blocked from trying again for a while

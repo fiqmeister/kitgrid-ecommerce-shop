@@ -54,5 +54,4 @@ function verifyAdminToken(token) {
 }
 
 module.exports = { signAccessToken, signRefreshToken, hashToken, getExpiry, verifyAccessToken, verifyRefreshToken,
-    signAdminToken, verifyAdminToken
- };
+    signAdminToken, verifyAdminToken };

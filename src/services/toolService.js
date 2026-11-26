@@ -60,7 +60,7 @@ async function getLowStock() {
 
     return {
         count: items.length,
-        items: items,
+        items,
     };
 }
 // turns a JS date into text like 2026-10-29, using the computer's own (Singapore) time
@@ -138,10 +138,10 @@ async function getOrderSummary(query) {
     return {
         from: fromDate,
         to: toDate,
-        totalOrders: totalOrders,
-        cancelledOrders: cancelledOrders,
+        totalOrders,
+        cancelledOrders,
         paidRevenue: roundMoney(paidRevenue),
-        waitingToShip: waitingToShip,
+        waitingToShip,
         unpaidOver24h: unpaidOverLimit,
     };
 }
@@ -162,7 +162,7 @@ async function getOrdersToShip() {
             productName: row.product_name,
             colour: row.colour,
             size: row.size,
-            quantity: quantity,
+            quantity,
         });
     }
 
@@ -193,8 +193,8 @@ async function getOrdersToShip() {
 
     return {
         orderCount: orderRows.length,
-        totalUnits: totalUnits,
-        pickList: pickList,
+        totalUnits,
+        pickList,
         deliveries: sectors,
     };
 }
@@ -225,7 +225,7 @@ async function searchVariants(query) {
     return {
         count: items.length,
         limitReached: items.length === variant_limit,
-        items: items,
+        items,
     };
 }
 // T4: Kit Advisor product search. Products with only the variants a customer can buy right now
@@ -268,7 +268,7 @@ async function searchProducts(query) {
     return {
         count: matchCount,
         limitReached: matchCount > items.length,
-        items: items,
+        items,
     };
 }
 // T5: price a list of items with the same rules as the cart and checkout
@@ -324,10 +324,10 @@ async function getQuote(items) {
         totalUnits: cart.totalUnits,
         subtotal: cart.subtotal,
         discount: cart.discount,
-        deliveryFee: deliveryFee,
+        deliveryFee,
         total: roundMoney(cart.total + deliveryFee),
         allInStock: stockProblems.length === 0,
-        stockProblems: stockProblems,
+        stockProblems,
     };
 }
 

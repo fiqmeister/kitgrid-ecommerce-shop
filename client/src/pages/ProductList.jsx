@@ -1,6 +1,4 @@
 // the product list page: /products?categoryId=2&size=M&minStock=15
-// this first version loads the products for whatever filters are in the address bar and shows them as cards
-// the filter sidebar, sort and page buttons come in the next steps: they only change the address bar
 import { useState, useEffect } from 'react';
 import { Link, useSearch, useLocation } from 'wouter';
 import api from '../api';

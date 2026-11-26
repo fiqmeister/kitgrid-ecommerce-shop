@@ -57,7 +57,7 @@ function buildFilterSql(filters) {
         params.push(filters.tag);
     }
 
-    return { sql: sql, params: params };
+    return { sql, params };
 }
 // after the filters building, then pass it accordingly by the filters, sort,
 // limit and offset for paging

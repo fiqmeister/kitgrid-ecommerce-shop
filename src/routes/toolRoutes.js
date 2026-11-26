@@ -18,5 +18,4 @@ router.get('/products', validate(productSearchSchema, 'query'), toolController.s
 // T5: quote with the same bulk discount and delivery rules as the cart (nothing is saved)
 router.post('/quote', validate(quoteSchema), toolController.gettingQuote);
 
-
 module.exports = router;

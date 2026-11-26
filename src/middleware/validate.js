@@ -33,7 +33,6 @@ function validate(schema, source) {
             for (const issue of err.inner) {
                 details.push({ field: issue.path, message: issue.message });
             }
-            // 
             const error = createError('Validation failed', 400);
             error.details = details;
             next(error);

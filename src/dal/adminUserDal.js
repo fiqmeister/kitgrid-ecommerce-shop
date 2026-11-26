@@ -20,7 +20,7 @@ function buildAdminUserFilterSql(filters) {
         params.push(filters.role);
     }
 
-    return { sql: sql, params: params };
+    return { sql, params };
 }
 
 // one page of users, newest first, with team name (if any) and how many orders they placed

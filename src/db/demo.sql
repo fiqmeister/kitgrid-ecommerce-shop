@@ -10,7 +10,7 @@
 --
 -- What is in it:
 --   - 8 customers (ids 101 to 108) in different postal sectors, 5 with a team profile.
---     They can log in with password: Password123
+--     Can log in with password: Password123
 --   - 37 orders (#1001 to #1037) placed over the last 6 weeks, in every status:
 --     20 delivered, 4 shipped, 3 processing, 4 paid, 3 pending payment (2 unpaid over 24 hours), 3 cancelled.
 --   - Dates are relative to the moment you load the file (NOW() - INTERVAL ... MINUTE),
@@ -21,7 +21,7 @@
 
 USE kitgrid;
 
--- 1. customers (the seed already has 1 = admin, 2 = Ravi)
+-- 1. customers (the seed already has 1 = admin, 2 = Cust Test)
 INSERT INTO users (id, name, email, password_hash, role, created_at) VALUES
     (101, 'Siti Rahman', 'siti.rahman@example.com', '$2b$10$3h9dTB3ZnflDNWCyoT3QC.nv15zBitC5R.jgzR9747J8PnEk7QGcm', 'customer', NOW() - INTERVAL 60 DAY),
     (102, 'Daniel Lim', 'daniel.lim@example.com', '$2b$10$3h9dTB3ZnflDNWCyoT3QC.nv15zBitC5R.jgzR9747J8PnEk7QGcm', 'customer', NOW() - INTERVAL 60 DAY),

@@ -89,7 +89,7 @@ async function listOrders(userId, query) {
     const filters = {
         status: query.status,
         search: query.search,
-        orderNumber: orderNumber,
+        orderNumber,
     };
 
     const offset = (query.page - 1) * query.limit; // limit default is 5, set at orderValidators
@@ -125,16 +125,16 @@ async function listOrders(userId, query) {
             status: order.status,
             createdAt: order.created_at,
             total: Number(order.total),
-            totalUnits: totalUnits,
-            products: products,
+            totalUnits,
+            products,
         });
     }
 
     return {
-        items: items,
+        items,
         page: query.page,
         limit: query.limit,
-        total: total,
+        total,
         totalPages: Math.ceil(total / query.limit),
     };
 }
@@ -195,7 +195,7 @@ async function getOrder(userId, orderId) {
         id: order.id,
         status: order.status,
         createdAt: order.created_at,
-        totalUnits: totalUnits,
+        totalUnits,
         subtotal: Number(order.subtotal),
         discount: Number(order.discount_total),
         deliveryFee: Number(order.delivery_fee),
@@ -208,8 +208,8 @@ async function getOrder(userId, orderId) {
             addressLine2: order.address_line2,
             postalCode: order.postal_code,
         },
-        products: products,
-        history: history,
+        products,
+        history,
     };
 }
 

@@ -38,18 +38,6 @@ app.use('/api/tools', requireApiKey, toolRoutes); // middleware use here means A
 // admin route
 app.use('/admin', adminRoutes);
 
-
-// temporary check: delete once the first real route works
-app.get('/api/health', async (req, res) => {
-    try {
-        const [rows] = await pool.query('SELECT COUNT(*) AS products FROM products');
-        res.json({ status: 'ok', products: rows[0].products });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ status: 'error' });
-    }
-});
-
 app.use(errorHandler);
 
 module.exports = app;

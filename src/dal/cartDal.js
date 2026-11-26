@@ -58,7 +58,7 @@ async function saveItemQuantity(userId, variantId, quantity) {
 }
 // return the rows that were deleted; 1 if it was in the cart, 0 if not
 async function removeItem(userId, variantId) {
-    // naming convention: delete return result object
+    // DELETE gives back a result object (not rows): result.affectedRows is how many rows were removed
     const [result] = await pool.query(
         `DELETE FROM cart_items
         WHERE user_id = ?

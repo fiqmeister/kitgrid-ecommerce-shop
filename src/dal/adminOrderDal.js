@@ -1,4 +1,4 @@
-// admin orders: SQL for the orders list (Part A). Detail and status changes are added in Part B
+// admin orders: SQL for the orders list, the order detail page and status changes
 // unlike orderDal, these queries are NOT limited to one user: the admin sees every order
 
 const pool = require('../db/database');
@@ -29,7 +29,7 @@ function buildAdminOrderFilterSql(filters) {
         params.push(filters.to);
     }
 
-    return { sql: sql, params: params };
+    return { sql, params };
 }
 
 // one page of orders, newest first, with customer name, team name (if any) and total units

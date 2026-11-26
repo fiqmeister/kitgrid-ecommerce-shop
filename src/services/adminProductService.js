@@ -1,4 +1,4 @@
-// admin products: works out the products list page (Part A). The add / edit form is added in Part B
+// admin products: works out the products list page and the add / edit form
 
 const adminProductDal = require('../dal/adminProductDal');
 const createError = require('../utils/createError');
@@ -60,7 +60,7 @@ async function setActive(productId, isActive) {
         throw createError('Product not found', 404);
     }
 }
-// ---------- Part B: the Add / Edit product form ----------
+// ---------- the Add / Edit product form ----------
 
 // a database value as text for a form box: null becomes an empty box
 function textOrEmpty(value) {
@@ -79,7 +79,7 @@ function textOrNull(text) {
 async function getFormOptions() {
     const categories = await adminProductDal.findCategories();
     const tags = await adminProductDal.findTags();
-    return { categories: categories, tags: tags };
+    return { categories, tags };
 }
 
 // the values for a brand new, empty form
@@ -205,7 +205,7 @@ async function saveProduct(productId, form) {
     }
     return savedId;
 }
-// ---------- nov05: low-stock threshold change (the admin assistant's Confirm button) ----------
+// ---------- low-stock threshold change (the admin assistant's Confirm button) ----------
 
 // saves the new threshold the admin confirmed. 404 when the variant does not exist
 async function changeThreshold(variantId, threshold) {
